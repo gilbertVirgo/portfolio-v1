@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Capture, Laptop, Phone, Tablet } from './devices'
 import { st } from './st'
 import { BookingJourney } from './booking/BookingJourney'
+import { StanzaJourney } from './stanza/StanzaJourney'
 import chlDesktop from './assets/chl-desktop.jpg'
 import chlMobile from './assets/chl-mobile.jpg'
 import lcrPlaque from './assets/lcr-plaque.png'
@@ -75,7 +76,7 @@ export const projects: Project[] = [
     disciplines: 'Desktop presentation app for churches', links: <span>Beta — v0.1.11</span>,
     stage: (
       <>
-        <Laptop outline>{null}</Laptop>
+        <Laptop outline><StanzaJourney /></Laptop>
         <div style={st('flex: 1 1 260px; max-width: 380px; display: flex; flex-direction: column; gap: 24px; align-items: flex-start')}>
           <img src={stanzaIcon} alt="Stanza app icon" style={st('width: 72px; height: 72px')} />
           <p style={st('margin: 0; font-size: clamp(22px, 2.2cqw, 32px); font-weight: 500; line-height: 1.1; letter-spacing: -0.015em')}>Presentation software for churches. Replaces PowerPoint on a Sunday.</p>
