@@ -1,0 +1,14 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stanza app mark. Brand foundations only:
+       warm-dark bg #2f2d2e, paper screen #FBFBEF, primary orange #f58549 play,
+       periwinkle #6184d8 stand. A projector screen mid-"present" — reads at the
+       dock and still at a 16px tray size. -->
+  <rect x="0" y="0" width="1024" height="1024" rx="230" fill="#2f2d2e"/>
+  <!-- the screen -->
+  <rect x="232" y="210" width="560" height="396" rx="44" fill="#FBFBEF"/>
+  <!-- play triangle, centred in the screen -->
+  <path d="M470 322 L470 494 L602 408 Z" fill="#f58549" stroke="#f58549" stroke-width="28" stroke-linejoin="round"/>
+  <!-- stand -->
+  <rect x="496" y="606" width="32" height="60" fill="#6184d8"/>
+  <rect x="372" y="664" width="280" height="40" rx="20" fill="#6184d8"/>
+</svg>
