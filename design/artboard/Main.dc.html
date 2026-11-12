@@ -72,7 +72,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
 <div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
-<div tabindex="0" role="region" aria-label="Christian Heritage London website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #ffffff; border-radius: 4px">
+<div class="capture" tabindex="0" role="region" aria-label="Christian Heritage London website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #ffffff; border-radius: 4px">
 <img src="/_blob/2e1ceaeebd8188bb6175f8ddfcc26a80" alt="Christian Heritage London home page: dark hero reading Explore London’s Stories, then walks, podcast, articles and gift vouchers" style="width: 100%; display: block">
 </div>
 </div>
@@ -168,7 +168,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
 <div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
-<div tabindex="0" role="region" aria-label="Selhurst Church home page design, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FFFEF2; border-radius: 4px">
+<div class="capture" tabindex="0" role="region" aria-label="Selhurst Church home page design, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FFFEF2; border-radius: 4px">
 <img src="/_blob/807f0b78d26e3e63b6c3195c01e16db4" alt="Selhurst Church home page: welcome hero, photos in soft blob shapes, a yellow Join us this Sunday band with map, what’s on, latest talk and a dark footer" style="width: 100%; display: block">
 </div>
 </div>
@@ -189,7 +189,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
 <div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
-<div tabindex="0" role="region" aria-label="Highbury Baptist Church website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FFFCED; border-radius: 4px">
+<div class="capture" tabindex="0" role="region" aria-label="Highbury Baptist Church website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FFFCED; border-radius: 4px">
 <img src="/_blob/6b07621c655ee65439a7bd60c9fa7183" alt="Highbury Baptist Church home page: hero reading Come as you are in heavy cream type over a photo, then who we are, Sundays and what to expect" style="width: 100%; display: block">
 </div>
 </div>
@@ -370,7 +370,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 48px clamp(24px, 3.5cqw, 48px); padding: 40px 0 112px">
 <article style="min-width: 0">
 <div style="border: 1px solid #0a0a0a">
-<div tabindex="0" role="region" aria-label="Victoria Park Community Church website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FCFCF5">
+<div class="capture" tabindex="0" role="region" aria-label="Victoria Park Community Church website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FCFCF5">
 <img src="/_blob/03d6485078aa35c6dd3d02b3b0944b5f" alt="Victoria Park Community Church home page: cream ground, black and white photos, orange buttons, sections for Sundays, what’s on, about and beliefs" style="width: 100%; display: block">
 </div>
 </div>
@@ -380,7 +380,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 </article>
 <article style="min-width: 0">
 <div style="border: 1px solid #0a0a0a">
-<div tabindex="0" role="region" aria-label="Hope Church West End website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FAF6ED">
+<div class="capture" tabindex="0" role="region" aria-label="Hope Church West End website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FAF6ED">
 <img src="/_blob/89b319d3386d0236bd0b0a1cc39864f3" alt="Hope Church West End home page: dark starry hero reading Hope for London, Hope for You, then Sundays, About us, Our team, Get in touch and Find us" style="width: 100%; display: block">
 </div>
 </div>
@@ -389,7 +389,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 </article>
 <article style="min-width: 0">
 <div style="border: 1px solid #0a0a0a">
-<div tabindex="0" role="region" aria-label="Automated Medical Technologies website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #ffffff">
+<div class="capture" tabindex="0" role="region" aria-label="Automated Medical Technologies website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #ffffff">
 <img src="/_blob/845d256c4df11002d6bb99beebaf9c26" alt="Automated Medical Technologies home page: dark navy hero reading Precision Medicine Powered by Intelligence" style="width: 100%; display: block">
 </div>
 </div>
@@ -452,10 +452,26 @@ class Component extends DCLogic {
 componentDidMount() {
 // one shared tick drives both walkthroughs; skipped when the viewer prefers reduced motion
 if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+// scroll cue: each mockup peeks down once and back the first time it is mostly in view
+this._peek = new IntersectionObserver((entries) => entries.forEach((e) => {
+if (!e.isIntersecting) return;
+const el = e.target;
+this._peek.unobserve(el);
+const run = () => {
+if (el.scrollTop > 0) return;
+el.scrollTo({ top: 80, behavior: 'smooth' });
+setTimeout(() => { if (el.scrollTop <= 80) el.scrollTo({ top: 0, behavior: 'smooth' }); }, 700);
+};
+// lazy screenshots: nothing to scroll until the image has loaded
+const img = el.querySelector('img');
+if (img && !img.complete) img.addEventListener('load', run, { once: true }); else run();
+}), { threshold: 0.6 });
+document.querySelectorAll('.capture').forEach((el) => this._peek.observe(el));
 this._tick = setInterval(() => this.setState({ t: ((this.state && this.state.t) || 0) + 1 }), 1300);
 }
 componentWillUnmount() {
 clearInterval(this._tick);
+if (this._peek) this._peek.disconnect();
 }
 renderVals() {
 const t = (this.state && this.state.t) || 0;

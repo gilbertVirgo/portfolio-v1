@@ -20,6 +20,26 @@ export default function App() {
     addEventListener('scroll', onScroll, { passive: true })
     return () => removeEventListener('scroll', onScroll)
   }, [])
+  // Scroll cue: each mockup peeks down once and back the first time it is mostly in view.
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const peek = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return
+      const el = e.target
+      peek.unobserve(el)
+      const run = () => {
+        if (el.scrollTop > 0) return
+        el.scrollTo({ top: 80, behavior: 'smooth' })
+        setTimeout(() => { if (el.scrollTop <= 80) el.scrollTo({ top: 0, behavior: 'smooth' }) }, 700)
+      }
+      // Screenshots are lazy: nothing to scroll until the image has loaded.
+      const img = el.querySelector('img')
+      if (img && !img.complete) img.addEventListener('load', run, { once: true })
+      else run()
+    }), { threshold: 0.6 })
+    document.querySelectorAll('.capture').forEach((el) => peek.observe(el))
+    return () => peek.disconnect()
+  }, [])
   return (
     <div className="page" id="top">
       <header ref={header} className="site-header" style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding: 20px clamp(16px, 2.5cqw, 36px)')}>
