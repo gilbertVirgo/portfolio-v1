@@ -15,6 +15,9 @@ body{margin:0}
 *{box-sizing:border-box}
 a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 
+/* touch: a locked mockup ignores swipes, so they scroll the page (componentDidMount) */
+.capture.locked { overflow-y: hidden !important; }
+
 /* Project title conveyor belt: .belt is set (in componentDidMount) when the title is wider than its line.
    Two copies, each followed by a dot, slide left by half their width, so the loop is seamless. */
 .title .rep { display: none; }
@@ -461,6 +464,15 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":8100}}'>
 class Component extends DCLogic {
 componentDidMount() {
+// touch: a mockup takes a swipe only when fully on screen and the page has been still for 0.25s; else .locked
+if (window.matchMedia('(pointer: coarse)').matches) {
+const caps = [...document.querySelectorAll('.capture')];
+let settled = true, timer = 0;
+const update = () => caps.forEach((el) => { const r = el.getBoundingClientRect(); el.classList.toggle('locked', !(r.height > 0 && r.top >= -8 && r.bottom <= innerHeight + 8 && settled)); });
+this._onScroll = () => { settled = false; clearTimeout(timer); timer = setTimeout(() => { settled = true; update(); }, 250); update(); };
+update();
+addEventListener('scroll', this._onScroll, { passive: true });
+}
 // one shared tick drives both walkthroughs; skipped when the viewer prefers reduced motion
 if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 // scroll cue: each mockup peeks down once and back the first time it is mostly in view
@@ -492,6 +504,7 @@ componentWillUnmount() {
 clearInterval(this._tick);
 if (this._peek) this._peek.disconnect();
 if (this._belt) this._belt.disconnect();
+if (this._onScroll) removeEventListener('scroll', this._onScroll);
 }
 renderVals() {
 const t = (this.state && this.state.t) || 0;

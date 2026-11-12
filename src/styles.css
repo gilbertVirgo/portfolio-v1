@@ -32,14 +32,8 @@ a:hover { text-decoration-thickness: 2px; }
 }
 @keyframes belt { to { transform: translateX(-50%); } }
 
-/* Experiment (scrollIntent.ts): a locked mockup ignores swipes, so they scroll the page */
+/* Touch (scrollIntent.ts): a locked mockup ignores swipes, so they scroll the page */
 .capture.locked { overflow-y: hidden !important; }
-[data-scroll="tap"] :has(> .capture) { position: relative; }
-[data-scroll="tap"] :has(> .capture.locked)::after {
-  content: 'Tap to scroll'; position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%);
-  background: #0a0a0acc; color: #fff; font-size: 13px; padding: 6px 12px; border-radius: 99px; pointer-events: none;
-}
-[data-scroll="tap"] .capture:not(.locked) { outline: 3px solid #4A6BC8; outline-offset: -3px; }
 
 /* Sticky header: App.tsx adds .away while scrolling down. Keyboard focus always brings it back. */
 .site-header { position: sticky; top: 0; z-index: 10; background: #fff; transition: transform 0.3s ease; }

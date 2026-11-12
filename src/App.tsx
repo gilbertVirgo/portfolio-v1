@@ -41,8 +41,8 @@ export default function App() {
     document.querySelectorAll('.capture').forEach((el) => peek.observe(el))
     return () => peek.disconnect()
   }, [])
-  // Experiment: touch rules for when a mockup may take a swipe (see scrollIntent.ts)
-  useEffect(() => scrollIntent(new URLSearchParams(location.search).get('scroll')), [])
+  // Touch: a mockup only takes a swipe when fully on screen and the page is still (see scrollIntent.ts)
+  useEffect(scrollIntent, [])
   return (
     <div className="page" id="top">
       <header ref={header} className="site-header" style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding: 20px clamp(16px, 2.5cqw, 36px)')}>
