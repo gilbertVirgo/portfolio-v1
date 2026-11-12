@@ -16,8 +16,9 @@ export function StanzaJourney() {
   const stageRing = live ? '0.25cqw solid #f58549' : '0 solid transparent'
   const btn = live ? { text: 'Stop', key: 'Esc', bg: '#2E2E2E', fg: '#FAFAFA' } : { text: 'Present', key: 'F5', bg: '#f58549', fg: '#2E2E2E' }
   return (
-    <div ref={ref} role="img" aria-label="Animated walkthrough of Stanza: add a song from the library, add a Bible reading by typing a reference, then present" style={st('position: relative; aspect-ratio: 16 / 10; overflow: hidden; container-type: inline-size; background: #FAFAFA; color: #2E2E2E; border-radius: 4px; letter-spacing: -0.01em; display: flex; flex-direction: column; font-family: Inter, sans-serif; font-size: 1.05cqw')}>
-      <div aria-hidden="true" style={st('display: flex; align-items: center; gap: 1.2cqw; padding: 0.8cqw 1.4cqw; border-bottom: 0.1cqw solid #D5D5D5')}>
+    <div ref={ref} role="img" aria-label="Animated walkthrough of Stanza: add a song from the library, add a Bible reading by typing a reference, then present" style={st('position: relative; aspect-ratio: 16 / 10; overflow: hidden; container-type: inline-size; background: #FAFAFA; color: #2E2E2E; border-radius: 4px')}>
+      <div aria-hidden="true" style={st('position: absolute; inset: 0; display: flex; flex-direction: column; letter-spacing: -0.01em; font-family: Inter, sans-serif; font-size: 1.05cqw')}>
+      <div style={st('display: flex; align-items: center; gap: 1.2cqw; padding: 0.8cqw 1.4cqw; border-bottom: 0.1cqw solid #D5D5D5')}>
         <span style={st('color: #505050; font-weight: 500')}>‹ Services</span>
         <span style={st('font-weight: 600; font-size: 1.15cqw')}>Sunday morning</span>
         <span style={st('border: 0.1cqw solid #D5D5D5; padding: 0.3cqw 0.8cqw; border-radius: 2cqw; color: #505050; font-size: 0.95cqw')}>Sun 23 Aug</span>
@@ -28,7 +29,7 @@ export function StanzaJourney() {
           <span style={st('border: 0.1cqw solid currentColor; border-radius: 0.3cqw; padding: 0 0.4cqw; font-size: 0.8cqw')}>{btn.key}</span>
         </span>
       </div>
-      <div aria-hidden="true" style={st('flex: 1; min-height: 0; display: flex')}>
+      <div style={st('flex: 1; min-height: 0; display: flex')}>
         <div style={st('width: 21cqw; border-right: 0.1cqw solid #D5D5D5; padding: 0.9cqw; display: flex; flex-direction: column; gap: 0.6cqw')}>
           {z.rows.map((r, i) =>
             r.kind === 'head' ? (
@@ -81,7 +82,7 @@ export function StanzaJourney() {
         </div>
       </div>
       {z.menu && (
-        <div aria-hidden="true" style={st('position: absolute; left: 0.9cqw; bottom: 4.6cqw; width: 19cqw; background: #FFFFFF; border: 0.1cqw solid #B8B8B8; border-radius: 0.7cqw; box-shadow: 0 0.6cqw 2cqw #00000033; padding: 0.5cqw; font-weight: 500')}>
+        <div style={st('position: absolute; left: 0.9cqw; bottom: 4.6cqw; width: 19cqw; background: #FFFFFF; border: 0.1cqw solid #B8B8B8; border-radius: 0.7cqw; box-shadow: 0 0.6cqw 2cqw #00000033; padding: 0.5cqw; font-weight: 500')}>
           <div style={st(`display: flex; justify-content: space-between; padding: 0.6cqw 0.8cqw; border-radius: 0.4cqw; background: ${z.hiSong}`)}>
             Song<span style={st('color: #5A5A5A; font-size: 0.9cqw')}>⌘M</span>
           </div>
@@ -93,7 +94,7 @@ export function StanzaJourney() {
         </div>
       )}
       {z.songModal && (
-        <div aria-hidden="true" style={modalWrap}>
+        <div style={modalWrap}>
           <div style={st('width: 54cqw; background: #FFFFFF; border-radius: 1cqw; padding: 2cqw; box-shadow: 0 1cqw 3cqw #00000055')}>
             <div style={modalTitle}>Add a song</div>
             <div style={st('display: flex; gap: 1cqw; margin: 1.4cqw 0 1cqw')}>
@@ -115,7 +116,7 @@ export function StanzaJourney() {
         </div>
       )}
       {z.bibleModal && (
-        <div aria-hidden="true" style={modalWrap}>
+        <div style={modalWrap}>
           <div style={st('width: 46cqw; background: #FFFFFF; border-radius: 1cqw; padding: 2cqw; box-shadow: 0 1cqw 3cqw #00000055')}>
             <div style={modalTitle}>Add a Bible passage</div>
             <div style={fieldLabel('1.4cqw 0 0.5cqw')}>Translation</div>
@@ -133,7 +134,8 @@ export function StanzaJourney() {
           </div>
         </div>
       )}
-      <span aria-hidden="true" style={st(`position: absolute; left: ${z.cx}; top: ${z.cy}; width: 2.4cqw; height: 2.4cqw; margin: -1.2cqw 0 0 -1.2cqw; border-radius: 50%; background: #2E2E2E33; border: 0.15cqw solid #2E2E2E; box-shadow: 0 0 0 0.15cqw #FAFAFA; transition: left 0.6s ease, top 0.6s ease; pointer-events: none`)} />
+      <span style={st(`position: absolute; left: ${z.cx}; top: ${z.cy}; width: 2.4cqw; height: 2.4cqw; margin: -1.2cqw 0 0 -1.2cqw; border-radius: 50%; background: #2E2E2E33; border: 0.15cqw solid #2E2E2E; box-shadow: 0 0 0 0.15cqw #FAFAFA; transition: left 0.6s ease, top 0.6s ease; pointer-events: none`)} />
+      </div>
     </div>
   )
 }
