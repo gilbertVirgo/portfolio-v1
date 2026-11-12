@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Capture, Laptop, Phone, Tablet } from './devices'
 import { st } from './st'
+import { BookingJourney } from './booking/BookingJourney'
 import chlDesktop from './assets/chl-desktop.jpg'
 import chlMobile from './assets/chl-mobile.jpg'
 import lcrPlaque from './assets/lcr-plaque.png'
@@ -50,7 +51,7 @@ export const projects: Project[] = [
     stage: (
       <>
         {laptop(chlDesktop, 'Christian Heritage London home page: dark hero reading Explore London’s Stories, then walks, podcast, articles and gift vouchers', 'Christian Heritage London website, scrollable', '#ffffff')}
-        <Tablet>{null}</Tablet>
+        <Tablet><BookingJourney /></Tablet>
         {phone(chlMobile, 'Christian Heritage London home page at phone width', 'Christian Heritage London website on a phone, scrollable', '#ffffff')}
       </>
     ),
