@@ -58,20 +58,6 @@ export const projects: Project[] = [
     ),
   },
   {
-    id: 'lcr', title: 'Life Church Richmond', bg: '#0B2A2E', fg: '#FFFDF0',
-    disciplines: 'Visual identity', links: <span>Logo, banners, signage</span>, bleed: true,
-    stage: (
-      <div tabIndex={0} role="region" aria-label="Life Church Richmond identity pieces, scrolls sideways" style={st('display: flex; gap: 24px; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px) 20px; align-items: flex-end')}>
-        {lcrFigures.map((f) => (
-          <figure key={f.caption} style={st(figureStyle)}>
-            <img src={f.src} alt={f.alt} loading="lazy" style={st(f.style)} />
-            <figcaption>{f.caption}</figcaption>
-          </figure>
-        ))}
-      </div>
-    ),
-  },
-  {
     id: 'stanza', title: 'Stanza', bg: '#2f2d2e', fg: '#FAFAFA',
     disciplines: 'Desktop presentation app for churches', links: <span>Beta — v0.1.11</span>,
     stage: (
@@ -105,14 +91,17 @@ export const projects: Project[] = [
     ),
   },
   {
-    id: 'vpcc', title: 'Victoria Park Community Church', bg: '#F47A2B', fg: '#0B0A10',
-    disciplines: 'Visual identity and website',
-    links: <a href="https://vpcc.church">vpcc.church</a>,
+    id: 'lcr', title: 'Life Church Richmond', bg: '#0B2A2E', fg: '#FFFDF0',
+    disciplines: 'Visual identity', links: <span>Logo, banners, signage</span>, bleed: true,
     stage: (
-      <>
-        {laptop(vpccDesktop, 'Victoria Park Community Church home page: cream ground, black and white photos, orange buttons, sections for Sundays, what’s on, about and beliefs', 'Victoria Park Community Church website, scrollable', '#FCFCF5')}
-        {phone(vpccMobile, 'Victoria Park Community Church home page at phone width', 'Victoria Park Community Church website on a phone, scrollable', '#FCFCF5')}
-      </>
+      <div tabIndex={0} role="region" aria-label="Life Church Richmond identity pieces, scrolls sideways" style={st('display: flex; gap: 24px; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px) 20px; align-items: flex-end')}>
+        {lcrFigures.map((f) => (
+          <figure key={f.caption} style={st(figureStyle)}>
+            <img src={f.src} alt={f.alt} loading="lazy" style={st(f.style)} />
+            <figcaption>{f.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
     ),
   },
   {
@@ -123,6 +112,17 @@ export const projects: Project[] = [
       <>
         {laptop(hbcDesktop, 'Highbury Baptist Church home page: hero reading Come as you are in heavy cream type over a photo, then who we are, Sundays and what to expect', 'Highbury Baptist Church website, scrollable', '#FFFCED')}
         {phone(hbcMobile, 'Highbury Baptist Church home page at phone width', 'Highbury Baptist Church website on a phone, scrollable', '#FFFCED')}
+      </>
+    ),
+  },
+  {
+    id: 'vpcc', title: 'Victoria Park Community Church', bg: '#F47A2B', fg: '#0B0A10',
+    disciplines: 'Visual identity and website',
+    links: <a href="https://vpcc.church">vpcc.church</a>,
+    stage: (
+      <>
+        {laptop(vpccDesktop, 'Victoria Park Community Church home page: cream ground, black and white photos, orange buttons, sections for Sundays, what’s on, about and beliefs', 'Victoria Park Community Church website, scrollable', '#FCFCF5')}
+        {phone(vpccMobile, 'Victoria Park Community Church home page at phone width', 'Victoria Park Community Church website on a phone, scrollable', '#FCFCF5')}
       </>
     ),
   },

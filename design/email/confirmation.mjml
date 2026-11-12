@@ -1,0 +1,64 @@
+<mjml lang="en">
+  <mj-head>
+    <mj-title>Thanks — your message reached me</mj-title>
+    <mj-preview>Your message reached me. I’ll reply by email.</mj-preview>
+    <!-- Sets Grotesk cannot load in email clients (the Adobe kit is domain-locked).
+         Inter Tight shows in Apple Mail; everything else falls back to Helvetica/Arial. -->
+    <mj-font name="Inter Tight" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" />
+    <mj-attributes>
+      <mj-all font-family="'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif" />
+      <mj-body background-color="#ffffff" width="600px" />
+      <mj-section background-color="#ffffff" padding="0 24px" />
+      <mj-column padding="0" />
+      <mj-text color="#0a0a0a" font-size="15px" line-height="1.35" padding="0" />
+    </mj-attributes>
+    <mj-style>
+      a { color: inherit; }
+      @media only screen and (max-width: 480px) {
+        .headline div { font-size: 40px !important; }
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body>
+    <!-- Masthead: name left, site right, hairline under -->
+    <mj-section padding="20px 24px 0">
+      <mj-group>
+        <mj-column width="50%" border-bottom="1px solid #0a0a0a" padding-bottom="20px">
+          <mj-text font-weight="600">Gil Virgo</mj-text>
+        </mj-column>
+        <mj-column width="50%" border-bottom="1px solid #0a0a0a" padding-bottom="20px">
+          <mj-text align="right"><a href="https://gilbertvirgo.co.uk" style="color:#0a0a0a;">gilbertvirgo.co.uk</a></mj-text>
+        </mj-column>
+      </mj-group>
+    </mj-section>
+
+    <!-- Headline. {{name}} is the visitor's name, HTML-escaped and capped at 100 characters. -->
+    <mj-section padding="40px 24px 0">
+      <mj-column>
+        <mj-text css-class="headline" font-size="56px" font-weight="600" line-height="1" letter-spacing="-1px">Thanks, {{name}}.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="32px 24px 0">
+      <mj-column>
+        <mj-text font-size="17px" line-height="1.45" padding-bottom="16px">Your message has reached me. I read every enquiry myself and will reply by email within three working days.</mj-text>
+        <mj-text font-size="17px" line-height="1.45">If anything changes in the meantime, just reply to this email.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="32px 24px 56px">
+      <mj-column>
+        <mj-button href="https://gilbertvirgo.co.uk/#work" align="left" background-color="#0a0a0a" color="#ffffff" border-radius="999px" font-size="17px" font-weight="600" inner-padding="16px 28px" padding="0">See recent work</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section background-color="#0a0a0a" padding="24px 24px 28px">
+      <mj-column>
+        <mj-text color="#ffffff" padding-bottom="12px">Gil Virgo — identity, websites and software for churches and charities.</mj-text>
+        <mj-text color="#bdbdbd" font-size="13px" line-height="1.45">You received this because this address was entered in the contact form at gilbertvirgo.co.uk. If that wasn’t you, ignore this email — nothing else will be sent.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
