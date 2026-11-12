@@ -4,6 +4,7 @@ import gil from './assets/gil.jpg'
 import { MoreWork } from './MoreWork'
 import { ProjectSection } from './ProjectSection'
 import { projects } from './projects'
+import { scrollIntent } from './scrollIntent'
 import { st } from './st'
 
 export default function App() {
@@ -40,6 +41,8 @@ export default function App() {
     document.querySelectorAll('.capture').forEach((el) => peek.observe(el))
     return () => peek.disconnect()
   }, [])
+  // Experiment: touch rules for when a mockup may take a swipe (see scrollIntent.ts)
+  useEffect(() => scrollIntent(new URLSearchParams(location.search).get('scroll')), [])
   return (
     <div className="page" id="top">
       <header ref={header} className="site-header" style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding: 20px clamp(16px, 2.5cqw, 36px)')}>
