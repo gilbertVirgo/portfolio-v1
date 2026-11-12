@@ -18,22 +18,15 @@ a:hover { text-decoration-thickness: 2px; }
 .more summary::after { content: '+'; }
 .more details[open] summary::after { content: '\2212'; }
 
-/* Project title conveyor belt (ProjectSection.tsx sets .belt when the title is wider than its line).
-   The track holds the title twice, each followed by a dot, and slides left by half its width, so the
-   loop is seamless. A belt runs edge to edge of the screen. Reduced motion: the title just wraps. */
-.title .rep { display: none; }
-@media (prefers-reduced-motion: no-preference) {
-  .title { white-space: nowrap; overflow-x: clip; }
-  .title-track { display: inline-block; }
-  .title.belt { margin-left: calc(-1 * clamp(16px, 2.5cqw, 36px)) !important; margin-right: calc(-1 * clamp(16px, 2.5cqw, 36px)) !important; padding: 0 clamp(16px, 2.5cqw, 36px); }
-  .title.belt .rep { display: inline; }
-  .title.belt .rep:nth-child(even) { padding: 0 0.3em; }
-  .title.belt .title-track { animation: belt var(--belt-dur, 20s) linear infinite; }
-}
-@keyframes belt { to { transform: translateX(-50%); } }
-
-/* Touch (scrollIntent.ts): a locked mockup ignores swipes, so they scroll the page */
+/* scrollIntent.ts: a locked mockup ignores swipes and the wheel, so they scroll the page */
+.capture { scrollbar-gutter: stable; } /* locking never shifts the screenshot sideways */
 .capture.locked { overflow-y: hidden !important; }
+
+/* "Scroll me" hint, added once per mockup by scrollIntent.ts */
+:has(> .capture) { position: relative; }
+.hint { position: absolute; left: 50%; bottom: 20px; translate: -50% 0; padding: 6px 12px; border-radius: 999px; background: #0a0a0a; color: #fff; box-shadow: 0 0 0 1px #ffffff33; font-size: 13px; line-height: 1.2; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+.hint.show { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .hint { transition: none; } }
 
 /* Sticky header: App.tsx adds .away while scrolling down. Keyboard focus always brings it back. */
 .site-header { position: sticky; top: 0; z-index: 10; background: #fff; transition: transform 0.3s ease; }
