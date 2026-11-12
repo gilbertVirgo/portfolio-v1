@@ -64,7 +64,7 @@ export default function App() {
         </div>
         <div style={st('display: flex; flex-wrap: wrap; gap: 32px clamp(32px, 5cqw, 72px); padding-top: 40px; align-items: flex-end')}>
           <img src={gil} alt="Black and white portrait of Gil Virgo, smiling, outdoors" style={st('flex: 1 1 220px; max-width: 380px; min-width: 0; aspect-ratio: 1; object-fit: cover; display: block')} />
-          <p style={st('flex: 3 1 480px; min-width: 0; margin: 0; font-size: clamp(30px, 4.4cqw, 68px); font-weight: 600; line-height: 1; letter-spacing: -0.02em; max-width: 16em')}>Husband. Father. Pastor. London. I love building software that is natural to use and beautiful to look at.</p>
+          <p style={st('flex: 3 1 480px; min-width: 0; margin: 0; font-size: clamp(30px, 4.4cqw, 68px); font-weight: 600; line-height: 1; letter-spacing: -0.02em; max-width: 16em')}>Husband. Father. Pastor. I love building stuff that's simple, smooth and intuitive. Based in London, UK.</p>
         </div>
       </section>
       <footer id="contact" style={st('background: #0a0a0a; color: #ffffff; padding: 0 clamp(16px, 2.5cqw, 36px) 32px')}>
