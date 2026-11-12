@@ -12,17 +12,17 @@ export function validate(body: unknown): Valid | Invalid {
   // CR/LF in a header field is a header-injection attempt, so treat it as invalid input
   if (!name || /[\r\n]/.test(name)) return { ok: false, error: 'Please enter your name.' }
   if (name.length > 100) return { ok: false, error: 'Name is too long.' }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return { ok: false, error: 'Please enter a valid email address.' }
+  if (!/^[^\s@<>,;"]+@[^\s@<>,;"]+\.[^\s@<>,;"]+$/.test(email) || email.length > 254) return { ok: false, error: 'Please enter a valid email address.' }
   if (!message) return { ok: false, error: 'Please enter a message.' }
   if (message.length > 5000) return { ok: false, error: 'Message is too long.' }
   return { ok: true, name, email, message, spam: str(b.company) !== '' }
 }
 
-const json = (status: number, data: unknown) =>
-  new Response(JSON.stringify(data), { status, headers: { 'content-type': 'application/json' } })
+const json = (status: number, data: unknown, headers: Record<string, string> = {}) =>
+  new Response(JSON.stringify(data), { status, headers: { 'content-type': 'application/json', ...headers } })
 
 export default async (req: Request) => {
-  if (req.method !== 'POST') return json(405, { ok: false, error: 'Method not allowed.' })
+  if (req.method !== 'POST') return json(405, { ok: false, error: 'Method not allowed.' }, { Allow: 'POST' })
   const v = validate(await req.json().catch(() => null))
   if (!v.ok) return json(400, v)
   if (v.spam) return json(200, { ok: true }) // honeypot filled: pretend success, send nothing

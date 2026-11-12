@@ -14,6 +14,7 @@ test('flags the honeypot', () => {
 test.each([
   [{ ...good, name: '  ' }, 'Please enter your name.'],
   [{ ...good, email: 'nope' }, 'Please enter a valid email address.'],
+  [{ ...good, email: 'a,b@example.org' }, 'Please enter a valid email address.'],
   [{ ...good, message: '' }, 'Please enter a message.'],
   [{ ...good, name: 'a'.repeat(101) }, 'Name is too long.'],
   [{ ...good, message: 'a'.repeat(5001) }, 'Message is too long.'],
