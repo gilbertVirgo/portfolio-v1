@@ -18,6 +18,20 @@ a:hover { text-decoration-thickness: 2px; }
 .more summary::after { content: '+'; }
 .more details[open] summary::after { content: '\2212'; }
 
+/* Project title conveyor belt (ProjectSection.tsx sets .belt when the title is wider than its line).
+   The track holds the title twice, each followed by a dot, and slides left by half its width, so the
+   loop is seamless. A belt runs edge to edge of the screen. Reduced motion: the title just wraps. */
+.title .rep { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .title { white-space: nowrap; overflow-x: clip; }
+  .title-track { display: inline-block; }
+  .title.belt { margin-left: calc(-1 * clamp(16px, 2.5cqw, 36px)) !important; margin-right: calc(-1 * clamp(16px, 2.5cqw, 36px)) !important; padding: 0 clamp(16px, 2.5cqw, 36px); }
+  .title.belt .rep { display: inline; }
+  .title.belt .rep:nth-child(even) { padding: 0 0.3em; }
+  .title.belt .title-track { animation: belt var(--belt-dur, 20s) linear infinite; }
+}
+@keyframes belt { to { transform: translateX(-50%); } }
+
 /* Sticky header: App.tsx adds .away while scrolling down. Keyboard focus always brings it back. */
 .site-header { position: sticky; top: 0; z-index: 10; background: #fff; transition: transform 0.3s ease; }
 .site-header.away:not(:focus-within) { transform: translateY(-100%); }
@@ -32,11 +46,11 @@ a:hover { text-decoration-thickness: 2px; }
   .site-header nav { gap: 18px !important; }
   .site-header p { display: none; }
 
-  /* Project header, kept quiet: only the disciplines, softened, over a smaller title.
+  /* Project header, kept quiet: only the disciplines, softened, over the title.
      Counter, links and the rule under them are desktop only. */
   .meta > :first-child, .meta-links { display: none !important; }
   .meta { border-bottom: 0 !important; padding: 32px 0 0 !important; opacity: 0.7; }
-  .meta + h2 { font-size: 40px !important; margin: 8px 0 32px !important; }
+  .meta + h2 { margin: 8px 0 32px !important; }
 
   .stage { gap: 32px !important; }
   .tablet, .phone { flex: 1 1 100% !important; max-width: none !important; }

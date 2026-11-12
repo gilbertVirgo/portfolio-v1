@@ -15,12 +15,25 @@ body{margin:0}
 *{box-sizing:border-box}
 a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 
+/* Project title conveyor belt: .belt is set (in componentDidMount) when the title is wider than its line.
+   Two copies, each followed by a dot, slide left by half their width, so the loop is seamless. */
+.title .rep { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .title { white-space: nowrap; overflow-x: clip; }
+  .title-track { display: inline-block; }
+  .title.belt { margin-left: calc(-1 * clamp(16px, 2.5cqw, 36px)) !important; margin-right: calc(-1 * clamp(16px, 2.5cqw, 36px)) !important; padding: 0 clamp(16px, 2.5cqw, 36px); }
+  .title.belt .rep { display: inline; }
+  .title.belt .rep:nth-child(even) { padding: 0 0.3em; }
+  .title.belt .title-track { animation: belt var(--belt-dur, 20s) linear infinite; }
+}
+@keyframes belt { to { transform: translateX(-50%); } }
+
 /* Phone-width layout (container is the page wrapper) */
 @container (max-width: 600px) {
-  /* project header, kept quiet: only the disciplines, softened, over a smaller title */
+  /* project header, kept quiet: only the disciplines, softened, over the title */
   .meta > :first-child, .meta-links { display: none !important; }
   .meta { border-bottom: 0 !important; padding: 32px 0 0 !important; opacity: 0.7; }
-  .meta + h2 { font-size: 40px !important; margin: 8px 0 32px !important; }
+  .meta + h2 { margin: 8px 0 32px !important; }
   .stage { gap: 32px !important; }
   .tablet, .phone { flex: 1 1 100% !important; max-width: none !important; }
   section:has(.phone) { padding-bottom: 0 !important; }
@@ -66,7 +79,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <a href="https://bookings.christianheritagelondon.org">bookings.christianheritagelondon.org</a>
 </span>
 </div>
-<h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Christian Heritage London</h2>
+<h2 class="title" style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: min(168px, max(11cqw, min(18cqw, 138px))); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em"><span class="title-track"><span>Christian Heritage London</span><span class="rep" aria-hidden="true">·</span><span class="rep" aria-hidden="true">Christian Heritage London</span><span class="rep" aria-hidden="true">·</span></span></h2>
 <div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
 <div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
@@ -162,7 +175,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <span>Full site in progress</span>
 </span>
 </div>
-<h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Selhurst Church</h2>
+<h2 class="title" style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: min(168px, max(11cqw, min(18cqw, 138px))); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em"><span class="title-track"><span>Selhurst Church</span><span class="rep" aria-hidden="true">·</span><span class="rep" aria-hidden="true">Selhurst Church</span><span class="rep" aria-hidden="true">·</span></span></h2>
 <div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
 <div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
@@ -183,7 +196,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <span style="flex: 2 1 280px">Visual identity, website, photography and videography</span>
 <span class="meta-links" style="flex: 1 1 200px; text-align: right"><a href="https://highburybaptistchurch.org">highburybaptistchurch.org</a></span>
 </div>
-<h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Highbury Baptist Church</h2>
+<h2 class="title" style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: min(168px, max(11cqw, min(18cqw, 138px))); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em"><span class="title-track"><span>Highbury Baptist Church</span><span class="rep" aria-hidden="true">·</span><span class="rep" aria-hidden="true">Highbury Baptist Church</span><span class="rep" aria-hidden="true">·</span></span></h2>
 <div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
 <div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
@@ -208,7 +221,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <span style="flex: 2 1 280px">Desktop presentation app for churches</span>
 <span class="meta-links" style="flex: 1 1 200px; text-align: right">Beta — v0.1.11</span>
 </div>
-<h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Stanza</h2>
+<h2 class="title" style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: min(168px, max(11cqw, min(18cqw, 138px))); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em"><span class="title-track"><span>Stanza</span><span class="rep" aria-hidden="true">·</span><span class="rep" aria-hidden="true">Stanza</span><span class="rep" aria-hidden="true">·</span></span></h2>
 <div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
 <div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0; border: 1px solid #5a5a5a; border-bottom: 0">
@@ -329,7 +342,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <span style="flex: 2 1 280px">Visual identity</span>
 <span class="meta-links" style="flex: 1 1 200px; text-align: right">Logo, banners, signage</span>
 </div>
-<h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Life Church Richmond</h2>
+<h2 class="title" style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: min(168px, max(11cqw, min(18cqw, 138px))); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em"><span class="title-track"><span>Life Church Richmond</span><span class="rep" aria-hidden="true">·</span><span class="rep" aria-hidden="true">Life Church Richmond</span><span class="rep" aria-hidden="true">·</span></span></h2>
 </div>
 <div tabindex="0" role="region" aria-label="Life Church Richmond identity pieces, scrolls sideways" style="display: flex; gap: 24px; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px) 20px; align-items: flex-end">
 <figure style="margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px">
@@ -465,11 +478,20 @@ const img = el.querySelector('img');
 if (img && !img.complete) img.addEventListener('load', run, { once: true }); else run();
 }), { threshold: 0.6 });
 document.querySelectorAll('.capture').forEach((el) => this._peek.observe(el));
+// title conveyor belt: on when a title is wider than its line (styles under .title.belt)
+this._belt = new ResizeObserver((entries) => entries.forEach((e) => {
+const h = e.target, first = h.querySelector('.title-track > span'), cs = getComputedStyle(h);
+const room = h.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+h.classList.toggle('belt', first.offsetWidth > room);
+h.style.setProperty('--belt-dur', Math.round(first.offsetWidth / 90) + 's');
+}));
+document.querySelectorAll('h2.title').forEach((h) => this._belt.observe(h));
 this._tick = setInterval(() => this.setState({ t: ((this.state && this.state.t) || 0) + 1 }), 1300);
 }
 componentWillUnmount() {
 clearInterval(this._tick);
 if (this._peek) this._peek.disconnect();
+if (this._belt) this._belt.disconnect();
 }
 renderVals() {
 const t = (this.state && this.state.t) || 0;
