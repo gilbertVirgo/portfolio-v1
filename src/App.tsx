@@ -21,7 +21,7 @@ export default function App() {
       </main>
       <section id="about" style={st('padding: 0 clamp(16px, 2.5cqw, 36px) 112px')}>
         <div style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 20px 0; border-bottom: 1px solid #0a0a0a')}>
-          <span style={st('flex: 1 1 160px')}>About</span>
+          <h2 style={st('flex: 1 1 160px; margin: 0; font: inherit')}>About</h2>
           <span style={st('flex: 3 1 480px')}></span>
         </div>
         <div style={st('display: flex; flex-wrap: wrap; gap: 32px clamp(32px, 5cqw, 72px); padding-top: 40px; align-items: flex-end')}>

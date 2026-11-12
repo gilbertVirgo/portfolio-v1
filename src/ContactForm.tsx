@@ -22,10 +22,10 @@ export function ContactForm() {
     setState('idle')
   }
 
-  if (state === 'sent') return <p role="status" style={st('flex: 3 1 480px; margin: 0; font-size: 20px; font-weight: 500')}>Thank you — your message is on its way. I’ll reply by email.</p>
+  if (state === 'sent') return <p role="status" tabIndex={-1} ref={(n) => n?.focus()} style={st('flex: 3 1 480px; margin: 0; font-size: 20px; font-weight: 500')}>Thank you — your message is on its way. I’ll reply by email.</p>
 
   return (
-    <form onSubmit={submit} style={st('flex: 3 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 28px; max-width: 760px')}>
+    <form method="post" onSubmit={submit} style={st('flex: 3 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 28px; max-width: 760px')}>
       <div style={st('display: flex; flex-wrap: wrap; gap: 28px 32px')}>
         <label style={st('flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px')}>Name
           <input type="text" name="name" autoComplete="name" required maxLength={100} style={st('min-height: 48px; ' + FIELD)} />
@@ -38,7 +38,7 @@ export function ContactForm() {
         <textarea name="message" rows={4} required maxLength={5000} style={st(FIELD + '; resize: vertical')} />
       </label>
       {/* honeypot: hidden from people, tempting to bots */}
-      <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" style={st('position: absolute; left: -9999px')} />
+      <div hidden><input type="text" name="company" autoComplete="off" /></div>
       {error && <p role="alert" style={st('margin: 0; color: #ffb4b4')}>{error}</p>}
       <button type="submit" disabled={state === 'sending'} style={st('align-self: flex-start; min-height: 52px; padding: 0 32px; background: #ffffff; color: #0a0a0a; border: 0; border-radius: 999px; font: inherit; font-weight: 600; font-size: 17px; cursor: pointer')}>
         {state === 'sending' ? 'Sending…' : 'Send'}

@@ -3,4 +3,5 @@ dist
 .netlify
 .env*
 .superpowers
+.claude/
 .DS_Store

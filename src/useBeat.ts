@@ -6,7 +6,8 @@ export function useBeat(ms = 1300) {
   useEffect(() => {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let id: ReturnType<typeof setInterval> | undefined
-    const io = new IntersectionObserver(([e]) => {
+    const io = new IntersectionObserver((entries) => {
+      const e = entries[entries.length - 1]
       clearInterval(id)
       id = e.isIntersecting ? setInterval(() => setBeat((b) => b + 1), ms) : undefined
     })

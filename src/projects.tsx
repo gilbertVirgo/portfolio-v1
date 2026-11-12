@@ -64,7 +64,7 @@ export const projects: Project[] = [
       <div tabIndex={0} role="region" aria-label="Life Church Richmond identity pieces, scrolls sideways" style={st('display: flex; gap: 24px; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px) 20px; align-items: flex-end')}>
         {lcrFigures.map((f) => (
           <figure key={f.caption} style={st(figureStyle)}>
-            <img src={f.src} alt={f.alt} style={st(f.style)} />
+            <img src={f.src} alt={f.alt} loading="lazy" style={st(f.style)} />
             <figcaption>{f.caption}</figcaption>
           </figure>
         ))}
