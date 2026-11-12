@@ -10,6 +10,13 @@ a:hover { text-decoration-thickness: 2px; }
 }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .page [role="region"]:focus-visible { outline-color: #fff; }
+.page .more [role="region"]:focus-visible { outline-color: #0a0a0a; outline-offset: 3px; }
+
+/* More work toggle: native <details>, own plus/minus sign in place of the browser marker */
+.more summary { list-style: none; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::after { content: '+'; }
+.more details[open] summary::after { content: '\2212'; }
 
 /* Sticky header: App.tsx adds .away while scrolling down. Keyboard focus always brings it back. */
 .site-header { position: sticky; top: 0; z-index: 10; background: #fff; transition: transform 0.3s ease; }
@@ -19,6 +26,14 @@ a:hover { text-decoration-thickness: 2px; }
 /* Phone-width layout. Layout styles are inline (ported from the artboard), so these overrides need
    !important. The breakpoint is on the .page container, matching the cqw units used elsewhere. */
 @container (max-width: 600px) {
+  /* Header: one row, name left and links right. The description moves out of the sticky bar
+     into .tagline below it, so the bar stays short. */
+  .site-header { flex-wrap: nowrap !important; gap: 16px !important; padding-top: 4px !important; padding-bottom: 4px !important; border-bottom: 1px solid #0a0a0a; }
+  .site-header h1, .site-header nav { flex: none !important; }
+  .site-header nav { gap: 18px !important; }
+  .site-header p { display: none; }
+  .tagline { display: block !important; }
+
   /* Project header: counter, disciplines and links each on their own line, left-aligned */
   .meta { flex-direction: column; flex-wrap: nowrap !important; gap: 12px !important; }
   .meta > * { flex: none !important; }

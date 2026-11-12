@@ -14,12 +14,38 @@
 body{margin:0}
 *{box-sizing:border-box}
 a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
+
+/* Phone-width layout (container is the page wrapper) */
+@container (max-width: 600px) {
+  .meta { flex-direction: column; flex-wrap: nowrap !important; gap: 12px !important; }
+  .meta > * { flex: none !important; }
+  .meta-links { align-items: flex-start !important; text-align: left !important; gap: 0 !important; }
+  .meta-links a { padding: 6px 0; }
+  .stage { gap: 32px !important; }
+  .tablet, .phone { flex: 1 1 100% !important; max-width: none !important; }
+  section:has(.phone) { padding-bottom: 0 !important; }
+  section:has(.phone) .laptop { display: none; }
+  .phone { padding-bottom: 0 !important; border-radius: 34px 34px 0 0 !important; }
+  .phone .capture { aspect-ratio: 27 / 38 !important; border-radius: 26px 26px 0 0 !important; }
+}
+
+.more summary { list-style: none; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::after { content: '+'; }
+.more details[open] summary::after { content: '\2212'; }
+@container (max-width: 600px) {
+  .site-header { flex-wrap: nowrap !important; gap: 16px !important; padding-top: 4px !important; padding-bottom: 4px !important; border-bottom: 1px solid #0a0a0a; }
+  .site-header > a, .site-header nav { flex: none !important; }
+  .site-header nav { gap: 18px !important; }
+  .site-header p { display: none; }
+  .tagline { display: block !important; }
+}
 </style>
 </helmet>
 <div style="container-type: inline-size; font-family: 'sets-grotesk-l', 'Inter Tight', system-ui, sans-serif; background: #ffffff; color: #0a0a0a; font-size: 15px; line-height: 1.35; letter-spacing: -0.01em">
 
 <!-- HEADER -->
-<header style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding: 20px clamp(16px, 2.5cqw, 36px)">
+<header class="site-header" style="position: sticky; top: 0; z-index: 10; background: #ffffff; display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding: 20px clamp(16px, 2.5cqw, 36px)">
 <a href="#top" style="font-weight: 600; text-decoration: none; flex: 1 1 160px">Gil Virgo</a>
 <p style="margin: 0; flex: 2 1 280px">Identity, websites and software for churches and charities.</p>
 <nav style="display: flex; gap: 24px; flex: 1 1 200px; justify-content: flex-end">
@@ -28,22 +54,23 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <a href="#contact" style="padding: 12px 0">Start a project</a>
 </nav>
 </header>
+<p class="tagline" style="display: none; margin: 0; padding: 16px clamp(16px, 2.5cqw, 36px) 20px">Identity, websites and software for churches and charities.</p>
 
 <main id="work" style="display: flex; flex-direction: column">
 
 <!-- 01 CHRISTIAN HERITAGE LONDON -->
 <section id="chl" style="order: 1; background: #A8192E; color: #ffffff; padding: 0 clamp(16px, 2.5cqw, 36px) 112px">
-<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #ffffff">
-<span style="flex: 1 1 160px">01 / 06</span>
+<div class="meta" style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #ffffff">
+<span style="flex: 1 1 160px">01 / 05</span>
 <span style="flex: 2 1 280px">Visual identity, website and booking system</span>
-<span style="flex: 1 1 200px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<span class="meta-links" style="flex: 1 1 200px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
 <a href="https://christianheritagelondon.org">christianheritagelondon.org</a>
 <a href="https://bookings.christianheritagelondon.org">bookings.christianheritagelondon.org</a>
 </span>
 </div>
 <h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Christian Heritage London</h2>
-<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
-<div style="flex: 4 1 420px; min-width: 0">
+<div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
+<div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
 <div tabindex="0" role="region" aria-label="Christian Heritage London website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #ffffff; border-radius: 4px">
 <img src="/_blob/2e1ceaeebd8188bb6175f8ddfcc26a80" alt="Christian Heritage London home page: dark hero reading Explore London’s Stories, then walks, podcast, articles and gift vouchers" style="width: 100%; display: block">
@@ -51,7 +78,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 </div>
 <div style="height: 14px; background: #0d0d0d; border-top: 1px solid #3a3a3a; border-radius: 0 0 14px 14px; margin: 0 -2%"></div>
 </div>
-<div style="flex: 1.4 1 260px; max-width: 380px; min-width: 0; background: #0d0d0d; padding: 10px; border-radius: 22px">
+<div class="tablet" style="flex: 1.4 1 260px; max-width: 380px; min-width: 0; background: #0d0d0d; padding: 10px; border-radius: 22px">
 <div role="img" aria-label="Animated walkthrough of the booking system: choose group size, pick a walk on the calendar, enter details, review, success" style="position: relative; aspect-ratio: 3 / 4; overflow: hidden; container-type: inline-size; background: #ffffff; color: #282828; border-radius: 12px; letter-spacing: 0; display: flex; flex-direction: column">
 <div style="display: flex; justify-content: space-between; align-items: center; padding: 3cqw 5cqw; border-bottom: 0.3cqw solid #e6e6e6">
 <img src="/_blob/2b3c8cddd4f602cda32cef208aa4d8b0" alt="" style="height: 8cqw">
@@ -119,8 +146,8 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <span aria-hidden="true" style="position: absolute; left: {{b.cx}}; top: {{b.cy}}; width: 7cqw; height: 7cqw; margin: -3.5cqw 0 0 -3.5cqw; border-radius: 50%; background: #28282833; border: 0.4cqw solid #282828; transition: left 0.6s ease, top 0.6s ease; pointer-events: none"></span>
 </div>
 </div>
-<div style="flex: 1 1 160px; max-width: 270px; min-width: 0; background: #0d0d0d; padding: 8px; border-radius: 34px">
-<div tabindex="0" role="region" aria-label="Christian Heritage London website on a phone, scrollable" style="aspect-ratio: 9 / 19; overflow-y: auto; background: #ffffff; border-radius: 26px">
+<div class="phone" style="flex: 1 1 160px; max-width: 270px; min-width: 0; background: #0d0d0d; padding: 8px; border-radius: 34px">
+<div class="capture" tabindex="0" role="region" aria-label="Christian Heritage London website on a phone, scrollable" style="aspect-ratio: 9 / 19; overflow-y: auto; background: #ffffff; border-radius: 26px">
 <img src="/_blob/a950ab2c4f85b9b9b9efc20e42da42b7" alt="Christian Heritage London home page at phone width" style="width: 100%; display: block">
 </div>
 </div>
@@ -129,17 +156,17 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 
 <!-- 02 SELHURST CHURCH -->
 <section id="selhurst" style="order: 3; background: #E5D87B; color: #231820; padding: 0 clamp(16px, 2.5cqw, 36px) 112px">
-<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #231820">
-<span style="flex: 1 1 160px">03 / 06</span>
+<div class="meta" style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #231820">
+<span style="flex: 1 1 160px">03 / 05</span>
 <span style="flex: 2 1 280px">Visual identity, website, photography and videography</span>
-<span style="flex: 1 1 200px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<span class="meta-links" style="flex: 1 1 200px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
 <a href="https://selhurstchurch.org">selhurstchurch.org</a>
 <span>Full site in progress</span>
 </span>
 </div>
 <h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Selhurst Church</h2>
-<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
-<div style="flex: 4 1 420px; min-width: 0">
+<div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
+<div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
 <div tabindex="0" role="region" aria-label="Selhurst Church home page design, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FFFEF2; border-radius: 4px">
 <img src="/_blob/807f0b78d26e3e63b6c3195c01e16db4" alt="Selhurst Church home page: welcome hero, photos in soft blob shapes, a yellow Join us this Sunday band with map, what’s on, latest talk and a dark footer" style="width: 100%; display: block">
@@ -153,14 +180,14 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 
 <!-- 03 HIGHBURY BAPTIST CHURCH -->
 <section id="hbc" style="order: 5; background: #FFFCED; color: #1E1F1B; padding: 0 clamp(16px, 2.5cqw, 36px) 112px">
-<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #1E1F1B">
-<span style="flex: 1 1 160px">05 / 06</span>
+<div class="meta" style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #1E1F1B">
+<span style="flex: 1 1 160px">05 / 05</span>
 <span style="flex: 2 1 280px">Visual identity, website, photography and videography</span>
-<span style="flex: 1 1 200px; text-align: right"><a href="https://highburybaptistchurch.org">highburybaptistchurch.org</a></span>
+<span class="meta-links" style="flex: 1 1 200px; text-align: right"><a href="https://highburybaptistchurch.org">highburybaptistchurch.org</a></span>
 </div>
 <h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Highbury Baptist Church</h2>
-<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
-<div style="flex: 4 1 420px; min-width: 0">
+<div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
+<div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
 <div tabindex="0" role="region" aria-label="Highbury Baptist Church website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FFFCED; border-radius: 4px">
 <img src="/_blob/6b07621c655ee65439a7bd60c9fa7183" alt="Highbury Baptist Church home page: hero reading Come as you are in heavy cream type over a photo, then who we are, Sundays and what to expect" style="width: 100%; display: block">
@@ -168,8 +195,8 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 </div>
 <div style="height: 14px; background: #0d0d0d; border-top: 1px solid #3a3a3a; border-radius: 0 0 14px 14px; margin: 0 -2%"></div>
 </div>
-<div style="flex: 1 1 160px; max-width: 270px; min-width: 0; background: #0d0d0d; padding: 8px; border-radius: 34px">
-<div tabindex="0" role="region" aria-label="Highbury Baptist Church website on a phone, scrollable" style="aspect-ratio: 9 / 19; overflow-y: auto; background: #FFFCED; border-radius: 26px">
+<div class="phone" style="flex: 1 1 160px; max-width: 270px; min-width: 0; background: #0d0d0d; padding: 8px; border-radius: 34px">
+<div class="capture" tabindex="0" role="region" aria-label="Highbury Baptist Church website on a phone, scrollable" style="aspect-ratio: 9 / 19; overflow-y: auto; background: #FFFCED; border-radius: 26px">
 <img src="/_blob/3aaa9ebcd9a67d4c520c6f044de753a6" alt="Highbury Baptist Church home page at phone width" style="width: 100%; display: block">
 </div>
 </div>
@@ -178,14 +205,14 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 
 <!-- 04 STANZA -->
 <section id="stanza" style="order: 2; background: #2f2d2e; color: #FAFAFA; padding: 0 clamp(16px, 2.5cqw, 36px) 112px">
-<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #FAFAFA">
-<span style="flex: 1 1 160px">02 / 06</span>
+<div class="meta" style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #FAFAFA">
+<span style="flex: 1 1 160px">02 / 05</span>
 <span style="flex: 2 1 280px">Desktop presentation app for churches</span>
-<span style="flex: 1 1 200px; text-align: right">Beta — v0.1.11</span>
+<span class="meta-links" style="flex: 1 1 200px; text-align: right">Beta — v0.1.11</span>
 </div>
 <h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Stanza</h2>
-<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
-<div style="flex: 4 1 420px; min-width: 0">
+<div class="stage" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
+<div class="laptop" style="flex: 4 1 420px; min-width: 0">
 <div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0; border: 1px solid #5a5a5a; border-bottom: 0">
 <div role="img" aria-label="Animated walkthrough of Stanza: add a song from the library, add a Bible reading by typing a reference, then present" style="position: relative; aspect-ratio: 16 / 10; overflow: hidden; container-type: inline-size; background: #FAFAFA; color: #2E2E2E; border-radius: 4px; letter-spacing: -0.01em; display: flex; flex-direction: column; font-family: Inter, sans-serif; font-size: 1.05cqw">
 <div style="display: flex; align-items: center; gap: 1.2cqw; padding: 0.8cqw 1.4cqw; border-bottom: 0.1cqw solid #D5D5D5">
@@ -295,74 +322,90 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 </div>
 </section>
 
-<!-- 05 VICTORIA PARK COMMUNITY CHURCH -->
-<section id="vpcc" style="order: 6; background: #F47A2B; color: #0B0A10; padding: 0 clamp(16px, 2.5cqw, 36px) 112px">
-<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #0B0A10">
-<span style="flex: 1 1 160px">06 / 06</span>
-<span style="flex: 2 1 280px">Visual identity and website</span>
-<span style="flex: 1 1 200px; text-align: right"><a href="https://vpcc.church">vpcc.church</a></span>
-</div>
-<h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Victoria Park Community Church</h2>
-<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
-<div style="flex: 4 1 420px; min-width: 0">
-<div style="background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0">
-<div tabindex="0" role="region" aria-label="Victoria Park Community Church website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FCFCF5; border-radius: 4px">
-<img src="/_blob/03d6485078aa35c6dd3d02b3b0944b5f" alt="Victoria Park Community Church home page: cream ground, black and white photos, orange buttons, sections for Sundays, what’s on, about and beliefs" style="width: 100%; display: block">
-</div>
-</div>
-<div style="height: 14px; background: #0d0d0d; border-top: 1px solid #3a3a3a; border-radius: 0 0 14px 14px; margin: 0 -2%"></div>
-</div>
-<div style="flex: 1 1 160px; max-width: 270px; min-width: 0; background: #0d0d0d; padding: 8px; border-radius: 34px">
-<div tabindex="0" role="region" aria-label="Victoria Park Community Church website on a phone, scrollable" style="aspect-ratio: 9 / 19; overflow-y: auto; background: #FCFCF5; border-radius: 26px">
-<img src="/_blob/67e12e6d1857a47da41c10cceb61278d" alt="Victoria Park Community Church home page at phone width" style="width: 100%; display: block">
-</div>
-</div>
-</div>
-</section>
 
 <!-- 06 LIFE CHURCH RICHMOND -->
 <section id="lcr" style="order: 4; background: #0B2A2E; color: #FFFDF0; padding: 0 0 112px">
 <div style="padding: 0 clamp(16px, 2.5cqw, 36px)">
-<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #FFFDF0">
-<span style="flex: 1 1 160px">04 / 06</span>
+<div class="meta" style="display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #FFFDF0">
+<span style="flex: 1 1 160px">04 / 05</span>
 <span style="flex: 2 1 280px">Visual identity</span>
-<span style="flex: 1 1 200px; text-align: right">Logo, banners, signage</span>
+<span class="meta-links" style="flex: 1 1 200px; text-align: right">Logo, banners, signage</span>
 </div>
 <h2 style="margin: clamp(24px, 3cqw, 40px) 0 clamp(28px, 4.5cqw, 64px); font-size: clamp(48px, 11cqw, 168px); font-weight: 600; line-height: 0.88; letter-spacing: -0.02em">Life Church Richmond</h2>
 </div>
 <div tabindex="0" role="region" aria-label="Life Church Richmond identity pieces, scrolls sideways" style="display: flex; gap: 24px; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px) 20px; align-items: flex-end">
-<figure style="margin: 0; flex: none; display: flex; flex-direction: column; gap: 12px">
+<figure style="margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px">
 <img src="/_blob/ac33bc5e4d66f3c4639dec279b18f96b" alt="Life Church Richmond logo: the word life set on a diagonal in magenta, beside the church name" style="height: clamp(240px, 30cqw, 420px); width: auto; display: block">
 <figcaption>Door plaque, A4</figcaption>
 </figure>
-<figure style="margin: 0; flex: none; display: flex; flex-direction: column; gap: 12px">
+<figure style="margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px">
 <img src="/_blob/379d04b872dbdfec4d0f7bea433fb080" alt="Cream poster reading everyone is welcome in large spaced magenta letters" style="height: clamp(340px, 42cqw, 600px); width: auto; display: block">
 <figcaption>Welcome banner, A2</figcaption>
 </figure>
-<figure style="margin: 0; flex: none; display: flex; flex-direction: column; gap: 12px">
+<figure style="margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px">
 <img src="/_blob/85c4c8f3840463c0f026c9786b47221e" alt="Tall magenta roller banner with yellow lettering" style="height: clamp(340px, 42cqw, 600px); width: auto; display: block">
 <figcaption>Roller banner 1, 800 × 2000 mm</figcaption>
 </figure>
-<figure style="margin: 0; flex: none; display: flex; flex-direction: column; gap: 12px">
+<figure style="margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px">
 <img src="/_blob/38b80727a76099fa189ef07054ce519f" alt="Tall yellow roller banner with magenta lettering" style="height: clamp(340px, 42cqw, 600px); width: auto; display: block">
 <figcaption>Roller banner 2, 800 × 2000 mm</figcaption>
 </figure>
-<figure style="margin: 0; flex: none; display: flex; flex-direction: column; gap: 12px">
+<figure style="margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px">
 <img src="/_blob/2d52c7669cec1f803a435349ffc80689" alt="Cream poster of the Lord’s Prayer in serif type with a large magenta initial" style="height: clamp(340px, 42cqw, 600px); width: auto; display: block">
 <figcaption>Lord’s Prayer banner, A2</figcaption>
 </figure>
-<figure style="margin: 0; flex: none; display: flex; flex-direction: column; gap: 12px">
+<figure style="margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px">
 <img src="/_blob/5309178b43f70cf952dda4a78cba49f6" alt="Logo variations in dark teal, magenta, blue, yellow and cream, on light and dark grounds" style="height: clamp(340px, 42cqw, 600px); width: auto; display: block; background: #E6E2D3; padding: 24px">
 <figcaption>Logo, all variations</figcaption>
 </figure>
 </div>
+</section>
+
+<!-- MORE WORK: closed by default on the site; drawn open here so the cards can be reviewed -->
+<section id="more" class="more" style="order: 7; padding: 0 clamp(16px, 2.5cqw, 36px)">
+<details open>
+<summary style="display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #0a0a0a; cursor: pointer">
+<h2 style="margin: 0; font: inherit">More work (3)</h2>
+</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 48px clamp(24px, 3.5cqw, 48px); padding: 40px 0 112px">
+<article style="min-width: 0">
+<div style="border: 1px solid #0a0a0a">
+<div tabindex="0" role="region" aria-label="Victoria Park Community Church website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FCFCF5">
+<img src="/_blob/03d6485078aa35c6dd3d02b3b0944b5f" alt="Victoria Park Community Church home page: cream ground, black and white photos, orange buttons, sections for Sundays, what’s on, about and beliefs" style="width: 100%; display: block">
+</div>
+</div>
+<h3 style="margin: 20px 0 8px; font-size: clamp(26px, 3cqw, 44px); font-weight: 600; line-height: 1; letter-spacing: -0.02em">Victoria Park Community Church</h3>
+<p style="margin: 0">Visual identity and website</p>
+<a href="https://vpcc.church" style="display: inline-block; padding: 6px 0">vpcc.church</a>
+</article>
+<article style="min-width: 0">
+<div style="border: 1px solid #0a0a0a">
+<div tabindex="0" role="region" aria-label="Hope Church West End website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #FAF6ED">
+<img src="/_blob/89b319d3386d0236bd0b0a1cc39864f3" alt="Hope Church West End home page: dark starry hero reading Hope for London, Hope for You, then Sundays, About us, Our team, Get in touch and Find us" style="width: 100%; display: block">
+</div>
+</div>
+<h3 style="margin: 20px 0 8px; font-size: clamp(26px, 3cqw, 44px); font-weight: 600; line-height: 1; letter-spacing: -0.02em">Hope Church West End</h3>
+<p style="margin: 0">Visual identity, website, photography</p>
+</article>
+<article style="min-width: 0">
+<div style="border: 1px solid #0a0a0a">
+<div tabindex="0" role="region" aria-label="Automated Medical Technologies website, scrollable" style="aspect-ratio: 16 / 10; overflow-y: auto; background: #ffffff">
+<img src="/_blob/845d256c4df11002d6bb99beebaf9c26" alt="Automated Medical Technologies home page: dark navy hero reading Precision Medicine Powered by Intelligence" style="width: 100%; display: block">
+</div>
+</div>
+<h3 style="margin: 20px 0 8px; font-size: clamp(26px, 3cqw, 44px); font-weight: 600; line-height: 1; letter-spacing: -0.02em">Automated Medical Technologies</h3>
+<p style="margin: 0">Website</p>
+<a href="https://automatedmedtech.com" style="display: inline-block; padding: 6px 0">automatedmedtech.com</a>
+</article>
+</div>
+</details>
 </section>
 </main>
 
 <!-- ABOUT -->
 <section id="about" style="padding: 0 clamp(16px, 2.5cqw, 36px) 112px">
 <div style="display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 20px 0; border-bottom: 1px solid #0a0a0a">
-<span style="flex: 1 1 160px">About</span>
+<span style="flex: 1 1 160px">About Gil Virgo</span>
 <span style="flex: 3 1 480px"></span>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 32px clamp(32px, 5cqw, 72px); padding-top: 40px; align-items: flex-end">
@@ -404,7 +447,7 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":8400}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":8100}}'>
 class Component extends DCLogic {
 componentDidMount() {
 // one shared tick drives both walkthroughs; skipped when the viewer prefers reduced motion

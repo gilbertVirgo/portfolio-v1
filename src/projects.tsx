@@ -14,8 +14,6 @@ import lcrLogos from './assets/lcr-logos.png'
 import stanzaIcon from './assets/stanza-icon.svg'
 import scHome from './assets/sc-home.jpg'
 import selhurstLogo from './assets/selhurst-logo-dark.svg'
-import vpccDesktop from './assets/vpcc-desktop.jpg'
-import vpccMobile from './assets/vpcc-mobile.jpg'
 import hbcDesktop from './assets/hbc-desktop.jpg'
 import hbcMobile from './assets/hbc-mobile.jpg'
 
@@ -113,17 +111,6 @@ export const projects: Project[] = [
       <>
         {laptop(hbcDesktop, 'Highbury Baptist Church home page: hero reading Come as you are in heavy cream type over a photo, then who we are, Sundays and what to expect', 'Highbury Baptist Church website, scrollable', '#FFFCED')}
         {phone(hbcMobile, 'Highbury Baptist Church home page at phone width', 'Highbury Baptist Church website on a phone, scrollable', '#FFFCED')}
-      </>
-    ),
-  },
-  {
-    id: 'vpcc', title: 'Victoria Park Community Church', bg: '#F47A2B', fg: '#0B0A10',
-    disciplines: 'Visual identity and website',
-    links: <a href="https://vpcc.church">vpcc.church</a>,
-    stage: (
-      <>
-        {laptop(vpccDesktop, 'Victoria Park Community Church home page: cream ground, black and white photos, orange buttons, sections for Sundays, what’s on, about and beliefs', 'Victoria Park Community Church website, scrollable', '#FCFCF5')}
-        {phone(vpccMobile, 'Victoria Park Community Church home page at phone width', 'Victoria Park Community Church website on a phone, scrollable', '#FCFCF5')}
       </>
     ),
   },
