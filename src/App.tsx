@@ -51,8 +51,6 @@ export default function App() {
           <a href="#contact" style={st('padding: 12px 0')}>Start a project</a>
         </nav>
       </header>
-      {/* Phone width only: the description leaves the sticky bar and sits in the page (see styles.css) */}
-      <p className="tagline" style={st('display: none; margin: 0; padding: 16px clamp(16px, 2.5cqw, 36px) 20px')}>Identity, websites and software for churches and charities.</p>
       <main id="work">
         {projects.map((p, i) => <ProjectSection key={p.id} p={p} index={i} total={projects.length} />)}
         <MoreWork />
