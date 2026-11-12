@@ -45,3 +45,13 @@ test('song slides carry bars, never text', () => {
   expect(songThumbs).toHaveLength(3)
   for (const r of songThumbs) if (r.kind === 'thumb') expect(r.text).toBe('')
 })
+
+test('cursor rests on the measured control centres', () => {
+  const at = (t: number) => [stanzaFrame(t).cx, stanzaFrame(t).cy]
+  expect(at(0)).toEqual(['10.5%', '96.4%'])   // + Add content
+  expect(at(1)).toEqual(['10.4%', '68.7%'])   // Song
+  expect(at(3)).toEqual(['71%', '54.3%'])     // Add song
+  expect(at(6)).toEqual(['10.4%', '72.9%'])   // Bible reading
+  expect(at(9)).toEqual(['66.8%', '68.9%'])   // Add reading
+  expect(at(12)).toEqual(['94%', '3.2%'])     // Present
+})

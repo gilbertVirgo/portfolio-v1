@@ -55,8 +55,8 @@ export function stanzaFrame(t: number): StanzaFrame {
     return { title, bg: hit ? '#E4EAF6' : 'transparent', addBg: g === 4 && hit ? '#2E2E2E' : '#FFFFFF', addFg: g === 4 && hit ? '#FAFAFA' : '#2E2E2E' }
   })
   const typedRef = g === 7 ? '' : 'john 3:16-17'
-  const ADD = ['10.5%', '96.4%'], ADDSONG = ['70.8%', '50.8%'], REF = ['50%', '48%'], READ = ['66.6%', '68.2%'], PRESENT = ['94%', '3.2%']
-  const zc = [ADD, ['8%', '70.2%'], ['45%', '34%'], ADDSONG, ADDSONG, ADD, ['8%', '74.1%'], REF, REF, READ, READ, ['11%', '47.1%'], PRESENT, PRESENT, ['62%', '55%'], ['62%', '55%']][g]
+  const ADD = ['10.5%', '96.4%'], ADDSONG = ['71%', '54.3%'], REF = ['50%', '48%'], READ = ['66.8%', '68.9%'], PRESENT = ['94%', '3.2%']
+  const zc = [ADD, ['10.4%', '68.7%'], ['45.5%', '33.2%'], ADDSONG, ADDSONG, ADD, ['10.4%', '72.9%'], REF, REF, READ, READ, ['11.3%', '47.9%'], PRESENT, PRESENT, ['62%', '55%'], ['62%', '55%']][g]
   return {
     rows,
     menu: g === 1 || g === 6,
