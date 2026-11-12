@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { ContactForm } from './ContactForm'
 import gil from './assets/gil.jpg'
 import { ProjectSection } from './ProjectSection'
@@ -5,9 +6,22 @@ import { projects } from './projects'
 import { st } from './st'
 
 export default function App() {
+  const header = useRef<HTMLElement>(null)
+  // Header slides away on scroll down and back in on scroll up. Class toggle only: no re-render.
+  useEffect(() => {
+    let last = scrollY
+    const onScroll = () => {
+      const el = header.current
+      if (!el || scrollY === last) return
+      el.classList.toggle('away', scrollY > last && scrollY > el.offsetHeight)
+      last = scrollY
+    }
+    addEventListener('scroll', onScroll, { passive: true })
+    return () => removeEventListener('scroll', onScroll)
+  }, [])
   return (
     <div className="page" id="top">
-      <header style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding: 20px clamp(16px, 2.5cqw, 36px)')}>
+      <header ref={header} className="site-header" style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; align-items: baseline; padding: 20px clamp(16px, 2.5cqw, 36px)')}>
         <h1 style={st('margin: 0; font-size: inherit; font-weight: 600; flex: 1 1 160px')}>Gil Virgo</h1>
         <p style={st('margin: 0; flex: 2 1 280px')}>Identity, websites and software for churches and charities.</p>
         <nav style={st('display: flex; gap: 24px; flex: 1 1 200px; justify-content: flex-end')}>
@@ -21,7 +35,7 @@ export default function App() {
       </main>
       <section id="about" style={st('padding: 0 clamp(16px, 2.5cqw, 36px) 112px')}>
         <div style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 20px 0; border-bottom: 1px solid #0a0a0a')}>
-          <h2 style={st('flex: 1 1 160px; margin: 0; font: inherit')}>About</h2>
+          <h2 style={st('flex: 1 1 160px; margin: 0; font: inherit')}>About Gil Virgo</h2>
           <span style={st('flex: 3 1 480px')}></span>
         </div>
         <div style={st('display: flex; flex-wrap: wrap; gap: 32px clamp(32px, 5cqw, 72px); padding-top: 40px; align-items: flex-end')}>

@@ -10,3 +10,29 @@ a:hover { text-decoration-thickness: 2px; }
 }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .page [role="region"]:focus-visible { outline-color: #fff; }
+
+/* Sticky header: App.tsx adds .away while scrolling down. Keyboard focus always brings it back. */
+.site-header { position: sticky; top: 0; z-index: 10; background: #fff; transition: transform 0.3s ease; }
+.site-header.away:not(:focus-within) { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .site-header { transition: none; } }
+
+/* Phone-width layout. Layout styles are inline (ported from the artboard), so these overrides need
+   !important. The breakpoint is on the .page container, matching the cqw units used elsewhere. */
+@container (max-width: 600px) {
+  /* Project header: counter, disciplines and links each on their own line, left-aligned */
+  .meta { flex-direction: column; flex-wrap: nowrap !important; gap: 12px !important; }
+  .meta > * { flex: none !important; }
+  .meta-links { align-items: flex-start !important; text-align: left !important; gap: 0 !important; }
+  .meta-links a { padding: 6px 0; }
+
+  .stage { gap: 32px !important; }
+  .tablet, .phone { flex: 1 1 100% !important; max-width: none !important; }
+
+  /* Where a phone mockup exists it carries the section: drop the laptop, run the phone full width,
+     show the top two-thirds of its screen and let it bleed off the bottom edge of the section.
+     The screen still scrolls to the end of the page inside it. */
+  section:has(.phone) { padding-bottom: 0 !important; }
+  section:has(.phone) .laptop { display: none; }
+  .phone { padding-bottom: 0 !important; border-radius: 34px 34px 0 0 !important; }
+  .phone .capture { aspect-ratio: 27 / 38 !important; border-radius: 26px 26px 0 0 !important; }
+}

@@ -28,7 +28,8 @@ const phone = (src: string, alt: string, label: string, bg: string) => (
   <Phone><Capture src={src} alt={alt} label={label} ratio="9 / 19" bg={bg} radius="26px" /></Phone>
 )
 
-const figureStyle = 'margin: 0; flex: none; display: flex; flex-direction: column; gap: 12px'
+// min-content: the figure is only as wide as its image, so a long caption wraps instead of stretching the image
+const figureStyle = 'margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px'
 const tall = 'height: clamp(340px, 42cqw, 600px); width: auto; display: block'
 const lcrFigures: { src: string; alt: string; caption: string; style: string }[] = [
   { src: lcrPlaque, alt: 'Life Church Richmond logo: the word life set on a diagonal in magenta, beside the church name', caption: 'Door plaque, A4', style: 'height: clamp(240px, 30cqw, 420px); width: auto; display: block' },
