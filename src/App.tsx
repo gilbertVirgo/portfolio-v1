@@ -1,3 +1,5 @@
+import { ProjectSection } from './ProjectSection'
+import { projects } from './projects'
 import { st } from './st'
 
 export default function App() {
@@ -12,7 +14,9 @@ export default function App() {
           <a href="#contact" style={st('padding: 12px 0')}>Start a project</a>
         </nav>
       </header>
-      <main id="work" />
+      <main id="work">
+        {projects.map((p, i) => <ProjectSection key={p.id} p={p} index={i} total={projects.length} />)}
+      </main>
     </div>
   )
 }
