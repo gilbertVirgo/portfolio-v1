@@ -17,10 +17,10 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 
 /* Phone-width layout (container is the page wrapper) */
 @container (max-width: 600px) {
-  .meta { flex-direction: column; flex-wrap: nowrap !important; gap: 12px !important; }
-  .meta > * { flex: none !important; }
-  .meta-links { align-items: flex-start !important; text-align: left !important; gap: 0 !important; }
-  .meta-links a { padding: 6px 0; }
+  /* project header, kept quiet: only the disciplines, softened, over a smaller title */
+  .meta > :first-child, .meta-links { display: none !important; }
+  .meta { border-bottom: 0 !important; padding: 32px 0 0 !important; opacity: 0.7; }
+  .meta + h2 { font-size: 40px !important; margin: 8px 0 32px !important; }
   .stage { gap: 32px !important; }
   .tablet, .phone { flex: 1 1 100% !important; max-width: none !important; }
   section:has(.phone) { padding-bottom: 0 !important; }
@@ -38,7 +38,6 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
   .site-header > a, .site-header nav { flex: none !important; }
   .site-header nav { gap: 18px !important; }
   .site-header p { display: none; }
-  .tagline { display: block !important; }
 }
 </style>
 </helmet>
@@ -54,7 +53,6 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 <a href="#contact" style="padding: 12px 0">Start a project</a>
 </nav>
 </header>
-<p class="tagline" style="display: none; margin: 0; padding: 16px clamp(16px, 2.5cqw, 36px) 20px">Identity, websites and software for churches and charities.</p>
 
 <main id="work" style="display: flex; flex-direction: column">
 
