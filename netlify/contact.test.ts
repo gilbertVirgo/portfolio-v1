@@ -1,6 +1,6 @@
 import { afterEach, expect, test, vi } from 'vitest'
-import { validate } from './contact'
-import handler from './contact'
+import { validate } from './functions/contact'
+import handler from './functions/contact'
 
 const { sendMail, createTransport } = vi.hoisted(() => {
   const sendMail = vi.fn().mockResolvedValue({})
