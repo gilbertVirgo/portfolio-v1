@@ -59,6 +59,9 @@ a:hover { text-decoration-thickness: 2px; }
   .face { display: block; width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
   main > section:not(.more) { margin: 10px 10px 0 !important; border-radius: 22px; overflow: clip; box-shadow: inset 0 0 0 1px #0000000f; }
   .more { margin-top: 10px; }
+  /* A card ends 32px below its last item, matching the space above its title. Sections whose phone
+     mockup bleeds off the bottom keep their 0. */
+  main > section:not(.more):not(:has(.phone)) { padding-bottom: 32px !important; }
 
   /* Project header, kept quiet: only the disciplines, softened, over the title.
      Counter, links and the rule under them are desktop only. */
