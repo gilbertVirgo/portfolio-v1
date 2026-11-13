@@ -1,65 +1,31 @@
-// Mockups (.capture) scroll inside the page, so a swipe or wheel passing over one could get caught in
-// it. A mockup only takes scrolling when it is fully on screen and the page has been still for a
-// moment. Otherwise it is .locked (styles.css) and the scroll goes to the page. The first time a
-// scrollable mockup unlocks, a "Scroll me" hint shows on it until it is scrolled or HINT_MS passes,
-// one hint at a time.
-const SETTLE_MS = 250
-const HINT_MS = 2500
+import { drift } from './drift'
 
+// Scrolling that the page does for, or instead of, the visitor.
+//
+// Mockups (.capture) cannot be scrolled by hand. Each scrolls itself slowly down and back up while on
+// screen (drift.ts), pausing only while a mouse is over it.
+//
+// Belts (.belt) scroll sideways. While one is fully on screen, an up or down wheel moves it sideways
+// instead of the page, until it reaches that end; then the wheel goes back to the page. Wheel and
+// trackpad only: a vertical swipe on a touch screen still moves the page.
 export function scrollIntent(): () => void {
-  const caps = [...document.querySelectorAll<HTMLElement>('.capture')]
-  const hinted = new Set<HTMLElement>()
-  let settled = true
-  let timer = 0
-  let showing = false
+  const stops = [...document.querySelectorAll<HTMLElement>('.capture')].map((el) => drift(el))
 
-  const hint = (el: HTMLElement) => {
-    hinted.add(el)
-    showing = true
-    const tip = document.createElement('span')
-    tip.className = 'hint'
-    tip.textContent = 'Scroll me'
-    tip.setAttribute('aria-hidden', 'true')
-    el.after(tip)
-    tip.getBoundingClientRect() // commit opacity 0 so .show fades in
-    tip.classList.add('show')
-    let done = false
-    const hide = () => {
-      if (done) return
-      done = true
-      showing = false
-      el.removeEventListener('scroll', hide)
-      tip.classList.remove('show')
-      setTimeout(() => tip.remove(), 400)
-    }
-    el.addEventListener('scroll', hide)
-    setTimeout(hide, HINT_MS)
-  }
-
-  const update = () => caps.forEach((el) => {
+  const onWheel = (e: WheelEvent) => {
+    const el = e.currentTarget as HTMLElement
+    if (e.ctrlKey || Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return // pinch zoom, or already sideways
     const r = el.getBoundingClientRect()
-    const open = settled && r.height > 0 && r.top >= -8 && r.bottom <= innerHeight + 8 // 8px slack for toolbar jitter
-    el.classList.toggle('locked', !open)
-    if (open && !showing && !hinted.has(el) && el.scrollHeight > el.clientHeight + 1) hint(el)
-  })
-  const onScroll = () => {
-    settled = false
-    clearTimeout(timer)
-    timer = window.setTimeout(() => { settled = true; update() }, SETTLE_MS)
-    update()
+    if (r.top < -8 || r.bottom > innerHeight + 8) return // 8px slack for toolbar jitter
+    const room = e.deltaY > 0 ? el.scrollWidth - el.clientWidth - el.scrollLeft : el.scrollLeft
+    if (room < 1) return
+    e.preventDefault()
+    el.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 16 : 1) // deltaMode 1: lines, not pixels
   }
+  const belts = [...document.querySelectorAll<HTMLElement>('.belt')]
+  belts.forEach((el) => el.addEventListener('wheel', onWheel, { passive: false }))
 
-  update()
-  addEventListener('scroll', onScroll, { passive: true })
-  addEventListener('resize', update)
-  addEventListener('toggle', update, true) // More work opening reveals mockups without a scroll
-  addEventListener('load', update, true) // a lazy screenshot loading makes its mockup scrollable
   return () => {
-    clearTimeout(timer)
-    removeEventListener('scroll', onScroll)
-    removeEventListener('resize', update)
-    removeEventListener('toggle', update, true)
-    removeEventListener('load', update, true)
-    document.querySelectorAll('.hint').forEach((t) => t.remove())
+    stops.forEach((stop) => stop())
+    belts.forEach((el) => el.removeEventListener('wheel', onWheel))
   }
 }

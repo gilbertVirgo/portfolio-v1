@@ -5,7 +5,7 @@ import hcweDesktop from './assets/hcwe-desktop.jpg'
 import vpccDesktop from './assets/vpcc-desktop.jpg'
 
 // Smaller projects, closed by default behind a native <details> toggle:
-// one scrollable capture each, no device mockups, no giant headline.
+// one capture each, no device mockups, no giant headline.
 const more = [
   {
     title: 'Victoria Park Community Church', disciplines: 'Visual identity and website', url: 'vpcc.church',
@@ -35,11 +35,11 @@ export function MoreWork() {
           {more.map((m) => (
             <article key={m.title} style={st('min-width: 0')}>
               <div style={st('border: 1px solid #0a0a0a')}>
-                <Capture src={m.src} alt={m.alt} label={`${m.title} website, scrollable`} ratio="16 / 10" bg={m.bg} radius="0" />
+                <Capture src={m.src} alt={m.alt} ratio="16 / 10" bg={m.bg} radius="0" />
               </div>
               <h3 style={st('margin: 20px 0 8px; font-size: clamp(26px, 3cqw, 44px); font-weight: 600; line-height: 1; letter-spacing: -0.02em')}>{m.title}</h3>
               <p style={st('margin: 0')}>{m.disciplines}</p>
-              {m.url && <a href={`https://${m.url}`} style={st('display: inline-block; padding: 6px 0')}>{m.url}</a>}
+              {m.url && <a target="_blank" rel="noopener" href={`https://${m.url}`} style={st('display: inline-block; padding: 6px 0')}>{m.url}</a>}
             </article>
           ))}
         </div>

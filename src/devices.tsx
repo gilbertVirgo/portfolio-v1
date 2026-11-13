@@ -19,9 +19,11 @@ export function Phone({ children }: { children: ReactNode }) {
   return <div className="phone" style={st('flex: 1 1 160px; max-width: 270px; min-width: 0; background: #0d0d0d; padding: 8px; border-radius: 34px')}>{children}</div>
 }
 
-export function Capture(p: { src: string; alt: string; label: string; ratio: string; bg: string; radius: string }) {
+// A full-page screenshot behind a screen-shaped window. The visitor cannot scroll it: it scrolls itself
+// slowly down and back up (scrollIntent.ts), so the window has no scrollbar and takes no focus.
+export function Capture(p: { src: string; alt: string; ratio: string; bg: string; radius: string }) {
   return (
-    <div className="capture" tabIndex={0} role="region" aria-label={p.label} style={st(`aspect-ratio: ${p.ratio}; overflow-y: auto; background: ${p.bg}; border-radius: ${p.radius}`)}>
+    <div className="capture" style={st(`aspect-ratio: ${p.ratio}; overflow: hidden; background: ${p.bg}; border-radius: ${p.radius}`)}>
       <img src={p.src} alt={p.alt} loading="lazy" style={st('width: 100%; display: block')} />
     </div>
   )

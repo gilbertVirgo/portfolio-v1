@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video and motion tiles — options</title>
+<link rel="stylesheet" href="https://use.typekit.net/jnj6xdu.css">
+<link rel="stylesheet" href="https://use.typekit.net/hdm2tfk.css"><!-- Highbury kit: pacaembu, adriane -->
+<link rel="stylesheet" href="https://use.typekit.net/srq0yqt.css"><!-- Christian Heritage London kit: area-inktrap, area-normal -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@600&family=Bona+Nova&display=swap" rel="stylesheet">
+<style>
+/* Exploration board: mockups stay as screenshots; the landing videos, headline build-in and button
+   hover get tiles of their own beside them. Videos are hotlinked from the client sites for this board
+   only. Open with the dev server: /design/artboard/Motion-tiles.html */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 40px; background: #e9e9e6; color: #0a0a0a; font: 15px/1.35 'sets-grotesk-l', 'Inter Tight', system-ui, sans-serif; letter-spacing: -0.01em; }
+h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+.intro { margin: 0 0 40px; max-width: 62em; }
+.option { margin-bottom: 64px; max-width: 1180px; }
+.option > h2 { margin: 0 0 4px; font-size: 17px; font-weight: 600; }
+.option > p { margin: 0 0 16px; max-width: 62em; }
+.pick { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: #0a0a0a; color: #fff; font-size: 12px; font-weight: 500; vertical-align: 2px; }
+.card { border-radius: 28px; padding: 28px 28px 40px; margin-bottom: 16px; overflow: clip; }
+.chl { background: #A8192E; color: #fff; }
+.selhurst { background: #E5D87B; color: #231820; }
+.hbc { background: #FFFCED; color: #1E1F1B; box-shadow: inset 0 0 0 1px #0000000f; }
+.card > h3 { margin: 0 0 28px; font-size: 64px; font-weight: 600; line-height: 0.9; letter-spacing: -0.02em; }
+
+/* A — one sideways belt per project, like the Life Church pieces. No scrollbar drawn. */
+.belt { display: flex; gap: 24px; align-items: stretch; overflow-x: auto; scrollbar-width: none; margin: 0 -28px; padding: 0 28px; }
+.belt::-webkit-scrollbar { display: none; }
+figure { margin: 0; flex: none; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; }
+.laptop { width: 560px; }
+.laptop .bezel { background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0; }
+.laptop .base { height: 12px; background: #0d0d0d; border-top: 1px solid #3a3a3a; border-radius: 0 0 14px 14px; margin: 0 -2%; }
+.laptop img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 4px; }
+.phone { width: 176px; }
+.phone .bezel { background: #0d0d0d; padding: 8px; border-radius: 30px; }
+.phone img { display: block; width: 100%; aspect-ratio: 9 / 19; object-fit: cover; object-position: top; border-radius: 22px; }
+.tile { width: 520px; }
+.tile.narrow { width: 340px; }
+.tile > div { flex: 1; min-height: 300px; }
+
+/* B — mockups as now, tiles in a row underneath */
+.stage { display: flex; gap: 32px; align-items: flex-end; }
+.stage .laptop { flex: 3; width: auto; } .stage .phone { flex: 0.9; width: auto; }
+.under { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; margin-top: 32px; }
+.under .tile { width: auto; }
+.under .tile > div { aspect-ratio: auto; min-height: 320px; }
+
+/* Hero tile: the landing video, muted and looping, with the page's own headline and buttons set over it */
+.hero { position: relative; overflow: hidden; border-radius: 16px; background: #111; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 18px; padding: 28px; isolation: isolate; }
+.hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--shade, #0006); }
+.hero p { margin: 0; max-width: 24em; text-wrap: balance; }
+.hero .row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+/* Christian Heritage London */
+.hero.c { align-items: flex-start; text-align: left; --shade: #0000008c; }
+.hero.c h4 { margin: 0; font: 600 46px/1.05 'area-inktrap', 'sets-grotesk-l', sans-serif; letter-spacing: -0.05rem; }
+.hero.c p { font: 15px/1.4 Georgia, serif; }
+.c-btn { display: inline-block; padding: 12px 20px; border: 1px solid #fff; color: #fff; font: 800 12px/1 'area-normal', sans-serif; text-transform: uppercase; letter-spacing: 0.125em; text-decoration: none; transition: background 0.2s, color 0.2s; }
+.c-btn:hover { background: #fff; color: #111; }
+
+/* Selhurst: each headline word wipes up behind a slanted edge, 0.15s apart (the site's own CSS) */
+@keyframes revealWord { 0% { clip-path: polygon(0 100%, 100% 66%, 100% 100%, 0 100%); } to { clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%); } }
+.word-reveal { display: inline-block; margin-right: 0.25em; clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%); }
+.play .word-reveal { animation: 0.46s cubic-bezier(0.33, 0.66, 0.66, 1) forwards revealWord; }
+.word-reveal:nth-child(2) { animation-delay: 0.15s; } .word-reveal:nth-child(3) { animation-delay: 0.3s; } .word-reveal:nth-child(4) { animation-delay: 0.45s; }
+.hero.s { --shade: #23172240; color: #fffef5; }
+.hero.s h4 { margin: 0 -0.125em 0 0; font: 600 58px/1 'DM Sans', system-ui, sans-serif; letter-spacing: -0.0175rem; text-wrap: balance; }
+.hero.s p { font: 17px/1.35 'Bona Nova', Georgia, serif; }
+.s-btn { display: inline-block; padding: 9px 24px; border-radius: 999px; border: 1px solid #9ea3a8; background: #e8db7d; color: #231722; font: 600 15px/1.4 'DM Sans', sans-serif; letter-spacing: -0.02em; text-decoration: none; }
+.s-btn.light { background: #fffef5; }
+.s-btn:hover { opacity: 0.8; }
+
+/* Highbury: a colour underlay slides up through the button, text flips colour (the site's own CSS) */
+.hero.h { --shade: #00000080; color: #fffced; }
+.hero.h h4 { margin: 0; font: 700 76px/0.825 'pacaembu', 'sets-grotesk-l', sans-serif; letter-spacing: -0.04em; text-wrap: balance; }
+.hero.h p { font: 15px/1.4 'adriane', Georgia, serif; }
+.button { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 1em; padding: 0.6em 1.3em; border: 1px solid; border-radius: 2.5rem; font-family: 'adriane', 'Bona Nova', Georgia, serif; text-decoration: none; cursor: pointer; z-index: 0; transition: color 0.23s; }
+.button svg { width: 1em; height: 1em; transition: color 0.23s; }
+.button__underlay { position: absolute; inset: 0; z-index: -1; transform: translateY(100%); transition: transform 0.23s; }
+.button.primary { border-color: #ef476f; } .button.primary svg { color: #ef476f; } .button.primary .button__underlay { background: #ef476f; }
+.button.secondary { border-color: #bfbcac; } .button.secondary svg { color: #bfbcac; } .button.secondary .button__underlay { background: #bfbcac; }
+.button:is(:hover, .on) .button__underlay { transform: translateY(0); }
+.button.primary:is(:hover, .on), .button.primary:is(:hover, .on) svg { color: #fffced; }
+.button.secondary:is(:hover, .on), .button.secondary:is(:hover, .on) svg { color: #1e1f1b; }
+/* Specimen tile: the two buttons large, demoing themselves until a pointer arrives */
+.spec { border-radius: 16px; background: #1e1f1b; color: #fffced; padding: 24px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 16px; font-size: 26px; white-space: nowrap; }
+.spec.sc { background: #231722; color: #fffef5; white-space: normal; }
+.spec.sc h4 { margin: 0; font: 600 62px/1 'DM Sans', system-ui, sans-serif; }
+
+@media (prefers-reduced-motion: reduce) { .play .word-reveal { animation-duration: 0.01s; animation-delay: 0s !important; } .button, .button svg, .button__underlay, .c-btn { transition: none; } }
+</style>
+</head>
+<body>
+<h1>Video and motion tiles beside the mockups</h1>
+<p class="intro">Mockups go back to being screenshots. The landing video, the headline build-in and the button hover each get a tile next to them: the video plays muted on a loop with the page’s real headline and buttons set over it in HTML, so type stays sharp and the buttons are live. Videos load nothing until their tile is on screen and pause when it leaves. Two layouts.</p>
+
+<section class="option">
+<h2>A · One sideways belt per project <span class="pick">Suggested</span></h2>
+<p>The stage becomes a horizontal scroller, as Life Church Richmond already is: laptop, phone, then the tiles, with the next one peeking in at the right edge. Same pattern on every card, room for as many tiles as a project earns, and the card stays one screen tall. No scrollbar drawn. Cost: tiles past the edge are only found by people who scroll sideways.</p>
+
+<div class="card chl">
+  <h3>Christian Heritage London</h3>
+  <div class="belt">
+    <figure class="laptop"><div><div class="bezel"><img src="../../src/assets/chl-desktop.jpg" alt=""></div><div class="base"></div></div><figcaption>Home page</figcaption></figure>
+    <figure class="phone"><div class="bezel"><img src="../../src/assets/chl-mobile.jpg" alt=""></div><figcaption>On a phone</figcaption></figure>
+    <figure class="tile"><div class="hero c">
+      <video muted loop playsinline preload="none" data-src="https://christianheritagelondon.org/videos/hero-video.mp4"></video>
+      <h4>Explore<br>London’s Stories</h4>
+      <p>Discover London’s Christian heroes, whose faith changed the world, through guided walking tours.</p>
+      <a class="c-btn">Book a London walk</a>
+    </div><figcaption>Landing video, shot and edited in house</figcaption></figure>
+  </div>
+</div>
+
+<div class="card selhurst">
+  <h3>Selhurst Church</h3>
+  <div class="belt">
+    <figure class="laptop"><div><div class="bezel"><img src="../../src/assets/sc-home.jpg" alt=""></div><div class="base"></div></div><figcaption>Home page design</figcaption></figure>
+    <figure class="tile"><div class="hero s">
+      <video muted loop playsinline preload="none" data-src="https://selhurstchurch.org/assets/reel--landscape.mp4"></video>
+      <h4 class="loop"><span class="word-reveal">Welcome</span><span class="word-reveal">to</span><span class="word-reveal">Selhurst</span><span class="word-reveal">Church</span></h4>
+      <p>We’re glad you’re here.</p>
+      <div class="row"><a class="s-btn">Find us</a><a class="s-btn light">Get in touch</a></div>
+    </div><figcaption>Landing video and headline build-in</figcaption></figure>
+    <figure class="tile narrow"><div class="spec sc"><h4 class="loop"><span class="word-reveal">Welcome</span><span class="word-reveal">to</span><span class="word-reveal">Selhurst</span><span class="word-reveal">Church</span></h4></div><figcaption>Build-in, 0.46s a word, 0.15s apart</figcaption></figure>
+  </div>
+</div>
+
+<div class="card hbc">
+  <h3>Highbury Baptist Church</h3>
+  <div class="belt">
+    <figure class="laptop"><div><div class="bezel"><img src="../../src/assets/hbc-desktop.jpg" alt=""></div><div class="base"></div></div><figcaption>Home page</figcaption></figure>
+    <figure class="phone"><div class="bezel"><img src="../../src/assets/hbc-mobile.jpg" alt=""></div><figcaption>On a phone</figcaption></figure>
+    <figure class="tile"><div class="hero h">
+      <video muted loop playsinline preload="none" data-src="https://highbury-baptist-church.cdn.prismic.io/highbury-baptist-church/aZMZ5VWLo0XkEio9_home-hero-video.mp4"></video>
+      <h4>Come as you are</h4>
+      <p>You’re welcome here — whether you’ve been coming to church for years, or you’re just curious.</p>
+      <div class="row"><a class="button primary">Visit us<svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span class="button__underlay"></span></a><a class="button secondary">Find out more<svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span class="button__underlay"></span></a></div>
+    </div><figcaption>Landing video. The buttons are live: hover them</figcaption></figure>
+    <figure class="tile narrow"><div class="spec demo">
+      <a class="button primary">Visit us<svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span class="button__underlay"></span></a>
+      <a class="button secondary">Find out more<svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span class="button__underlay"></span></a>
+    </div><figcaption>Button hover, 0.23s fill</figcaption></figure>
+  </div>
+</div>
+</section>
+
+<section class="option">
+<h2>B · Tiles in a row underneath</h2>
+<p>Mockups stay exactly as they are; the tiles sit below in a two-column row. Nothing is hidden off the edge, and the video gets a wider frame. Cost: each of these three cards grows by about a screen, and on a phone the tiles stack into a long column.</p>
+<div class="card hbc">
+  <h3>Highbury Baptist Church</h3>
+  <div class="stage">
+    <figure class="laptop"><div><div class="bezel"><img src="../../src/assets/hbc-desktop.jpg" alt=""></div><div class="base"></div></div></figure>
+    <figure class="phone"><div class="bezel"><img src="../../src/assets/hbc-mobile.jpg" alt=""></div></figure>
+  </div>
+  <div class="under">
+    <figure class="tile"><div class="hero h">
+      <video muted loop playsinline preload="none" data-src="https://highbury-baptist-church.cdn.prismic.io/highbury-baptist-church/aZMZ5VWLo0XkEio9_home-hero-video.mp4"></video>
+      <h4>Come as you are</h4>
+      <div class="row"><a class="button primary">Visit us<svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span class="button__underlay"></span></a><a class="button secondary">Find out more<svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span class="button__underlay"></span></a></div>
+    </div><figcaption>Landing video. The buttons are live: hover them</figcaption></figure>
+    <figure class="tile"><div class="spec demo">
+      <a class="button primary">Visit us<svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span class="button__underlay"></span></a>
+      <a class="button secondary">Find out more<svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span class="button__underlay"></span></a>
+    </div><figcaption>Button hover, 0.23s fill</figcaption></figure>
+  </div>
+</div>
+</section>
+
+<script>
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches
+// Videos: no bytes until the tile is half on screen, paused again when it leaves. Still under reduced motion.
+const vio = new IntersectionObserver((es) => es.forEach((e) => {
+  const v = e.target
+  if (still) return
+  if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}) } else v.pause()
+}), { threshold: 0.5 })
+document.querySelectorAll('video').forEach((v) => vio.observe(v))
+
+// Headline: builds when it comes into view, then again every few seconds while it stays there.
+// One finite animation per replay; nothing remounts.
+const play = (el) => { el.classList.remove('play'); el.getBoundingClientRect(); el.classList.add('play') }
+document.querySelectorAll('.loop').forEach((el) => {
+  let t = 0
+  new IntersectionObserver(([e]) => {
+    clearInterval(t)
+    if (!e.isIntersecting) return
+    play(el)
+    if (!still) t = setInterval(() => play(el), 5000)
+  }, { threshold: 0.5 }).observe(el)
+})
+
+// Specimen buttons: take turns looking hovered until a real pointer comes in, resume when it leaves
+document.querySelectorAll('.demo').forEach((box) => {
+  const btns = [...box.querySelectorAll('.button')]
+  let i = 0, hands = false
+  box.addEventListener('pointerenter', () => { hands = true; btns.forEach((b) => b.classList.remove('on')) })
+  box.addEventListener('pointerleave', () => { hands = false })
+  if (!still) setInterval(() => { if (hands) return; btns.forEach((b, n) => b.classList.toggle('on', n === i % 3)); i++ }, 1100)
+})
+</script>
+</body>
+</html>
