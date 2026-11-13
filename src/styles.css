@@ -28,6 +28,13 @@ a:hover { text-decoration-thickness: 2px; }
 .hint.show { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .hint { transition: none; } }
 
+/* Skeleton: a grey sheen sweeps a mockup until its screen loads (Capture adds .loaded).
+   Animates background-position, not transform, so Safari makes no compositing layer per mockup. */
+.capture:not(.loaded) { background: linear-gradient(100deg, #e9e9e9 40%, #f5f5f5 50%, #e9e9e9 60%) 0 0 / 300% 100% !important; animation: shimmer 1.4s linear infinite; }
+.capture:not(.loaded) img { opacity: 0; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .capture:not(.loaded) { animation: none; } }
+
 /* Sticky header: App.tsx adds .away while scrolling down. Keyboard focus always brings it back. */
 .site-header { position: sticky; top: 0; z-index: 10; background: #fff; transition: transform 0.3s ease; }
 .site-header.away:not(:focus-within) { transform: translateY(-100%); }

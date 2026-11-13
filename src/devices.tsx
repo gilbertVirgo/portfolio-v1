@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ReactNode, SyntheticEvent } from 'react'
 import { st } from './st'
 
 export function Laptop({ children, outline }: { children: ReactNode; outline?: boolean }) {
@@ -20,9 +20,12 @@ export function Phone({ children }: { children: ReactNode }) {
 }
 
 export function Capture(p: { src: string; alt: string; label: string; ratio: string; bg: string; radius: string }) {
+  // skeleton shimmer until the screen loads (or fails, so it never sweeps forever). Set by classList,
+  // not className, so a re-render can't drop the .locked class scrollIntent.ts toggles.
+  const done = (e: SyntheticEvent<HTMLImageElement>) => e.currentTarget.parentElement!.classList.add('loaded')
   return (
     <div className="capture" tabIndex={0} role="region" aria-label={p.label} style={st(`aspect-ratio: ${p.ratio}; overflow-y: auto; background: ${p.bg}; border-radius: ${p.radius}`)}>
-      <img src={p.src} alt={p.alt} loading="lazy" style={st('width: 100%; display: block')} />
+      <img src={p.src} alt={p.alt} loading="lazy" onLoad={done} onError={done} style={st('width: 100%; display: block')} />
     </div>
   )
 }

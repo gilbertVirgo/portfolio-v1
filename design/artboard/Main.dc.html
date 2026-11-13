@@ -23,6 +23,12 @@ a{color:inherit}a:hover{color:inherit;text-decoration-thickness:2px}
 .hint { position: absolute; left: 50%; bottom: 20px; translate: -50% 0; padding: 6px 12px; border-radius: 999px; background: #0a0a0a; color: #fff; box-shadow: 0 0 0 1px #ffffff33; font-size: 13px; line-height: 1.2; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
 .hint.show { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .hint { transition: none; } }
+/* Skeleton: a grey sheen sweeps a mockup until its screen loads (.loaded, componentDidMount).
+   Animates background-position, not transform, so Safari makes no compositing layer per mockup. */
+.capture:not(.loaded) { background: linear-gradient(100deg, #e9e9e9 40%, #f5f5f5 50%, #e9e9e9 60%) 0 0 / 300% 100% !important; animation: shimmer 1.4s linear infinite; }
+.capture:not(.loaded) img { opacity: 0; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .capture:not(.loaded) { animation: none; } }
 
 /* Phone-width layout (container is the page wrapper) */
 @container (max-width: 600px) {
@@ -475,6 +481,9 @@ componentDidMount() {
 // The first time a scrollable mockup unlocks, a "Scroll me" hint shows until it is scrolled or 2.5s pass, one at a time.
 {
 const caps = [...document.querySelectorAll('.capture')], hinted = new Set();
+// skeleton off once the screen has loaded (or failed, so it never sweeps forever)
+caps.forEach((el) => { const img = el.querySelector('img'), done = () => el.classList.add('loaded');
+if (!img || img.complete) done(); else { img.addEventListener('load', done); img.addEventListener('error', done); } });
 let settled = true, timer = 0, showing = false;
 const hint = (el) => {
 hinted.add(el); showing = true;
