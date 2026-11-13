@@ -31,14 +31,22 @@ a:hover { text-decoration-thickness: 2px; }
    edge and the next item peeks in. Device styles are inline, hence !important. */
 .belt { display: flex; gap: clamp(16px, 2cqw, 32px); align-items: stretch; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px); }
 .belt > * { flex: none !important; max-width: none !important; align-self: flex-end; }
-.belt .laptop { width: clamp(420px, 56cqw, 900px); margin: 0 1.2cqw; } /* margin: the base is wider than the lid */
-.belt .tablet { width: clamp(240px, 22cqw, 380px); }
-.belt .phone { width: clamp(160px, 15cqw, 270px); }
-.belt .logo-tile { width: clamp(160px, 22cqw, 300px); }
-.belt .tile { align-self: stretch; width: clamp(320px, 44cqw, 680px); }
-.belt .tile.spec { width: clamp(240px, 28cqw, 440px); }
+/* --u is the belt's unit: 1% of the page width, held back on short-wide screens so the laptop (56u wide,
+   about 36u tall) always fits the viewport with room to spare. Everything in a belt is sized in it, so
+   mockups and tiles keep their proportions to each other at any screen size. */
+.belt { --u: min(1cqw, (100svh - 200px) / 37); }
+.belt .laptop { width: max(420px, 56 * var(--u)); margin: 0 1.2cqw; } /* margin: the base is wider than the lid */
+/* Tablet and phone stand as tall as the laptop (about 35.6u + 15px with its base). Their widths are
+   that height run back through their screen ratios (3:4 and 9:19) plus bezel. */
+.belt .tablet { width: max(240px, 26.7 * var(--u) + 16px); }
+.belt .phone { width: max(160px, 16.9 * var(--u) + 15px); }
+.belt .logo-tile { width: max(160px, 22 * var(--u)); }
+/* --w: the tile's width, for its own padding and gap. A tile is a size container, and cqw written on
+   the container itself measures the page, not the tile; its children's cqw do measure the tile. */
+.belt .tile { align-self: stretch; --w: max(320px, 44 * var(--u)); width: var(--w); }
+.belt .tile.spec { --w: max(240px, 28 * var(--u)); }
 
-.tile { letter-spacing: normal; /* not the page's tracking: each site sets its own */ container-type: inline-size; position: relative; overflow: hidden; isolation: isolate; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 4cqw; padding: 6cqw; }
+.tile { letter-spacing: normal; /* not the page's tracking: each site sets its own */ container-type: inline-size; position: relative; overflow: hidden; isolation: isolate; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: calc(var(--w) * 0.04); padding: calc(var(--w) * 0.06); }
 .tile h3, .tile p { margin: 0; text-wrap: balance; }
 .tile p { max-width: 24em; }
 .tile .row { display: flex; flex-wrap: wrap; gap: 2.4cqw; justify-content: center; }
@@ -132,7 +140,7 @@ main > section:not(.more) { margin: clamp(10px, 1.2cqw, 18px) clamp(10px, 1.2cqw
      bezel; tiles most of the card wide. Without a phone, the laptop leads and tiles match its height. */
   section:has(.phone) .laptop { display: none; }
   .belt { --h: 100cqw; }
-  .belt .tile, .belt .tile.spec { width: 78cqw; }
+  .belt .tile, .belt .tile.spec { --w: 78cqw; }
   .belt .laptop { width: 84cqw; }
   .belt .phone { width: calc((var(--h) - 16px) * 9 / 19 + 16px); }
   .belt .tablet { width: calc((var(--h) - 20px) * 3 / 4 + 20px); }
