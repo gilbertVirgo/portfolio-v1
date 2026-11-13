@@ -39,9 +39,8 @@ const belt = (label: string, children: ReactNode) => (
   <div className="belt" tabIndex={0} role="region" aria-label={label}>{children}</div>
 )
 
-// min-content: the figure is only as wide as its image, so a long caption wraps instead of stretching the image
-const figureStyle = 'margin: 0; flex: none; width: min-content; display: flex; flex-direction: column; gap: 12px'
 const tall = 'height: clamp(340px, 42cqw, 600px); width: auto; display: block'
+// caption: what the piece is. Not shown; kept as the list key and for whoever edits this next.
 const lcrFigures: { src: string; alt: string; caption: string; style: string }[] = [
   { src: lcrPlaque, alt: 'Life Church Richmond logo: the word life set on a diagonal in magenta, beside the church name', caption: 'Door plaque, A4', style: 'height: clamp(240px, 30cqw, 420px); width: auto; display: block' },
   { src: lcrWelcome, alt: 'Cream poster reading everyone is welcome in large spaced magenta letters', caption: 'Welcome banner, A2', style: tall },
@@ -119,10 +118,7 @@ export const projects: Project[] = [
     id: 'lcr', title: 'Life Church Richmond', bg: '#0B2A2E', fg: '#FFFDF0',
     disciplines: 'Visual identity', links: <span>Logo, banners, signage</span>, bleed: true,
     stage: belt('Life Church Richmond identity pieces, scrolls sideways', lcrFigures.map((f) => (
-      <figure key={f.caption} style={st(figureStyle)}>
-        <img src={f.src} alt={f.alt} loading="lazy" style={st(f.style)} />
-        <figcaption>{f.caption}</figcaption>
-      </figure>
+      <img key={f.caption} src={f.src} alt={f.alt} loading="lazy" style={st(f.style)} />
     ))),
   },
   {

@@ -111,9 +111,8 @@ main > section:not(.more) { margin: clamp(10px, 1.2cqw, 18px) clamp(10px, 1.2cqw
 
   .site-header h1 { gap: 10px; }
   .face { width: 30px; height: 30px; }
-  /* A card ends 32px below its last item, matching the space above its title. Sections whose phone
-     mockup bleeds off the bottom keep their 0. */
-  main > section:not(.more):not(:has(.phone)) { padding-bottom: 32px !important; }
+  /* A card ends 32px below its last item, matching the space above its title. */
+  main > section:not(.more) { padding-bottom: 32px !important; }
 
   /* Project header, kept quiet: only the disciplines, softened, over the title.
      Counter, links and the rule under them are desktop only. */
@@ -122,18 +121,20 @@ main > section:not(.more) { margin: clamp(10px, 1.2cqw, 18px) clamp(10px, 1.2cqw
   .meta + h2 { margin: 8px 0 32px !important; }
 
   .stage { gap: 32px !important; }
-  .tablet, .phone { flex: 1 1 100% !important; max-width: none !important; }
 
-  /* Where a phone mockup exists it carries the section: drop the laptop, run the phone full width,
-     show the top two-thirds of its screen and let it bleed off the bottom edge of the section. */
-  section:has(.phone) { padding-bottom: 0 !important; }
+  /* Laptop frame: the inline radii are sized for a desktop-width laptop. Halve them here. */
+  .laptop > :first-child { border-radius: 9px 9px 0 0 !important; }
+  .laptop > :last-child { height: 7px !important; border-radius: 0 0 7px 7px !important; }
+  .laptop .capture { border-radius: 2px !important; }
+
+  /* Belts. Where there is a phone mockup, the laptop is dropped and every item is one height (--h):
+     the phone and tablet whole, their widths worked out from their screen ratios (9:19 and 3:4) plus
+     bezel; tiles most of the card wide. Without a phone, the laptop leads and tiles match its height. */
   section:has(.phone) .laptop { display: none; }
-  .phone { padding-bottom: 0 !important; border-radius: 34px 34px 0 0 !important; }
-  .phone .capture { aspect-ratio: 27 / 38 !important; border-radius: 26px 26px 0 0 !important; }
-
-  /* Belts: each item takes most of the width. The phone still bleeds off the bottom; the rest end 32px
-     above the card's edge. */
-  .belt .phone, .belt .tablet, .belt .tile, .belt .tile.spec { flex: none !important; width: 78cqw !important; }
-  .belt .laptop { width: 84cqw !important; }
-  .belt:has(.phone) > :not(.phone) { margin-bottom: 32px; }
+  .belt { --h: 100cqw; }
+  .belt .tile, .belt .tile.spec { width: 78cqw; }
+  .belt .laptop { width: 84cqw; }
+  .belt .phone { width: calc((var(--h) - 16px) * 9 / 19 + 16px); }
+  .belt .tablet { width: calc((var(--h) - 20px) * 3 / 4 + 20px); }
+  .belt:has(.phone) .tile { height: var(--h); }
 }
