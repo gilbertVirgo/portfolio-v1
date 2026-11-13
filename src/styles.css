@@ -35,7 +35,14 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* Phone-width layout. Layout styles are inline (ported from the artboard), so these overrides need
    !important. The breakpoint is on the .page container, matching the cqw units used elsewhere. */
-.face { display: none; }
+/* Portfolio cues: a small photo by the name, and each project framed as a card on the white page
+   so the first screen reads as work shown here, not as the client's own site. The faint inset rule
+   keeps light cards (Highbury's cream) visible against the white. */
+.site-header { align-items: center !important; }
+.site-header h1 { display: flex; align-items: center; gap: 12px; }
+.face { display: block; width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+main > section:not(.more) { margin: clamp(10px, 1.2cqw, 18px) clamp(10px, 1.2cqw, 18px) 0 !important; border-radius: clamp(22px, 2.2cqw, 32px); overflow: clip; box-shadow: inset 0 0 0 1px #0000000f; }
+.more { margin-top: clamp(10px, 1.2cqw, 18px); }
 
 @container (max-width: 600px) {
   /* Header: one row, name left and links right. The description is desktop only. */
@@ -44,14 +51,8 @@ a:hover { text-decoration-thickness: 2px; }
   .site-header nav { gap: 18px !important; }
   .site-header p { display: none; }
 
-  /* Portfolio cues: a small photo by the name, and each project framed as a card on the white
-     page so the first screen reads as work shown here, not as the client's own site. The faint
-     inset rule keeps light cards (Highbury's cream) visible against the white. */
-  .site-header { align-items: center !important; }
-  .site-header h1 { display: flex; align-items: center; gap: 10px; }
-  .face { display: block; width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
-  main > section:not(.more) { margin: 10px 10px 0 !important; border-radius: 22px; overflow: clip; box-shadow: inset 0 0 0 1px #0000000f; }
-  .more { margin-top: 10px; }
+  .site-header h1 { gap: 10px; }
+  .face { width: 30px; height: 30px; }
   /* A card ends 32px below its last item, matching the space above its title. Sections whose phone
      mockup bleeds off the bottom keep their 0. */
   main > section:not(.more):not(:has(.phone)) { padding-bottom: 32px !important; }
