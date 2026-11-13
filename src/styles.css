@@ -18,15 +18,68 @@ a:hover { text-decoration-thickness: 2px; }
 .more summary::after { content: '+'; }
 .more details[open] summary::after { content: '\2212'; }
 
-/* scrollIntent.ts: a locked mockup ignores swipes and the wheel, so they scroll the page */
-.capture { scrollbar-gutter: stable; } /* locking never shifts the screenshot sideways */
-.capture.locked { overflow-y: hidden !important; }
+/* Belts scroll by touch, wheel and keys, with no scrollbar drawn */
+.belt { scrollbar-width: none; }
+.belt::-webkit-scrollbar { display: none; }
 
-/* "Scroll me" hint, added once per mockup by scrollIntent.ts */
-:has(> .capture) { position: relative; }
-.hint { position: absolute; left: 50%; bottom: 20px; translate: -50% 0; padding: 6px 12px; border-radius: 999px; background: #0a0a0a; color: #fff; box-shadow: 0 0 0 1px #ffffff33; font-size: 13px; line-height: 1.2; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
-.hint.show { opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .hint { transition: none; } }
+/* Belt and tiles (projects.tsx, tiles.tsx). A project's stage scrolls sideways: mockups stand on the
+   baseline, tiles stretch to the tallest mockup. Widths are fixed so the row always runs past the right
+   edge and the next item peeks in. Device styles are inline, hence !important. */
+.belt { display: flex; gap: clamp(16px, 2cqw, 32px); align-items: stretch; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px); }
+.belt > * { flex: none !important; max-width: none !important; align-self: flex-end; }
+.belt .laptop { width: clamp(420px, 56cqw, 900px); margin: 0 1.2cqw; } /* margin: the base is wider than the lid */
+.belt .tablet { width: clamp(240px, 22cqw, 380px); }
+.belt .phone { width: clamp(160px, 15cqw, 270px); }
+.belt .logo-tile { width: clamp(160px, 22cqw, 300px); }
+.belt .tile { align-self: stretch; width: clamp(320px, 44cqw, 680px); }
+.belt .tile.spec { width: clamp(240px, 28cqw, 440px); }
+
+.tile { letter-spacing: normal; /* not the page's tracking: each site sets its own */ container-type: inline-size; position: relative; overflow: hidden; isolation: isolate; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 4cqw; padding: 6cqw; }
+.tile h3, .tile p { margin: 0; text-wrap: balance; }
+.tile p { max-width: 24em; }
+.tile .row { display: flex; flex-wrap: wrap; gap: 2.4cqw; justify-content: center; }
+.hero { background: #111; color: #fff; }
+.hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--shade); }
+
+/* Christian Heritage London */
+/* Spacing follows the site: tight tracking, text close under the headline, the button set apart. */
+.hero.chl { --shade: linear-gradient(to right, #282828bb 0%, #282828bb 27.5%, #28282833 100%); align-items: flex-start; text-align: left; gap: 0; }
+.hero.chl h3 { font: 600 8.8cqw/1.075 'area-inktrap', 'sets-grotesk-l', sans-serif; letter-spacing: -0.035em; }
+.hero.chl p { margin-top: 1.9cqw; max-width: 60cqw; text-align: justify; text-wrap: wrap; font: 400 max(12px, 2.2cqw)/1.5 'ivyora-text', Georgia, serif; }
+.chl-button { margin-top: 7cqw; }
+.chl-button { padding: 1em 1.6em; border: 1px solid #fff; font: 800 max(10px, 1.7cqw)/1 'area-normal', sans-serif; text-transform: uppercase; letter-spacing: 0.125em; }
+
+/* Selhurst Church. The word reveal is the site's own: each word wipes up behind a slanted edge. */
+@keyframes revealWord { 0% { clip-path: polygon(0 100%, 100% 66%, 100% 100%, 0 100%); } to { clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%); } }
+.word-reveal { display: inline-block; margin: 0 0.125em; clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%); }
+.play .word-reveal { animation: 0.46s cubic-bezier(0.33, 0.66, 0.66, 1) forwards revealWord; }
+.tile.selhurst { color: #fffef5; }
+.tile.selhurst h3 { font: 600 11cqw/1 'DM Sans', system-ui, sans-serif; letter-spacing: -0.0175rem; }
+.hero.selhurst { --shade: #23172240; }
+.hero.selhurst p { font: 400 max(14px, 3.3cqw)/1.35 'Bona Nova', Georgia, serif; letter-spacing: -0.017em; }
+.selhurst-button { padding: 0.6em 1.6em; border-radius: 999px; border: 1px solid #9ea3a8; background: #e8db7d; color: #231722; font: 600 max(12px, 2.9cqw)/1.4 'DM Sans', sans-serif; letter-spacing: -0.02em; }
+.selhurst-button.light { background: #fffef5; }
+.spec.selhurst { background: #231722; }
+.spec.selhurst h3 { font-size: 19cqw; }
+
+/* Highbury Baptist Church. The button fill is the site's own: an underlay slides up, the text flips colour. */
+.tile.hbc { color: #fffced; }
+.hero.hbc { --shade: #00000080; }
+.hero.hbc h3 { font: 700 14.6cqw/0.825 'pacaembu', 'sets-grotesk-l', sans-serif; letter-spacing: -0.04em; }
+.hero.hbc p { font: max(13px, 2.9cqw)/1.4 'adriane', Georgia, serif; }
+.hbc-button { position: relative; z-index: 0; overflow: hidden; display: inline-flex; align-items: center; gap: 1em; padding: 0.6em 1.3em; border: 1px solid; border-radius: 2.5rem; font: max(13px, 3cqw)/1.4 'adriane', Georgia, serif; white-space: nowrap; cursor: pointer; transition: color 0.23s; }
+.hbc-button svg { width: 1em; height: 1em; transition: color 0.23s; }
+.hbc-button .underlay { position: absolute; inset: 0; z-index: -1; transform: translateY(100%); transition: transform 0.23s; }
+.hbc-button.primary { border-color: #ef476f; } .hbc-button.primary svg { color: #ef476f; } .hbc-button.primary .underlay { background: #ef476f; }
+.hbc-button.secondary { border-color: #bfbcac; } .hbc-button.secondary svg { color: #bfbcac; } .hbc-button.secondary .underlay { background: #bfbcac; }
+.hbc-button:is(:hover, .on) .underlay { transform: translateY(0); }
+.hbc-button.primary:is(:hover, .on), .hbc-button.primary:is(:hover, .on) svg { color: #fffced; }
+.hbc-button.secondary:is(:hover, .on), .hbc-button.secondary:is(:hover, .on) svg { color: #1e1f1b; }
+.spec.hbc { background: #1e1f1b; align-items: flex-start; }
+.spec.hbc .row { flex-direction: column; align-items: flex-start; gap: 5cqw; }
+.spec.hbc .hbc-button { font-size: 9.5cqw; }
+@media (prefers-reduced-motion: reduce) { .play .word-reveal { animation-duration: 0.01s; animation-delay: 0s !important; } .hbc-button, .hbc-button svg, .hbc-button .underlay { transition: none; } }
 
 /* Sticky header: App.tsx adds .away while scrolling down. Keyboard focus always brings it back. */
 .site-header { position: sticky; top: 0; z-index: 10; background: #fff; transition: transform 0.3s ease; }
@@ -68,10 +121,15 @@ main > section:not(.more) { margin: clamp(10px, 1.2cqw, 18px) clamp(10px, 1.2cqw
   .tablet, .phone { flex: 1 1 100% !important; max-width: none !important; }
 
   /* Where a phone mockup exists it carries the section: drop the laptop, run the phone full width,
-     show the top two-thirds of its screen and let it bleed off the bottom edge of the section.
-     The screen still scrolls to the end of the page inside it. */
+     show the top two-thirds of its screen and let it bleed off the bottom edge of the section. */
   section:has(.phone) { padding-bottom: 0 !important; }
   section:has(.phone) .laptop { display: none; }
   .phone { padding-bottom: 0 !important; border-radius: 34px 34px 0 0 !important; }
   .phone .capture { aspect-ratio: 27 / 38 !important; border-radius: 26px 26px 0 0 !important; }
+
+  /* Belts: each item takes most of the width. The phone still bleeds off the bottom; the rest end 32px
+     above the card's edge. */
+  .belt .phone, .belt .tablet, .belt .tile, .belt .tile.spec { flex: none !important; width: 78cqw !important; }
+  .belt .laptop { width: 84cqw !important; }
+  .belt:has(.phone) > :not(.phone) { margin-bottom: 32px; }
 }

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablet links — options</title>
+<link rel="stylesheet" href="https://use.typekit.net/jnj6xdu.css">
+<style>
+/* Exploration board: project links at tablet width (768). Each frame is a real 768px container,
+   so the cqw sizes match the site. Open with the dev server: /design/artboard/Tablet-links.html */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 40px; background: #e9e9e6; color: #0a0a0a; font: 15px/1.35 'sets-grotesk-l', 'Inter Tight', system-ui, sans-serif; letter-spacing: -0.01em; }
+a { color: inherit; }
+h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+.intro { margin: 0 0 40px; max-width: 60em; }
+.board { display: flex; flex-wrap: wrap; gap: 56px 40px; align-items: flex-start; }
+.option { width: 768px; flex: none; }
+.option > h2 { margin: 0 0 4px; font-size: 17px; font-weight: 600; }
+.option > p { margin: 0 0 16px; min-height: 3.6em; max-width: 46em; }
+.pick { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: #0a0a0a; color: #fff; font-size: 12px; font-weight: 500; vertical-align: 2px; }
+.frame { container-type: inline-size; background: #fff; padding: 12px 0; display: flex; flex-direction: column; gap: 12px; }
+.card { margin: 0 12px; border-radius: 22px; overflow: clip; padding: 0 19px 40px; }
+.chl { background: #A8192E; color: #fff; --fg: #fff; }
+.stanza { background: #2f2d2e; color: #FAFAFA; --fg: #FAFAFA; padding-bottom: 28px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--fg); }
+.meta > :nth-child(1) { flex: 1 1 160px; }
+.meta > :nth-child(2) { flex: 2 1 280px; }
+.card h3 { margin: 24px 0 34px; font-size: 18cqw; font-weight: 600; line-height: 0.88; letter-spacing: -0.02em; }
+.stanza h3 { margin-bottom: 0; }
+.stage { display: flex; gap: 32px; align-items: flex-end; }
+.dev { margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.dev > div { background: #0d0d0d; padding: 8px; }
+.dev img { display: block; width: 100%; object-fit: cover; object-position: top; }
+.laptop { flex: 3; } .laptop > div { border-radius: 14px 14px 4px 4px; } .laptop img { aspect-ratio: 16 / 10; border-radius: 3px; }
+.phone { flex: 1; } .phone > div { border-radius: 26px; } .phone img { aspect-ratio: 9 / 19; border-radius: 19px; }
+.arrow { display: inline-block; margin-left: 0.3em; text-decoration: none; }
+
+/* A — now */
+.a .links { flex: 1 1 200px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: right; }
+
+/* B — short labels, one line */
+.b .links { flex: 1 1 200px; display: flex; justify-content: flex-end; gap: 20px; white-space: nowrap; }
+
+/* C — pills under the title */
+.c h3 { margin-bottom: 22px; }
+.c .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
+.c .pills a, .c .pills span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border: 1px solid var(--fg); border-radius: 999px; text-decoration: none; }
+.c .pills span { border-style: dashed; opacity: 0.75; }
+.c.stanza-fix .pills { margin-bottom: 0; }
+
+/* D — captions on the devices */
+.d figcaption a { display: inline-block; padding: 6px 0; }
+
+/* E — one left-aligned column */
+.e .meta > :nth-child(2) { display: flex; flex-direction: column; gap: 4px; }
+.e .meta { justify-content: flex-start; }
+</style>
+</head>
+<body>
+<h1>Project links at tablet width</h1>
+<p class="intro">Problem: at 768 the meta row has room for two columns, so the links fall to a row of their own and sit right-aligned with nothing above them (Christian Heritage London), or wrap inside a 200px column (the rest). Five treatments below, each on the two-link case and on a card with a note instead of a link. All links open in a new tab.</p>
+
+<div class="board">
+
+<section class="option a">
+<h2>A · Now</h2>
+<p>Reference. Links are a third meta column, right-aligned. With two long addresses they drop under the row and float right.</p>
+<div class="frame">
+  <div class="card chl">
+    <div class="meta"><span>01 / 05</span><span>Visual identity, website and booking system</span>
+      <span class="links"><a href="#">christianheritagelondon.org</a><a href="#">bookings.christianheritagelondon.org</a></span></div>
+    <h3>Christian Heritage London</h3>
+    <div class="stage"><figure class="dev laptop"><div><img src="../../src/assets/chl-desktop.jpg" alt=""></div></figure><figure class="dev phone"><div><img src="../../src/assets/chl-mobile.jpg" alt=""></div></figure></div>
+  </div>
+  <div class="card stanza">
+    <div class="meta"><span>02 / 05</span><span>Desktop presentation app for churches</span><span class="links"><span>Beta — v0.1.11</span></span></div>
+    <h3>Stanza</h3>
+  </div>
+</div>
+</section>
+
+<section class="option b">
+<h2>B · Short labels, one line</h2>
+<p>Say what the link is, not its address: “Website ↗ Bookings ↗”. Fits the third column at every width, so the row never breaks. Loses the domain names, which do some credibility work.</p>
+<div class="frame">
+  <div class="card chl">
+    <div class="meta"><span>01 / 05</span><span>Visual identity, website and booking system</span>
+      <span class="links"><a href="#">Website<span class="arrow">↗</span></a><a href="#">Bookings<span class="arrow">↗</span></a></span></div>
+    <h3>Christian Heritage London</h3>
+    <div class="stage"><figure class="dev laptop"><div><img src="../../src/assets/chl-desktop.jpg" alt=""></div></figure><figure class="dev phone"><div><img src="../../src/assets/chl-mobile.jpg" alt=""></div></figure></div>
+  </div>
+  <div class="card stanza">
+    <div class="meta"><span>02 / 05</span><span>Desktop presentation app for churches</span><span class="links"><span>Beta — v0.1.11</span></span></div>
+    <h3>Stanza</h3>
+  </div>
+</div>
+</section>
+
+<section class="option c">
+<h2>C · Pills under the title</h2>
+<p>Links leave the meta row and become 44px outlined pills between title and mockups. Big touch targets, reads as “go and look”. Adds a third element to the card head, and the notes (“Beta”) need a non-link pill.</p>
+<div class="frame">
+  <div class="card chl">
+    <div class="meta"><span>01 / 05</span><span>Visual identity, website and booking system</span></div>
+    <h3>Christian Heritage London</h3>
+    <div class="pills"><a href="#">christianheritagelondon.org<span class="arrow">↗</span></a><a href="#">Booking system<span class="arrow">↗</span></a></div>
+    <div class="stage"><figure class="dev laptop"><div><img src="../../src/assets/chl-desktop.jpg" alt=""></div></figure><figure class="dev phone"><div><img src="../../src/assets/chl-mobile.jpg" alt=""></div></figure></div>
+  </div>
+  <div class="card stanza stanza-fix">
+    <div class="meta"><span>02 / 05</span><span>Desktop presentation app for churches</span></div>
+    <h3>Stanza</h3>
+    <div class="pills" style="margin-top: 22px"><span>Beta — v0.1.11</span></div>
+  </div>
+</div>
+</section>
+
+<section class="option d">
+<h2>D · Captions on the devices <span class="pick">Suggested</span></h2>
+<p>Each mockup carries its own address underneath, the way the Life Church pieces already carry captions. The link sits beside the thing it opens, the meta row drops to two columns that always fit, and phones get links too (they have none today).</p>
+<div class="frame">
+  <div class="card chl">
+    <div class="meta"><span>01 / 05</span><span>Visual identity, website and booking system</span></div>
+    <h3>Christian Heritage London</h3>
+    <div class="stage">
+      <figure class="dev laptop"><div><img src="../../src/assets/chl-desktop.jpg" alt=""></div><figcaption><a href="#">christianheritagelondon.org<span class="arrow">↗</span></a></figcaption></figure>
+      <figure class="dev phone"><div><img src="../../src/assets/chl-mobile.jpg" alt=""></div><figcaption><a href="#">Booking system<span class="arrow">↗</span></a></figcaption></figure>
+    </div>
+  </div>
+  <div class="card stanza">
+    <div class="meta"><span>02 / 05</span><span>Desktop presentation app for churches · Beta — v0.1.11</span></div>
+    <h3>Stanza</h3>
+  </div>
+</div>
+</section>
+
+<section class="option e">
+<h2>E · One left-aligned column</h2>
+<p>Smallest change: at tablet width the links stack under the disciplines in the same column, left-aligned. Nothing floats right. Full addresses stay. The meta block gets taller (three lines for Christian Heritage London).</p>
+<div class="frame">
+  <div class="card chl">
+    <div class="meta"><span>01 / 05</span><span><span>Visual identity, website and booking system</span><a href="#">christianheritagelondon.org</a><a href="#">bookings.christianheritagelondon.org</a></span></div>
+    <h3>Christian Heritage London</h3>
+    <div class="stage"><figure class="dev laptop"><div><img src="../../src/assets/chl-desktop.jpg" alt=""></div></figure><figure class="dev phone"><div><img src="../../src/assets/chl-mobile.jpg" alt=""></div></figure></div>
+  </div>
+  <div class="card stanza">
+    <div class="meta"><span>02 / 05</span><span><span>Desktop presentation app for churches</span><span>Beta — v0.1.11</span></span></div>
+    <h3>Stanza</h3>
+  </div>
+</div>
+</section>
+
+</div>
+</body>
+</html>

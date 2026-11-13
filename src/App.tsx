@@ -21,7 +21,7 @@ export default function App() {
     addEventListener('scroll', onScroll, { passive: true })
     return () => removeEventListener('scroll', onScroll)
   }, [])
-  // A mockup only takes a swipe or wheel when fully on screen and the page is still; first time, a "Scroll me" hint (see scrollIntent.ts)
+  // Mockups scroll themselves; a vertical wheel moves a belt sideways (see scrollIntent.ts)
   useEffect(scrollIntent, [])
   return (
     <div className="page" id="top">
@@ -61,7 +61,7 @@ export default function App() {
         <div style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; margin-top: 112px; padding-top: 20px; border-top: 1px solid #ffffff')}>
           <span style={st('flex: 1 1 160px')}>© Gil Virgo 2026</span>
           <span style={st('flex: 2 1 280px')}>gilbertvirgo.co.uk</span>
-          <span style={st('flex: 1 1 200px; text-align: right')}><a href="https://github.com/gilbertVirgo" style={st('display: inline-block; padding: 12px 0')}>GitHub</a></span>
+          <span style={st('flex: 1 1 200px; text-align: right')}><a target="_blank" rel="noopener" href="https://github.com/gilbertVirgo" style={st('display: inline-block; padding: 12px 0')}>GitHub</a></span>
         </div>
       </footer>
       <CookieBar />

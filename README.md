@@ -42,3 +42,12 @@ project must list `gilbertvirgo.co.uk` and the Netlify preview domain.
 
 `design/artboard/Main.dc.html` is the approved artboard. Device screens in
 `src/assets/` are full-page captures of the live client sites.
+
+`design/artboard/Motion-tiles.html` is the board for the video and motion
+tiles; option A (sideways belt, no captions) is built. `Tablet-links.html` is
+an option board, not yet approved. View both through the dev server.
+
+The hero videos in `src/assets/*-hero.mp4` are the client sites' landing
+videos re-encoded small (960 wide, 24fps, no audio):
+
+    ffmpeg -i in.mp4 -an -vf "scale=960:-2,fps=24" -c:v libx264 -preset slow -crf 30 -pix_fmt yuv420p -movflags +faststart out.mp4
