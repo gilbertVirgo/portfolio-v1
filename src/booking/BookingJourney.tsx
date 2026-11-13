@@ -3,10 +3,13 @@ import { st } from '../st'
 import { bookingFrame } from './frame'
 import logo from '../assets/chl-logo.svg'
 
-const F = "font-family: Figtree, 'Inter Tight', sans-serif"
-const G = "font-family: 'EB Garamond', Georgia, serif"
+// The booking site's own faces, from the Christian Heritage London Adobe kit (index.html):
+// Area Inktrap for headings, Area Normal for the small capitals, IvyOra Text for body copy.
+const F = "font-family: 'area-inktrap', 'Inter Tight', sans-serif"
+const A = "font-family: 'area-normal', 'Inter Tight', sans-serif"
+const G = "font-family: 'ivyora-text', Georgia, serif"
 const h1 = st(`${F}; font-weight: 600; font-size: 8cqw; line-height: 1`)
-const label = (margin: string, extra = '') => st(`${F}; font-weight: 700; font-size: 2.4cqw; letter-spacing: 0.12em; ${extra}margin: ${margin}`)
+const label = (margin: string, extra = '') => st(`${A}; font-weight: 800; font-size: 2.4cqw; letter-spacing: 0.12em; ${extra}margin: ${margin}`)
 const field = st(`border: 0.3cqw solid #282828; height: 11cqw; padding: 0 3cqw; display: flex; align-items: center; ${G}; font-size: 4.4cqw`)
 
 export function BookingJourney() {
@@ -28,7 +31,7 @@ export function BookingJourney() {
           <>
             <div style={h1}>Book a tour</div>
             <div style={label('7cqw 0 2.4cqw')}>GROUP SIZE</div>
-            <div style={st(`display: flex; width: 44cqw; border: 0.3cqw solid #8a8a8a; ${F}; font-size: 5cqw`)}>
+            <div style={st(`display: flex; width: 44cqw; border: 0.3cqw solid #8a8a8a; ${F}; font-weight: 600; font-size: 5cqw`)}>
               <span style={st('width: 12cqw; height: 12cqw; border-right: 0.3cqw solid #8a8a8a; display: flex; align-items: center; justify-content: center')}>−</span>
               <span style={st('flex: 1; display: flex; align-items: center; justify-content: center')}>{b.size}</span>
               <span style={st('width: 12cqw; height: 12cqw; border-left: 0.3cqw solid #8a8a8a; display: flex; align-items: center; justify-content: center')}>+</span>
@@ -36,7 +39,7 @@ export function BookingJourney() {
             <div style={st('display: flex; gap: 3cqw; border: 0.3cqw solid #e0e0e0; padding: 4cqw; margin-top: 7cqw')}>
               <span style={st('width: 4cqw; height: 4cqw; border: 0.3cqw solid #8a8a8a; flex: none; margin-top: 0.6cqw')} />
               <span>
-                <span style={st(`display: block; ${F}; font-weight: 500; font-size: 3.8cqw`)}>Make it a private tour</span>
+                <span style={st(`display: block; ${F}; font-weight: 600; font-size: 3.8cqw`)}>Make it a private tour</span>
                 <span style={st(`display: block; ${G}; font-size: 3.2cqw; line-height: 1.35; color: #5c5c5c; margin-top: 1cqw`)}>We keep our tours open to everyone by default, so private tours are limited.</span>
               </span>
             </div>
@@ -60,7 +63,7 @@ export function BookingJourney() {
                   <span style={st(`display: block; ${F}; font-weight: 600; font-size: 4.2cqw`)}>City Walk</span>
                   <span style={st(`display: block; ${G}; font-size: 3.4cqw; color: #5c5c5c`)}>Saturday 13 · 3 guests</span>
                 </span>
-                <span style={st(`${F}; font-weight: 700; font-size: 2.4cqw; letter-spacing: 0.12em; color: #A8192E`)}>ADDED</span>
+                <span style={st(`${A}; font-weight: 800; font-size: 2.4cqw; letter-spacing: 0.12em; color: #A8192E`)}>ADDED</span>
               </div>
             )}
           </>
@@ -81,7 +84,7 @@ export function BookingJourney() {
             <div style={h1}>Review</div>
             <div style={st('display: flex; border: 0.3cqw solid #282828; margin-top: 6cqw')}>
               <span style={st('width: 20cqw; padding: 4cqw 0; background: #f3f1ec; border-right: 0.3cqw dashed #8a8a8a; display: flex; flex-direction: column; align-items: center; gap: 0.6cqw')}>
-                <span style={st(`${F}; font-weight: 700; font-size: 2.4cqw; letter-spacing: 0.12em`)}>SAT</span>
+                <span style={st(`${A}; font-weight: 800; font-size: 2.4cqw; letter-spacing: 0.12em`)}>SAT</span>
                 <span style={st(`${F}; font-weight: 600; font-size: 9cqw; line-height: 1`)}>13</span>
               </span>
               <span style={st('flex: 1; padding: 4cqw')}>
@@ -105,7 +108,7 @@ export function BookingJourney() {
         )}
       </div>
       <div aria-hidden="true" style={st('padding: 3cqw 6cqw; border-top: 0.3cqw solid #e6e6e6; background: #ffffff')}>
-        <div style={st(`background: #A8192E; color: #ffffff; text-align: center; padding: 4cqw; ${F}; font-weight: 700; font-size: 2.8cqw; letter-spacing: 0.14em`)}>{b.btn}</div>
+        <div style={st(`background: #A8192E; color: #ffffff; text-align: center; padding: 4cqw; ${A}; font-weight: 800; font-size: 2.8cqw; letter-spacing: 0.14em`)}>{b.btn}</div>
       </div>
       <span aria-hidden="true" style={st(`position: absolute; left: ${b.cx}; top: ${b.cy}; width: 7cqw; height: 7cqw; margin: -3.5cqw 0 0 -3.5cqw; border-radius: 50%; background: #28282833; border: 0.4cqw solid #282828; transition: left 0.6s ease, top 0.6s ease; pointer-events: none`)} />
     </div>
