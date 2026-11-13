@@ -21,6 +21,9 @@ a:hover { text-decoration-thickness: 2px; }
 /* scrollIntent.ts: a locked mockup ignores swipes and the wheel, so they scroll the page */
 .capture { scrollbar-gutter: stable; } /* locking never shifts the screenshot sideways */
 .capture.locked { overflow-y: hidden !important; }
+/* A mockup only unlocks when fully on screen, so a laptop taller than the viewport would never
+   scroll. Cap its width so the whole laptop (screen ~0.64 × width) fits with room to spare. */
+.laptop { max-width: calc((100svh - 200px) * 1.5); }
 
 /* "Scroll me" hint, added once per mockup by scrollIntent.ts */
 :has(> .capture) { position: relative; }
