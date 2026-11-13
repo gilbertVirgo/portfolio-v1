@@ -43,6 +43,7 @@ a:hover { text-decoration-thickness: 2px; }
   .site-header h1, .site-header nav { flex: none !important; }
   .site-header nav { gap: 18px !important; }
   .site-header p { display: none; }
+  .cookie-bar { font-size: 14px; padding-left: 16px !important; padding-right: 16px !important; }
 
   /* Portfolio cues: a small photo by the name, and each project framed as a card on the white
      page so the first screen reads as work shown here, not as the client's own site. The faint

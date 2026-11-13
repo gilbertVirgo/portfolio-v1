@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ContactForm } from './ContactForm'
 import gil from './assets/gil.jpg'
 import { MoreWork } from './MoreWork'
@@ -64,6 +64,25 @@ export default function App() {
           <span style={st('flex: 1 1 200px; text-align: right')}><a href="https://github.com/gilbertVirgo" style={st('display: inline-block; padding: 12px 0')}>GitHub</a></span>
         </div>
       </footer>
+      <CookieBar />
+    </div>
+  )
+}
+
+// Notice only: GA (index.html) loads regardless. Dismissal is remembered per browser.
+function CookieBar() {
+  const [open, setOpen] = useState(() => {
+    try { return !localStorage.getItem('cookies-dismissed') } catch { return true }
+  })
+  if (!open) return null
+  const dismiss = () => {
+    try { localStorage.setItem('cookies-dismissed', '1') } catch {}
+    setOpen(false)
+  }
+  return (
+    <div role="region" aria-label="Cookies" className="cookie-bar" style={st('position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: #0a0a0a; color: #ffffff; padding: 8px clamp(16px, 2.5cqw, 36px); display: flex; gap: 16px; justify-content: space-between; align-items: center; border-top: 1px solid #ffffff33')}>
+      <p style={st('margin: 0')}>By using this site you agree to its use of cookies.</p>
+      <button type="button" onClick={dismiss} style={st('flex: none; min-height: 44px; padding: 0 20px; background: #ffffff; color: #0a0a0a; border: 0; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer')}>Dismiss</button>
     </div>
   )
 }
