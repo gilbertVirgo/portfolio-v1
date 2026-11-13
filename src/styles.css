@@ -21,6 +21,10 @@ a:hover { text-decoration-thickness: 2px; }
 /* Belts scroll by touch, wheel and keys, with no scrollbar drawn */
 .belt { scrollbar-width: none; }
 .belt::-webkit-scrollbar { display: none; }
+/* On tall-wide screens (1920) a laptop outside a belt would grow taller than the viewport and dominate
+   the page. Cap its width so the whole laptop (screen ~0.64 × width) fits with room to spare. Belt
+   laptops have their own width cap below. */
+.laptop { max-width: calc((100svh - 200px) * 1.5); }
 
 /* Belt and tiles (projects.tsx, tiles.tsx). A project's stage scrolls sideways: mockups stand on the
    baseline, tiles stretch to the tallest mockup. Widths are fixed so the row always runs past the right
