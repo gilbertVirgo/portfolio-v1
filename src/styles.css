@@ -50,6 +50,7 @@ main > section:not(.more) { margin: clamp(10px, 1.2cqw, 18px) clamp(10px, 1.2cqw
   .site-header h1, .site-header nav { flex: none !important; }
   .site-header nav { gap: 18px !important; }
   .site-header p { display: none; }
+  .cookie-bar { font-size: 14px; padding-left: 16px !important; padding-right: 16px !important; }
 
   .site-header h1 { gap: 10px; }
   .face { width: 30px; height: 30px; }
