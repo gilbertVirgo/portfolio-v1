@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { bookingFrame } from './frame'
+import { bookingBeatMs, bookingFrame } from './frame'
 
 test('loops every 13 beats', () => {
   expect(bookingFrame(13)).toEqual(bookingFrame(0))
@@ -34,4 +34,8 @@ test('every beat is complete', () => {
     expect(f.cx).toMatch(/%$/)
     expect(f.btn).not.toBe('')
   }
+})
+
+test('one duration per beat', () => {
+  expect(bookingBeatMs).toHaveLength(13)
 })

@@ -1,6 +1,6 @@
 import { useBeat } from '../useBeat'
 import { st } from '../st'
-import { bookingFrame } from './frame'
+import { bookingBeatMs, bookingFrame } from './frame'
 import logo from '../assets/chl-logo.svg'
 
 // The booking site's own faces, from the Christian Heritage London Adobe kit (index.html):
@@ -13,7 +13,7 @@ const label = (margin: string, extra = '') => st(`${A}; font-weight: 800; font-s
 const field = st(`border: 0.3cqw solid #282828; height: 11cqw; padding: 0 3cqw; display: flex; align-items: center; ${G}; font-size: 4.4cqw`)
 
 export function BookingJourney() {
-  const [ref, beat] = useBeat()
+  const [ref, beat] = useBeat(bookingBeatMs)
   const b = bookingFrame(beat)
   return (
     <div ref={ref} role="img" aria-label="Animated walkthrough of the booking system: choose group size, pick a walk on the calendar, enter details, review, success" style={st('position: relative; aspect-ratio: 3 / 4; overflow: hidden; container-type: inline-size; background: #ffffff; color: #282828; border-radius: 12px; letter-spacing: 0; display: flex; flex-direction: column')}>
