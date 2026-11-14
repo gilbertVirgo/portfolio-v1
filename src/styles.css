@@ -29,7 +29,7 @@ a:hover { text-decoration-thickness: 2px; }
 /* Belt and tiles (projects.tsx, tiles.tsx). A project's stage scrolls sideways: mockups stand on the
    baseline, tiles stretch to the tallest mockup. Widths are fixed so the row always runs past the right
    edge and the next item peeks in. Device styles are inline, hence !important. */
-.belt { display: flex; gap: clamp(16px, 2cqw, 32px); align-items: stretch; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px); }
+.belt { position: sticky; display: flex; gap: clamp(16px, 2cqw, 32px); align-items: stretch; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px); }
 .belt > * { flex: none !important; max-width: none !important; align-self: flex-end; }
 /* --u is the belt's unit: 1% of the page width, held back on short-wide screens so the laptop (56u wide,
    about 36u tall) always fits the viewport with room to spare. Everything in a belt is sized in it, so

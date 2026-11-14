@@ -35,8 +35,11 @@ const phone = (src: string, alt: string, bg: string) => (
 
 // A project's stage as a sideways scroller: mockups first, then the video and motion tiles, the next
 // one peeking in at the right edge. Sizes and the phone layout are in styles.css ("Belt and tiles").
+// The .pin around it holds it mid-screen while the page scrolls it sideways (scrollIntent.ts).
 const belt = (label: string, children: ReactNode) => (
-  <div className="belt" tabIndex={0} role="region" aria-label={label}>{children}</div>
+  <div className="pin">
+    <div className="belt" tabIndex={0} role="region" aria-label={label}>{children}</div>
+  </div>
 )
 
 const tall = 'height: clamp(340px, 42cqw, 600px); width: auto; display: block'
