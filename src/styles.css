@@ -21,6 +21,11 @@ a:hover { text-decoration-thickness: 2px; }
 /* Belts scroll by touch, wheel and keys, with no scrollbar drawn */
 .belt { scrollbar-width: none; }
 .belt::-webkit-scrollbar { display: none; }
+/* Touch screens: no pinning (scrollIntent.ts); a swipe lands on the next item, like a native carousel */
+@media (hover: none) {
+  .belt { scroll-snap-type: x mandatory; scroll-padding-inline: clamp(16px, 2.5cqw, 36px); }
+  .belt > * { scroll-snap-align: start; }
+}
 /* On tall-wide screens (1920) a laptop outside a belt would grow taller than the viewport and dominate
    the page. Cap its width so the whole laptop (screen ~0.64 × width) fits with room to spare. Belt
    laptops have their own width cap below. */

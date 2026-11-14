@@ -10,10 +10,14 @@ import { drift } from './drift'
 // and every pixel scrolled down moves it a pixel sideways. So the whole belt is seen before the page
 // moves on, by wheel, touch, keys or scrollbar alike, and scrolling up runs it back. A sideways swipe
 // on a pinned belt moves the page to match, so the two never disagree.
+//
+// Touch screens (no hover) don't pin: on iOS the page's scroll and the belt's fought each other. There
+// the page scrolls past freely and belts are swiped by hand, snapping to each item (styles.css).
 export function scrollIntent(): () => void {
   const stops = [...document.querySelectorAll<HTMLElement>('.capture')].map((el) => drift(el))
 
-  const pins = [...document.querySelectorAll<HTMLElement>('.pin')].map((pin) => {
+  const touch = matchMedia('(hover: none)').matches
+  const pins = (touch ? [] : [...document.querySelectorAll<HTMLElement>('.pin')]).map((pin) => {
     const belt = pin.firstElementChild as HTMLElement
     let top = 0 // where the belt sticks: centred, or at the top if taller than the screen
     let range = 0 // sideways overflow, and so the extra height of the pin
