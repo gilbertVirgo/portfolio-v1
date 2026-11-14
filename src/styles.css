@@ -21,6 +21,11 @@ a:hover { text-decoration-thickness: 2px; }
 /* Belts scroll by touch, wheel and keys, with no scrollbar drawn */
 .belt { scrollbar-width: none; }
 .belt::-webkit-scrollbar { display: none; }
+/* Touch screens: no pinning (scrollIntent.ts); a swipe lands on the next item, like a native carousel */
+@media (hover: none) {
+  .belt { scroll-snap-type: x mandatory; scroll-padding-inline: clamp(16px, 2.5cqw, 36px); }
+  .belt > * { scroll-snap-align: start; }
+}
 /* On tall-wide screens (1920) a laptop outside a belt would grow taller than the viewport and dominate
    the page. Cap its width so the whole laptop (screen ~0.64 × width) fits with room to spare. Belt
    laptops have their own width cap below. */
@@ -29,7 +34,7 @@ a:hover { text-decoration-thickness: 2px; }
 /* Belt and tiles (projects.tsx, tiles.tsx). A project's stage scrolls sideways: mockups stand on the
    baseline, tiles stretch to the tallest mockup. Widths are fixed so the row always runs past the right
    edge and the next item peeks in. Device styles are inline, hence !important. */
-.belt { display: flex; gap: clamp(16px, 2cqw, 32px); align-items: stretch; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px); }
+.belt { position: sticky; display: flex; gap: clamp(16px, 2cqw, 32px); align-items: stretch; overflow-x: auto; padding: 0 clamp(16px, 2.5cqw, 36px); }
 .belt > * { flex: none !important; max-width: none !important; align-self: flex-end; }
 /* --u is the belt's unit: 1% of the page width, held back on short-wide screens so the laptop (56u wide,
    about 36u tall) always fits the viewport with room to spare. Everything in a belt is sized in it, so

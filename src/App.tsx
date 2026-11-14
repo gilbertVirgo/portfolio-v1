@@ -21,7 +21,7 @@ export default function App() {
     addEventListener('scroll', onScroll, { passive: true })
     return () => removeEventListener('scroll', onScroll)
   }, [])
-  // Mockups scroll themselves; a vertical wheel moves a belt sideways (see scrollIntent.ts)
+  // Mockups scroll themselves; belts pin mid-screen and page scroll moves them sideways (scrollIntent.ts)
   useEffect(scrollIntent, [])
   return (
     <div className="page" id="top">
