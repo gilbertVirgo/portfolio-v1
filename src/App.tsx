@@ -4,18 +4,23 @@ import gil from './assets/gil.jpg'
 import { MoreWork } from './MoreWork'
 import { ProjectSection } from './ProjectSection'
 import { projects } from './projects'
-import { scrollIntent } from './scrollIntent'
+import { scrollIntent, sideways } from './scrollIntent'
 import { st } from './st'
 
 export default function App() {
   const header = useRef<HTMLElement>(null)
   // Header slides away on scroll down and back in on scroll up. Class toggle only: no re-render.
+  // Moves under 8px are saved up rather than acted on, so jitter can't flicker it, and page movement
+  // caused by a sideways swipe on a belt is ignored.
   useEffect(() => {
     let last = scrollY
     const onScroll = () => {
       const el = header.current
-      if (!el || scrollY === last) return
-      el.classList.toggle('away', scrollY > last && scrollY > el.offsetHeight)
+      if (!el) return
+      if (sideways()) { last = scrollY; return }
+      const top = scrollY <= el.offsetHeight
+      if (!top && Math.abs(scrollY - last) < 8) return
+      el.classList.toggle('away', !top && scrollY > last)
       last = scrollY
     }
     addEventListener('scroll', onScroll, { passive: true })

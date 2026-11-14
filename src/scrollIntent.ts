@@ -13,6 +13,10 @@ import { drift } from './drift'
 //
 // Touch screens (no hover) don't pin: on iOS the page's scroll and the belt's fought each other. There
 // the page scrolls past freely and belts are swiped by hand, snapping to each item (styles.css).
+let syncedAt = -Infinity
+// True just after a sideways swipe moved the page, so the header can ignore that movement (App.tsx)
+export const sideways = () => performance.now() - syncedAt < 150
+
 export function scrollIntent(): () => void {
   const stops = [...document.querySelectorAll<HTMLElement>('.capture')].map((el) => drift(el))
 
@@ -29,7 +33,7 @@ export function scrollIntent(): () => void {
       if (Math.abs(d) < 1) return // our own write, or rounding
       const r = pin.getBoundingClientRect()
       const stuck = r.top <= top + 1 && r.bottom >= top + belt.offsetHeight - 1
-      if (stuck) scrollBy(0, d)
+      if (stuck) { syncedAt = performance.now(); scrollBy(0, d) }
       else fromPage() // not stuck: the page decides where the belt is
     }
     const measure = () => {
