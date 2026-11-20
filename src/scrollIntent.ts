@@ -1,65 +1,62 @@
-// Mockups (.capture) scroll inside the page, so a swipe or wheel passing over one could get caught in
-// it. A mockup only takes scrolling when it is fully on screen and the page has been still for a
-// moment. Otherwise it is .locked (styles.css) and the scroll goes to the page. The first time a
-// scrollable mockup unlocks, a "Scroll me" hint shows on it until it is scrolled or HINT_MS passes,
-// one hint at a time.
-const SETTLE_MS = 250
-const HINT_MS = 2500
+import { drift } from './drift'
+
+// Scrolling that the page does for, or instead of, the visitor.
+//
+// Mockups (.capture) cannot be scrolled by hand. Each scrolls itself slowly down and back up while on
+// screen (drift.ts).
+//
+// Belts (.belt) scroll sideways, each inside a .pin. The pin is made as tall as the belt plus its
+// sideways overflow; the belt sticks at the middle of the screen while the page scrolls through the pin,
+// and every pixel scrolled down moves it a pixel sideways. So the whole belt is seen before the page
+// moves on, by wheel, touch, keys or scrollbar alike, and scrolling up runs it back. A sideways swipe
+// on a pinned belt moves the page to match, so the two never disagree.
+//
+// Touch screens (no hover) don't pin: on iOS the page's scroll and the belt's fought each other. There
+// the page scrolls past freely and belts are swiped by hand, snapping to each item (styles.css).
+let syncedAt = -Infinity
+// True just after a sideways swipe moved the page, so the header can ignore that movement (App.tsx)
+export const sideways = () => performance.now() - syncedAt < 150
 
 export function scrollIntent(): () => void {
-  const caps = [...document.querySelectorAll<HTMLElement>('.capture')]
-  const hinted = new Set<HTMLElement>()
-  let settled = true
-  let timer = 0
-  let showing = false
+  const stops = [...document.querySelectorAll<HTMLElement>('.capture')].map((el) => drift(el))
 
-  const hint = (el: HTMLElement) => {
-    hinted.add(el)
-    showing = true
-    const tip = document.createElement('span')
-    tip.className = 'hint'
-    tip.textContent = 'Scroll me'
-    tip.setAttribute('aria-hidden', 'true')
-    el.after(tip)
-    tip.getBoundingClientRect() // commit opacity 0 so .show fades in
-    tip.classList.add('show')
-    let done = false
-    const hide = () => {
-      if (done) return
-      done = true
-      showing = false
-      el.removeEventListener('scroll', hide)
-      tip.classList.remove('show')
-      setTimeout(() => tip.remove(), 400)
+  const touch = matchMedia('(hover: none)').matches
+  const pins = (touch ? [] : [...document.querySelectorAll<HTMLElement>('.pin')]).map((pin) => {
+    const belt = pin.firstElementChild as HTMLElement
+    let top = 0 // where the belt sticks: centred, or at the top if taller than the screen
+    let range = 0 // sideways overflow, and so the extra height of the pin
+    // Where the page puts the belt: at its start until it sticks, then 1px sideways per 1px down
+    const want = () => Math.min(range, Math.max(0, top - pin.getBoundingClientRect().top))
+    const fromPage = () => { belt.scrollLeft = want() }
+    const fromBelt = () => {
+      const d = belt.scrollLeft - want()
+      if (Math.abs(d) < 1) return // our own write, or rounding
+      const r = pin.getBoundingClientRect()
+      const stuck = r.top <= top + 1 && r.bottom >= top + belt.offsetHeight - 1
+      if (stuck) { syncedAt = performance.now(); scrollBy(0, d) }
+      else fromPage() // not stuck: the page decides where the belt is
     }
-    el.addEventListener('scroll', hide)
-    setTimeout(hide, HINT_MS)
-  }
-
-  const update = () => caps.forEach((el) => {
-    const r = el.getBoundingClientRect()
-    const open = settled && r.height > 0 && r.top >= -8 && r.bottom <= innerHeight + 8 // 8px slack for toolbar jitter
-    el.classList.toggle('locked', !open)
-    if (open && !showing && !hinted.has(el) && el.scrollHeight > el.clientHeight + 1) hint(el)
+    const measure = () => {
+      range = belt.scrollWidth - belt.clientWidth
+      top = Math.max(0, (innerHeight - belt.offsetHeight) / 2)
+      belt.style.top = top + 'px'
+      pin.style.height = belt.offsetHeight + range + 'px'
+      fromPage()
+    }
+    const ro = new ResizeObserver(measure) // children too: images loading change the overflow
+    ;[belt, ...belt.children].forEach((el) => ro.observe(el))
+    belt.addEventListener('scroll', fromBelt, { passive: true })
+    return { measure, fromPage, stop: () => { ro.disconnect(); belt.removeEventListener('scroll', fromBelt) } }
   })
-  const onScroll = () => {
-    settled = false
-    clearTimeout(timer)
-    timer = window.setTimeout(() => { settled = true; update() }, SETTLE_MS)
-    update()
-  }
-
-  update()
+  const onScroll = () => pins.forEach((p) => p.fromPage())
+  const onResize = () => pins.forEach((p) => p.measure())
   addEventListener('scroll', onScroll, { passive: true })
-  addEventListener('resize', update)
-  addEventListener('toggle', update, true) // More work opening reveals mockups without a scroll
-  addEventListener('load', update, true) // a lazy screenshot loading makes its mockup scrollable
+  addEventListener('resize', onResize)
+
   return () => {
-    clearTimeout(timer)
+    stops.forEach((stop) => stop())
+    pins.forEach((p) => p.stop())
     removeEventListener('scroll', onScroll)
-    removeEventListener('resize', update)
-    removeEventListener('toggle', update, true)
-    removeEventListener('load', update, true)
-    document.querySelectorAll('.hint').forEach((t) => t.remove())
+    removeEventListener('resize', onResize)
   }
 }

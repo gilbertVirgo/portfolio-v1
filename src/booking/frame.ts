@@ -10,6 +10,10 @@ export type BookingFrame = {
   cx: string; cy: string
 }
 
+// How long each beat lasts. The + clicks and field fills run quick; 700ms still
+// leaves the 0.6s cursor glide time to land before the next field fills.
+export const bookingBeatMs = [700, 500, 1100, 1300, 1300, 700, 700, 700, 1100, 1300, 1300, 1300, 1300] as const
+
 // 13 beats. The cursor rests on the control the next beat acts on.
 export function bookingFrame(t: number): BookingFrame {
   const f = t % 13

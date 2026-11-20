@@ -4,24 +4,29 @@ import gil from './assets/gil.jpg'
 import { MoreWork } from './MoreWork'
 import { ProjectSection } from './ProjectSection'
 import { projects } from './projects'
-import { scrollIntent } from './scrollIntent'
+import { scrollIntent, sideways } from './scrollIntent'
 import { st } from './st'
 
 export default function App() {
   const header = useRef<HTMLElement>(null)
   // Header slides away on scroll down and back in on scroll up. Class toggle only: no re-render.
+  // Moves under 8px are saved up rather than acted on, so jitter can't flicker it, and page movement
+  // caused by a sideways swipe on a belt is ignored.
   useEffect(() => {
     let last = scrollY
     const onScroll = () => {
       const el = header.current
-      if (!el || scrollY === last) return
-      el.classList.toggle('away', scrollY > last && scrollY > el.offsetHeight)
+      if (!el) return
+      if (sideways()) { last = scrollY; return }
+      const top = scrollY <= el.offsetHeight
+      if (!top && Math.abs(scrollY - last) < 8) return
+      el.classList.toggle('away', !top && scrollY > last)
       last = scrollY
     }
     addEventListener('scroll', onScroll, { passive: true })
     return () => removeEventListener('scroll', onScroll)
   }, [])
-  // A mockup only takes a swipe or wheel when fully on screen and the page is still; first time, a "Scroll me" hint (see scrollIntent.ts)
+  // Mockups scroll themselves; belts pin mid-screen and page scroll moves them sideways (scrollIntent.ts)
   useEffect(scrollIntent, [])
   return (
     <div className="page" id="top">
@@ -31,7 +36,7 @@ export default function App() {
         <nav style={st('display: flex; gap: 24px; flex: 1 1 200px; justify-content: flex-end')}>
           <a href="#work" style={st('text-decoration: none; padding: 12px 0')}>Work</a>
           <a href="#about" style={st('text-decoration: none; padding: 12px 0')}>About</a>
-          <a href="#contact" style={st('padding: 12px 0')}>Start a project</a>
+          <a href="#contact" style={st('padding: 12px 0; white-space: nowrap')}>Start a project</a>
         </nav>
       </header>
       <main id="work">
@@ -61,7 +66,7 @@ export default function App() {
         <div style={st('display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; margin-top: 112px; padding-top: 20px; border-top: 1px solid #ffffff')}>
           <span style={st('flex: 1 1 160px')}>© Gil Virgo 2026</span>
           <span style={st('flex: 2 1 280px')}>gilbertvirgo.co.uk</span>
-          <span style={st('flex: 1 1 200px; text-align: right')}><a href="https://github.com/gilbertVirgo" style={st('display: inline-block; padding: 12px 0')}>GitHub</a></span>
+          <span style={st('flex: 1 1 200px; text-align: right')}><a target="_blank" rel="noopener" href="https://github.com/gilbertVirgo" style={st('display: inline-block; padding: 12px 0')}>GitHub</a></span>
         </div>
       </footer>
       <CookieBar />
