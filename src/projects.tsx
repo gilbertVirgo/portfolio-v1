@@ -6,6 +6,11 @@ import { BookingJourney } from './booking/BookingJourney'
 import { StanzaJourney } from './stanza/StanzaJourney'
 import chlDesktop from './assets/chl-desktop.jpg'
 import chlMobile from './assets/chl-mobile.jpg'
+import chlArtPoster from './assets/chl-art-remember-poster.jpg'
+import chlArtHistory from './assets/chl-art-history-isnt-finished.jpg'
+import chlArtGod from './assets/chl-art-god-of-god.jpg'
+import chlArtSummer from './assets/chl-art-summer-school.jpg'
+import chlArtMap from './assets/chl-art-map.jpg'
 import lcrPlaque from './assets/lcr-plaque.png'
 import lcrWelcome from './assets/lcr-welcome.png'
 import lcrRoller1 from './assets/lcr-roller1.png'
@@ -53,10 +58,20 @@ const lcrFigures: { src: string; alt: string; caption: string; style: string }[]
   { src: lcrLogos, alt: 'Logo variations in dark teal, magenta, blue, yellow and cream, on light and dark grounds', caption: 'Logo, all variations', style: tall + '; background: #E6E2D3; padding: 24px' },
 ]
 
+// Christian Heritage London print and social pieces, packed into one bento tile (styles.css, "Bento").
+// The poster leads and runs the full height; the rest fill the grid in order and are cropped to fit.
+const chlArt: { src: string; alt: string; caption: string }[] = [
+  { src: chlArtPoster, alt: 'Pale blue poster: a line drawing of a man’s face under the word Remember in red capitals, with Hebrews 13:7 below', caption: 'Remember poster, A5' },
+  { src: chlArtHistory, alt: 'Podcast cover: History isn’t Finished in pink serif capitals over two older men in glasses, printed in navy halftone on cream', caption: 'History isn’t Finished podcast cover' },
+  { src: chlArtGod, alt: 'Podcast cover: God of God, Light of Light in heavy cream capitals on a dark grainy blue ground', caption: 'God of God podcast cover' },
+  { src: chlArtSummer, alt: 'Event banner: Summer School in tall condensed capitals under a yellow-to-blue grainy gradient, with the speakers’ names and 5–9 August 2024', caption: 'Summer School banner, 16:9' },
+  { src: chlArtMap, alt: 'Walking map of the City of London in blue, with numbered stops and a key of the Christians linked to each', caption: 'City walking map, A4' },
+]
+
 export const projects: Project[] = [
   {
     id: 'chl', title: 'Christian Heritage London', bg: '#A8192E', fg: '#ffffff',
-    disciplines: 'Visual identity, website and booking system',
+    disciplines: 'Visual identity, website, booking system and artwork',
     links: (
       <>
         <a target="_blank" rel="noopener" href="https://christianheritagelondon.org">christianheritagelondon.org</a>
@@ -64,7 +79,7 @@ export const projects: Project[] = [
       </>
     ),
     bleed: true,
-    stage: belt('Christian Heritage London website, booking system and landing video, scrolls sideways', (
+    stage: belt('Christian Heritage London website, booking system, landing video and artwork, scrolls sideways', (
       <>
         <Tablet><BookingJourney /></Tablet>
         <HeroTile site="chl" video={chlHero} poster={chlHeroPoster} label="Christian Heritage London landing video, a street scene in the City, under the headline Explore London’s Stories">
@@ -73,6 +88,9 @@ export const projects: Project[] = [
           <span className="chl-button">Book a London walk</span>
         </HeroTile>
         {laptop(chlDesktop, 'Christian Heritage London home page: dark hero reading Explore London’s Stories, then walks, podcast, articles and gift vouchers', '#ffffff')}
+        <div className="bento" role="group" aria-label="Christian Heritage London artwork: poster, podcast covers, event banner and walking map">
+          {chlArt.map((a) => <img key={a.caption} src={a.src} alt={a.alt} loading="lazy" />)}
+        </div>
         {phone(chlMobile, 'Christian Heritage London home page at phone width', '#ffffff')}
       </>
     )),

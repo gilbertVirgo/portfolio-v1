@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>More work — options</title>
+<link rel="stylesheet" href="https://use.typekit.net/jnj6xdu.css">
+<style>
+/* Exploration board: the More work section, reworked so each project can carry several pieces
+   (a capture plus artwork) instead of one thumbnail. SPUC joins the list. Dashed tiles are
+   placeholders for artwork not supplied yet. Open with the dev server: /design/artboard/More-work.html */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 40px; background: #e9e9e6; color: #0a0a0a; font: 15px/1.35 'sets-grotesk-l', 'Inter Tight', system-ui, sans-serif; letter-spacing: -0.01em; }
+h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+.intro { margin: 0 0 40px; max-width: 62em; }
+.option { margin-bottom: 72px; max-width: 1360px; }
+.option > h2 { margin: 0 0 4px; font-size: 17px; font-weight: 600; }
+.option > p { margin: 0 0 16px; max-width: 62em; }
+.pick { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: #0a0a0a; color: #fff; font-size: 12px; font-weight: 500; vertical-align: 2px; }
+
+/* The section as on the page: white, a ruled toggle heading */
+.page { background: #fff; border-radius: 28px; padding: 0 36px 72px; overflow: clip; }
+.toggle { display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid #0a0a0a; }
+.toggle::after { content: '\2212'; }
+a { color: inherit; }
+
+/* Shared piece styles */
+.cap { overflow: hidden; background: #fff; }
+.cap img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.art { display: block; border-radius: 6px; }
+/* Placeholder for artwork not supplied yet */
+.ph { display: grid; place-items: center; border: 1.5px dashed currentColor; border-radius: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.55; text-align: center; padding: 8px; }
+
+/* ---------- A: index rows ---------- */
+/* One row per project: name and details pinned left, its pieces in a sideways strip on the right.
+   A project with one piece is a short row; one with eight just scrolls further. */
+.rows .row { display: grid; grid-template-columns: minmax(220px, 1fr) 3fr; gap: 32px; padding: 32px 0; border-bottom: 1px solid #0a0a0a; }
+.rows .info h3 { margin: 0 0 10px; font-size: 32px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.rows .info p { margin: 0 0 4px; }
+.rows .info .count { margin-top: 16px; opacity: 0.55; font-size: 13px; }
+.strip { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.strip::-webkit-scrollbar { display: none; }
+.strip > * { flex: none; height: 260px; }
+.strip .cap { aspect-ratio: 16 / 10; border: 1px solid #0a0a0a; }
+.strip img.art { width: auto; }
+.strip .ph.tall { aspect-ratio: 1 / 1.414; } .strip .ph.sq { aspect-ratio: 1; } .strip .ph.wide { aspect-ratio: 16 / 9; }
+
+/* ---------- B: colour cards ---------- */
+/* Two columns of cards, each in the project's own colours, holding its pieces as a small bento:
+   lead piece big, the rest in a column beside it. Breaks up the white and reads as work, not links. */
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 32px; }
+.card { border-radius: 22px; padding: 24px; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.card .head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.card h3 { margin: 0; font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.card .head span { font-size: 13px; opacity: 0.7; text-align: right; }
+.bento { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-auto-rows: minmax(0, 1fr); gap: 10px; height: 300px; }
+.bento > * { min-height: 0; width: 100%; height: 100%; border-radius: 8px; }
+.bento > :first-child { grid-row: span 3; }
+.bento img { object-fit: cover; object-position: top; display: block; }
+.bento.one { grid-template-columns: minmax(0, 1fr); }
+.bento.two > :first-child { grid-row: span 2; }
+.card .foot { display: flex; gap: 16px; font-size: 14px; }
+
+/* ---------- C: grid with a tray ---------- */
+/* Keeps today's three-up grid. Under each capture, a tray of small thumbnails; tapping one swaps it
+   into the main frame. Most compact, but extra pieces are small until chosen. */
+.trays { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 32px; padding-top: 40px; }
+.trays .main { aspect-ratio: 16 / 10; border: 1px solid #0a0a0a; overflow: hidden; background: #f4f4f2; }
+.trays .main img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.trays .main img.fill { object-fit: cover; object-position: top; }
+.tray { display: flex; gap: 8px; margin-top: 10px; }
+.tray button { width: 56px; height: 40px; padding: 0; border: 1px solid #0003; background: #f4f4f2; cursor: pointer; overflow: hidden; }
+.tray button[aria-pressed="true"] { outline: 2px solid #0a0a0a; outline-offset: 1px; }
+.tray button img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.tray button.ph { opacity: 0.55; border-style: dashed; font-size: 9px; }
+.trays h3 { margin: 18px 0 6px; font-size: 32px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.trays p { margin: 0; }
+
+@media (max-width: 700px) {
+  body { padding: 16px; }
+  .page { padding: 0 16px 40px; border-radius: 22px; }
+  .rows .row { grid-template-columns: 1fr; gap: 16px; padding: 24px 0; }
+  .rows .info .count { display: none; }
+  .strip { margin-right: -16px; padding-right: 16px; }
+  .strip > * { height: 200px; }
+  .cards, .trays { grid-template-columns: minmax(0, 1fr); }
+  .card .head { flex-direction: column; gap: 6px; }
+  .card .head span { text-align: left; }
+  .bento { height: 240px; }
+  .card { padding: 18px; }
+}
+</style>
+</head>
+<body>
+<h1>More work, with room for more</h1>
+<p class="intro">Each project can now carry several pieces: its site capture plus artwork, adverts or app screens. SPUC joins as the fourth entry, with no link. Dashed tiles stand in for the Victoria Park artwork you haven’t sent yet. Shown open; the section can stay behind its toggle or open by default.</p>
+
+<!-- ======================= A ======================= -->
+<section class="option">
+<h2>A · Index rows <span class="pick">Suggested</span></h2>
+<p>A ruled list, one row per project: name, disciplines and link on the left, its pieces in a sideways strip on the right, all at one height and uncropped. Same language as the project cards above it (rules, sideways belts) at a smaller scale. A project with one piece makes a short row; one with eight just scrolls further. On a phone the name sits above its strip.</p>
+<div class="page">
+  <div class="toggle">More work (4)</div>
+  <div class="rows">
+    <div class="row">
+      <div class="info"><h3>Victoria Park Community Church</h3><p>Visual identity, website and artwork</p><a href="#">vpcc.church</a><p class="count">4 pieces</p></div>
+      <div class="strip">
+        <div class="cap"><img src="../../src/assets/vpcc-desktop.jpg" alt=""></div>
+        <div class="ph tall" style="color: #E98D43">Artwork</div>
+        <div class="ph sq" style="color: #17171F">Artwork</div>
+        <div class="ph wide" style="color: #E98D43">Artwork</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="info"><h3>SPUC</h3><p>Website design and advertising</p><p style="opacity: 0.55">Scottish Parliament election, 2026</p><p class="count">3 pieces</p></div>
+      <div class="strip">
+        <img class="art" src="../../src/assets/spuc-hero.jpg" alt="">
+        <img class="art" src="../../src/assets/spuc-regions.jpg" alt="">
+        <img class="art" src="../../src/assets/spuc-candidates.jpg" alt="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="info"><h3>Hope Church West End</h3><p>Visual identity, website, photography</p><p class="count">1 piece</p></div>
+      <div class="strip"><div class="cap"><img src="../../src/assets/hcwe-desktop.jpg" alt=""></div></div>
+    </div>
+    <div class="row">
+      <div class="info"><h3>Automated Medical Technologies</h3><p>Website</p><a href="#">automatedmedtech.com</a><p class="count">1 piece</p></div>
+      <div class="strip"><div class="cap"><img src="../../src/assets/amt-desktop.jpg" alt=""></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ======================= B ======================= -->
+<section class="option">
+<h2>B · Colour cards</h2>
+<p>Two columns of cards, each in the project’s own colours, so the section stops being black and white. Pieces sit in a small bento: the lead piece big, the rest stacked beside it. Most lively of the three. Cost: everything past the lead is cropped to fit, and the bento caps a project at about four pieces before they get too small.</p>
+<div class="page">
+  <div class="toggle">More work (4)</div>
+  <div class="cards">
+    <article class="card" style="background: #FCFCF5; color: #17171F; box-shadow: inset 0 0 0 1px #0000001a">
+      <div class="head"><h3>Victoria Park Community Church</h3><span>Visual identity, website and artwork</span></div>
+      <div class="bento">
+        <img src="../../src/assets/vpcc-desktop.jpg" alt="">
+        <div class="ph" style="color: #E98D43">Artwork</div>
+        <div class="ph">Artwork</div>
+        <div class="ph" style="color: #E98D43">Artwork</div>
+      </div>
+      <div class="foot"><a href="#">vpcc.church</a></div>
+    </article>
+    <article class="card" style="background: #2C2C2C; color: #F4F4F2">
+      <div class="head"><h3>SPUC</h3><span>Website design and advertising</span></div>
+      <div class="bento two">
+        <img src="../../src/assets/spuc-hero.jpg" alt="" style="object-position: left">
+        <img src="../../src/assets/spuc-regions.jpg" alt="">
+        <img src="../../src/assets/spuc-candidates.jpg" alt="">
+      </div>
+      <div class="foot" style="opacity: 0.6">Scottish Parliament election, 2026</div>
+    </article>
+    <article class="card" style="background: #232628; color: #F5F1E9">
+      <div class="head"><h3>Hope Church West End</h3><span>Visual identity, website, photography</span></div>
+      <div class="bento one"><img src="../../src/assets/hcwe-desktop.jpg" alt=""></div>
+    </article>
+    <article class="card" style="background: #0F172A; color: #F6F7F8">
+      <div class="head"><h3>Automated Medical Technologies</h3><span>Website</span></div>
+      <div class="bento one"><img src="../../src/assets/amt-desktop.jpg" alt=""></div>
+      <div class="foot"><a href="#">automatedmedtech.com</a></div>
+    </article>
+  </div>
+</div>
+</section>
+
+<!-- ======================= C ======================= -->
+<section class="option">
+<h2>C · Grid with a tray</h2>
+<p>Keeps today’s three-up grid and adds a row of small thumbnails under each frame; tap one to swap it in. Smallest change and the page stays tidy. Cost: still black and white, and the extra pieces are postage stamps until someone taps, so most visitors won’t see them.</p>
+<div class="page">
+  <div class="toggle">More work (4)</div>
+  <div class="trays">
+    <article>
+      <div class="main"><img class="fill" src="../../src/assets/vpcc-desktop.jpg" alt=""></div>
+      <div class="tray"><button aria-pressed="true"><img src="../../src/assets/vpcc-desktop.jpg" alt=""></button><button class="ph">Art</button><button class="ph">Art</button><button class="ph">Art</button></div>
+      <h3>Victoria Park Community Church</h3><p>Visual identity, website and artwork</p>
+    </article>
+    <article>
+      <div class="main" style="background: #2C2C2C"><img src="../../src/assets/spuc-hero.jpg" alt=""></div>
+      <div class="tray"><button aria-pressed="true"><img src="../../src/assets/spuc-hero.jpg" alt=""></button><button><img src="../../src/assets/spuc-regions.jpg" alt=""></button><button><img src="../../src/assets/spuc-candidates.jpg" alt=""></button></div>
+      <h3>SPUC</h3><p>Website design and advertising</p>
+    </article>
+    <article>
+      <div class="main"><img class="fill" src="../../src/assets/hcwe-desktop.jpg" alt=""></div>
+      <h3>Hope Church West End</h3><p>Visual identity, website, photography</p>
+    </article>
+  </div>
+</div>
+</section>
+
+<script>
+// C: a tray button swaps its picture into the main frame
+document.querySelectorAll('.trays article').forEach((a) => {
+  const main = a.querySelector('.main img')
+  a.querySelectorAll('.tray button').forEach((b) => b.addEventListener('click', () => {
+    const img = b.querySelector('img'); if (!img) return
+    main.src = img.src
+    main.classList.toggle('fill', img.src.includes('desktop'))
+    a.querySelectorAll('.tray button').forEach((x) => x.setAttribute('aria-pressed', x === b))
+  }))
+})
+</script>
+</body>
+</html>
