@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHL artwork gallery — options</title>
+<link rel="stylesheet" href="https://use.typekit.net/jnj6xdu.css">
+<style>
+/* Exploration board: four ways to fit six Christian Heritage London print and social pieces into the
+   CHL card. Open with the dev server: /design/artboard/CHL-gallery.html */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 40px; background: #e9e9e6; color: #0a0a0a; font: 15px/1.35 'sets-grotesk-l', 'Inter Tight', system-ui, sans-serif; letter-spacing: -0.01em; }
+h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+.intro { margin: 0 0 40px; max-width: 62em; }
+.option { margin-bottom: 72px; max-width: 1280px; }
+.option > h2 { margin: 0 0 4px; font-size: 17px; font-weight: 600; }
+.option > p { margin: 0 0 16px; max-width: 62em; }
+.pick { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: #0a0a0a; color: #fff; font-size: 12px; font-weight: 500; vertical-align: 2px; }
+.card { border-radius: 28px; padding: 28px 0 40px; background: #A8192E; color: #fff; overflow: clip; }
+.card > h3 { margin: 0 28px 28px; font-size: 64px; font-weight: 600; line-height: 0.9; letter-spacing: -0.02em; }
+.card > .sub { margin: 28px 28px 14px; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.75; }
+
+.belt { --h: 400px; display: flex; gap: 24px; align-items: flex-end; overflow-x: auto; scrollbar-width: none; padding: 0 28px; }
+.belt::-webkit-scrollbar { display: none; }
+.belt > * { flex: none; }
+.belt img.art { height: var(--h); width: auto; display: block; border-radius: 6px; box-shadow: 0 10px 30px #0004; }
+.belt.short { --h: 240px; gap: 16px; }
+
+/* Stand-ins for the mockups already in the belt, so each option reads in context */
+.laptop { width: 640px; }
+.laptop .bezel { background: #0d0d0d; padding: 1.4%; border-radius: 18px 18px 0 0; }
+.laptop .base { height: 12px; background: #0d0d0d; border-top: 1px solid #3a3a3a; border-radius: 0 0 14px 14px; margin: 0 -2%; }
+.laptop img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 4px; }
+.phone { width: 196px; background: #0d0d0d; padding: 8px; border-radius: 30px; }
+.phone img { display: block; width: 100%; aspect-ratio: 9 / 19; object-fit: cover; object-position: top; border-radius: 22px; }
+
+/* A: label riding above the first art piece, so the jump from screens to print is announced */
+.marker { align-self: stretch; display: flex; align-items: flex-end; padding-bottom: 8px; width: 120px; font-size: 13px; font-weight: 500; line-height: 1.25; opacity: 0.8; border-left: 1px solid #fff6; padding-left: 16px; margin-left: 8px; }
+
+/* C: one bento tile, the six pieces packed in a grid */
+.bento { width: 760px; height: 470px; display: grid; gap: 10px; grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.bento img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 6px; }
+.bento .poster { grid-row: span 2; object-position: top; }
+.bento .map { object-position: left; }
+
+/* D: one slot that deals the pieces in turn, like a stack of prints */
+.deck { position: relative; width: 470px; height: 470px; border-radius: 10px; background: #8d1426; }
+.deck img { position: absolute; inset: 0; margin: auto; max-width: 88%; max-height: 88%; border-radius: 6px; box-shadow: 0 10px 30px #0005; opacity: 0; transform: translateY(10px) rotate(var(--r, 0deg)); transition: opacity 0.6s, transform 0.6s; }
+.deck img.on { opacity: 1; transform: rotate(var(--r, 0deg)); }
+.deck .dots { position: absolute; left: 0; right: 0; bottom: -28px; display: flex; gap: 8px; justify-content: center; }
+.deck .dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: #fff6; cursor: pointer; }
+.deck .dots button[aria-current] { background: #fff; }
+
+@media (prefers-reduced-motion: reduce) { .deck img { transition: none; } }
+</style>
+</head>
+<body>
+<h1>Christian Heritage London — artwork gallery</h1>
+<p class="intro">Six pieces: the <i>History isn’t Finished</i> and <i>God of God</i> podcast covers, the <i>Remember</i> poster and its 16:9 slide, the City walking map, and the Summer School banner. Mixed shapes (square, 16:9, A5 portrait, A4 landscape), so every option keeps each piece uncropped except C. The laptop and phone below stand in for the CHL belt as it is now.</p>
+
+<section class="option">
+<h2>A · Carry on down the belt <span class="pick">Suggested</span></h2>
+<p>The art joins the end of the existing CHL belt, all at one height, the way Life Church Richmond already works. A small label marks the switch from screens to print. No new layout, no new code paths, no card growth. Cost: the art is past the phone, so it’s only seen by people who keep scrolling sideways (the pin does most of that for them on desktop).</p>
+<div class="card">
+  <h3>Christian Heritage London</h3>
+  <div class="belt">
+    <div class="laptop"><div class="bezel"><img src="../../src/assets/chl-desktop.jpg" alt=""></div><div class="base"></div></div>
+    <div class="phone"><img src="../../src/assets/chl-mobile.jpg" alt=""></div>
+    <div class="marker">Print, podcast and event artwork</div>
+    <img class="art" src="../../src/assets/chl-art-history-isnt-finished.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-remember-poster.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-remember-forever.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-god-of-god.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-map.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-summer-school.jpg" alt="">
+  </div>
+</div>
+</section>
+
+<section class="option">
+<h2>B · A second, shorter belt underneath</h2>
+<p>Website belt stays as it is; the art gets its own lower strip with a small heading. Visitors see there’s artwork without scrolling sideways, and the pieces sit smaller, like a contact sheet. Cost: the card grows by about 300px, and it’s a second sideways scroller to wire into the pin logic (or leave unpinned, swipe and trackpad only).</p>
+<div class="card">
+  <h3>Christian Heritage London</h3>
+  <div class="belt">
+    <div class="laptop"><div class="bezel"><img src="../../src/assets/chl-desktop.jpg" alt=""></div><div class="base"></div></div>
+    <div class="phone"><img src="../../src/assets/chl-mobile.jpg" alt=""></div>
+  </div>
+  <p class="sub">Artwork</p>
+  <div class="belt short">
+    <img class="art" src="../../src/assets/chl-art-history-isnt-finished.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-remember-poster.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-remember-forever.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-god-of-god.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-map.jpg" alt="">
+    <img class="art" src="../../src/assets/chl-art-summer-school.jpg" alt="">
+  </div>
+</div>
+</section>
+
+<section class="option">
+<h2>C · One bento tile in the belt</h2>
+<p>All six packed into a single tile, one slot in the belt, so the whole body of work reads at a glance. Poster runs full height on the left. Cost: pieces are cropped to fit the grid (the map loses its key, the wide ones lose their edges), and each piece is small. Works best as a teaser that opens a lightbox.</p>
+<div class="card">
+  <h3>Christian Heritage London</h3>
+  <div class="belt">
+    <div class="laptop"><div class="bezel"><img src="../../src/assets/chl-desktop.jpg" alt=""></div><div class="base"></div></div>
+    <div class="bento">
+      <img class="poster" src="../../src/assets/chl-art-remember-poster.jpg" alt="">
+      <img src="../../src/assets/chl-art-history-isnt-finished.jpg" alt="">
+      <img src="../../src/assets/chl-art-god-of-god.jpg" alt="">
+      <img src="../../src/assets/chl-art-remember-forever.jpg" alt="">
+      <img class="map" src="../../src/assets/chl-art-map.jpg" alt="">
+    </div>
+    <div class="phone"><img src="../../src/assets/chl-mobile.jpg" alt=""></div>
+  </div>
+</div>
+</section>
+
+<section class="option">
+<h2>D · A stack that deals itself</h2>
+<p>One square slot in the belt. The pieces cross-fade in turn every few seconds, each tipped a degree or two like prints on a table; dots underneath jump to any piece. Smallest footprint, every piece shown whole. Cost: only one piece visible at a time, and it’s more motion on a card that already has a video and a booking demo.</p>
+<div class="card">
+  <h3>Christian Heritage London</h3>
+  <div class="belt" style="padding-bottom: 32px">
+    <div class="laptop"><div class="bezel"><img src="../../src/assets/chl-desktop.jpg" alt=""></div><div class="base"></div></div>
+    <div class="deck">
+      <img style="--r: -1.5deg" src="../../src/assets/chl-art-history-isnt-finished.jpg" alt="">
+      <img style="--r: 1deg" src="../../src/assets/chl-art-remember-poster.jpg" alt="">
+      <img style="--r: -1deg" src="../../src/assets/chl-art-remember-forever.jpg" alt="">
+      <img style="--r: 1.5deg" src="../../src/assets/chl-art-god-of-god.jpg" alt="">
+      <img style="--r: -0.5deg" src="../../src/assets/chl-art-map.jpg" alt="">
+      <img style="--r: 1deg" src="../../src/assets/chl-art-summer-school.jpg" alt="">
+      <div class="dots"></div>
+    </div>
+    <div class="phone"><img src="../../src/assets/chl-mobile.jpg" alt=""></div>
+  </div>
+</div>
+</section>
+
+<script>
+// D: advance every 3.5s while on screen; a dot click jumps there and restarts the timer.
+// Class toggles on fixed elements (opacity/transform transitions, nothing remounts or loops infinitely).
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches
+document.querySelectorAll('.deck').forEach((deck) => {
+  const imgs = [...deck.querySelectorAll('img')], dots = deck.querySelector('.dots')
+  let i = 0, t = 0
+  const btns = imgs.map((_, n) => { const b = document.createElement('button'); b.ariaLabel = `Piece ${n + 1}`; b.onclick = () => { show(n); start() }; dots.append(b); return b })
+  const show = (n) => { i = n; imgs.forEach((im, k) => im.classList.toggle('on', k === n)); btns.forEach((b, k) => k === n ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')) }
+  const start = () => { clearInterval(t); if (!still) t = setInterval(() => show((i + 1) % imgs.length), 3500) }
+  show(0)
+  new IntersectionObserver(([e]) => e.isIntersecting ? start() : clearInterval(t), { threshold: 0.5 }).observe(deck)
+})
+</script>
+</body>
+</html>

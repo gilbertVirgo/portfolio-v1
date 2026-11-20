@@ -1,5 +1,6 @@
 * { box-sizing: border-box; }
-body { margin: 0; background: #fff; }
+/* Pretty line breaks everywhere (inherited), no orphans; balance where pretty isn't supported yet (Firefox). Big headings: noOrphan() in ProjectSection.tsx. */
+body { margin: 0; background: #fff; text-wrap: balance; text-wrap: pretty; }
 a { color: inherit; }
 a:hover { text-decoration-thickness: 2px; }
 .page {
@@ -17,6 +18,15 @@ a:hover { text-decoration-thickness: 2px; }
 .more summary::-webkit-details-marker { display: none; }
 .more summary::after { content: '+'; }
 .more details[open] summary::after { content: '\2212'; }
+/* More work: one piece in a 16:10 frame, a tray of thumbnails under it swaps the others in.
+   Page captures fill from the top; artwork sits whole on the project's ground colour. */
+.more .frame { aspect-ratio: 16 / 10; border: 1px solid #0a0a0a; overflow: hidden; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; }
+.more .frame img { display: block; max-width: 88%; max-height: 88%; box-shadow: 0 6px 24px #0003; }
+.more .frame img.page-shot { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; object-position: top; box-shadow: none; }
+.tray { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.tray button { width: 44px; height: 44px; padding: 0; border: 1px solid #0003; cursor: pointer; overflow: hidden; }
+.tray button[aria-pressed="true"] { outline: 2px solid #0a0a0a; outline-offset: 1px; }
+.tray img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
 
 /* Belts scroll by touch, wheel and keys, with no scrollbar drawn */
 .belt { scrollbar-width: none; }
@@ -51,8 +61,18 @@ a:hover { text-decoration-thickness: 2px; }
 .belt .tile { align-self: stretch; --w: max(320px, 44 * var(--u)); width: var(--w); }
 .belt .tile.spec { --w: max(240px, 28 * var(--u)); }
 
+/* Bento: several artworks in one belt slot. It stands as tall as the laptop (about 36u). The first
+   column is the A5 poster's width at that height (ratio 0.705), so the poster shows whole; the other
+   pieces fill two rows of two and are cropped to fit. The map keeps its streets and loses the key. */
+.bento { display: grid; gap: clamp(6px, 0.7cqw, 10px); grid-template-columns: 25fr 17fr 17fr; grid-template-rows: 1fr 1fr; }
+.bento img { width: 100%; height: 100%; min-height: 0; object-fit: cover; display: block; border-radius: 6px; }
+.bento img:first-child { grid-row: span 2; object-position: top; }
+.bento img:last-child { object-position: left; }
+.bento img:nth-child(4) { object-position: left bottom; } /* Summer School banner: keep the start of its title */
+.belt .bento { align-self: stretch; width: max(480px, 61 * var(--u)); }
+
 .tile { letter-spacing: normal; /* not the page's tracking: each site sets its own */ container-type: inline-size; position: relative; overflow: hidden; isolation: isolate; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: calc(var(--w) * 0.04); padding: calc(var(--w) * 0.06); }
-.tile h3, .tile p { margin: 0; text-wrap: balance; }
+.tile h3, .tile p { margin: 0; }
 .tile p { max-width: 24em; }
 .tile .row { display: flex; flex-wrap: wrap; gap: 2.4cqw; justify-content: center; }
 .hero { background: #111; color: #fff; }
@@ -63,7 +83,7 @@ a:hover { text-decoration-thickness: 2px; }
 /* Spacing follows the site: tight tracking, text close under the headline, the button set apart. */
 .hero.chl { --shade: linear-gradient(to right, #282828bb 0%, #282828bb 27.5%, #28282833 100%); align-items: flex-start; text-align: left; gap: 0; }
 .hero.chl h3 { font: 600 8.8cqw/1.075 'area-inktrap', 'sets-grotesk-l', sans-serif; letter-spacing: -0.035em; }
-.hero.chl p { margin-top: 1.9cqw; max-width: 60cqw; text-align: justify; text-wrap: wrap; font: 400 max(12px, 2.2cqw)/1.5 'ivyora-text', Georgia, serif; }
+.hero.chl p { margin-top: 1.9cqw; max-width: 60cqw; text-align: justify; font: 400 max(12px, 2.2cqw)/1.5 'ivyora-text', Georgia, serif; }
 .chl-button { margin-top: 7cqw; }
 .chl-button { padding: 1em 1.6em; border: 1px solid #fff; font: 800 max(10px, 1.7cqw)/1 'area-normal', sans-serif; text-transform: uppercase; letter-spacing: 0.125em; }
 
@@ -150,4 +170,7 @@ main > section:not(.more) { margin: clamp(10px, 1.2cqw, 18px) clamp(10px, 1.2cqw
   .belt .phone { width: calc((var(--h) - 16px) * 9 / 19 + 16px); }
   .belt .tablet { width: calc((var(--h) - 20px) * 3 / 4 + 20px); }
   .belt:has(.phone) .tile { height: var(--h); }
+  /* Bento at phone width: two columns, the poster down the left of the first two rows, the banner and
+     map side by side under it. */
+  .belt .bento { width: 78cqw; height: var(--h); grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 0.9fr; }
 }

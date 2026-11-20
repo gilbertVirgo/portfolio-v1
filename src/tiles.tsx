@@ -47,7 +47,9 @@ export function WordReveal({ text }: { text: string }) {
     play()
     if (!still()) timer.current = window.setInterval(play, 5000)
   }, () => clearInterval(timer.current))
-  return <h3 ref={ref}>{text.split(' ').map((w, i) => <span key={i} className="word-reveal" style={{ animationDelay: `${i * 0.15}s` }}>{w}</span>)}</h3>
+  const words = text.split(' ').map((w, i) => <span key={i} className="word-reveal" style={{ animationDelay: `${i * 0.15}s` }}>{w}</span>)
+  // Last two words share an inline-block so the headline never ends on a lone word (see noOrphan)
+  return <h3 ref={ref}>{words.slice(0, -2)}<span style={{ display: 'inline-block' }}>{words.slice(-2)}</span></h3>
 }
 
 const arrow = <svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" /></svg>

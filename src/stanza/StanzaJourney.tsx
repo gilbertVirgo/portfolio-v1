@@ -71,7 +71,7 @@ export function StanzaJourney() {
             )}
             {z.stage === 'bible' && (
               <>
-                <div style={st('font-weight: 600; font-size: 2.5cqw; line-height: 1.2; letter-spacing: -0.03em; text-wrap: balance')}>
+                <div style={st('font-weight: 600; font-size: 2.5cqw; line-height: 1.2; letter-spacing: -0.03em')}>
                   <sup style={st('font-size: 0.62em; color: #BDB9AE; margin-right: 0.4cqw')}>{z.verseNo}</sup>{z.verse}
                 </div>
                 <div style={st('font-weight: 600; font-size: 1.4cqw; color: #BDB9AE')}>John 3:16–17 · KJV</div>

@@ -36,7 +36,7 @@ export default function App() {
         <nav style={st('display: flex; gap: 24px; flex: 1 1 200px; justify-content: flex-end')}>
           <a href="#work" style={st('text-decoration: none; padding: 12px 0')}>Work</a>
           <a href="#about" style={st('text-decoration: none; padding: 12px 0')}>About</a>
-          <a href="#contact" style={st('padding: 12px 0')}>Start a project</a>
+          <a href="#contact" style={st('padding: 12px 0; white-space: nowrap')}>Start a project</a>
         </nav>
       </header>
       <main id="work">
