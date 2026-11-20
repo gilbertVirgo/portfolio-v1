@@ -1,33 +1,44 @@
 import type { ReactNode } from 'react'
-import { Capture, Laptop, Phone, Tablet } from './devices'
+import { ABoard, Capture, Flyer, Laptop, Phone, Roller, Tablet } from './devices'
 import { HbcButtons, HeroTile, WordReveal } from './tiles'
 import { st } from './st'
 import { BookingJourney } from './booking/BookingJourney'
 import { StanzaJourney } from './stanza/StanzaJourney'
-import chlDesktop from './assets/chl-desktop.jpg'
-import chlMobile from './assets/chl-mobile.jpg'
-import chlArtPoster from './assets/chl-art-remember-poster.jpg'
-import chlArtHistory from './assets/chl-art-history-isnt-finished.jpg'
-import chlArtGod from './assets/chl-art-god-of-god.jpg'
-import chlArtSummer from './assets/chl-art-summer-school.jpg'
-import chlArtMap from './assets/chl-art-map.jpg'
-import lcrPlaque from './assets/lcr-plaque.png'
-import lcrWelcome from './assets/lcr-welcome.png'
-import lcrRoller1 from './assets/lcr-roller1.png'
-import lcrRoller2 from './assets/lcr-roller2.png'
-import lcrPrayer from './assets/lcr-prayer.png'
-import lcrLogos from './assets/lcr-logos.png'
+import chlDesktop from './assets/chl-desktop.webp'
+import chlMobile from './assets/chl-mobile.webp'
+import chlArtPoster from './assets/chl-art-remember-poster.webp'
+import chlArtHistory from './assets/chl-art-history-isnt-finished.webp'
+import chlArtGod from './assets/chl-art-god-of-god.webp'
+import chlArtSummer from './assets/chl-art-summer-school.webp'
+import chlArtMap from './assets/chl-art-map.webp'
+import lcrPlaque from './assets/lcr-plaque.webp'
+import lcrWelcome from './assets/lcr-welcome.webp'
+import lcrRoller1 from './assets/lcr-roller1.webp'
+import lcrRoller2 from './assets/lcr-roller2.webp'
+import lcrPrayer from './assets/lcr-prayer.webp'
+import lcrLogos from './assets/lcr-logos.webp'
+import vpccDesktop from './assets/vpcc-desktop.webp'
+import vpccLogo from './assets/vpcc-art-logo.webp'
+import vpccWelcome from './assets/vpcc-art-welcome.webp'
+import vpccWelcomeCream from './assets/vpcc-art-welcome-cream.webp'
+import vpccWereHere from './assets/vpcc-art-were-here.webp'
+import vpccJoinUs from './assets/vpcc-art-join-us.webp'
+import vpccJoinUsBanner from './assets/vpcc-art-join-us-banner.webp'
+import vpccHcb from './assets/vpcc-art-hot-cross-buns.webp'
+import vpccHcbWhite from './assets/vpcc-art-hot-cross-buns-white.webp'
+import vpccInvited from './assets/vpcc-art-youre-invited.webp'
+import vpccEsol from './assets/vpcc-art-esol.webp'
 import stanzaIcon from './assets/stanza-icon.svg'
-import scHome from './assets/sc-home.jpg'
+import scHome from './assets/sc-home.webp'
 import selhurstLogo from './assets/selhurst-logo-dark.svg'
-import hbcDesktop from './assets/hbc-desktop.jpg'
-import hbcMobile from './assets/hbc-mobile.jpg'
+import hbcDesktop from './assets/hbc-desktop.webp'
+import hbcMobile from './assets/hbc-mobile.webp'
 import chlHero from './assets/chl-hero.mp4'
-import chlHeroPoster from './assets/chl-hero.jpg'
+import chlHeroPoster from './assets/chl-hero.webp'
 import selhurstHero from './assets/selhurst-hero.mp4'
-import selhurstHeroPoster from './assets/selhurst-hero.jpg'
+import selhurstHeroPoster from './assets/selhurst-hero.webp'
 import hbcHero from './assets/hbc-hero.mp4'
-import hbcHeroPoster from './assets/hbc-hero.jpg'
+import hbcHeroPoster from './assets/hbc-hero.webp'
 
 export type Project = { id: string; title: string; bg: string; fg: string; disciplines: string; links: ReactNode; stage: ReactNode; bleed?: boolean }
 
@@ -46,17 +57,6 @@ const belt = (label: string, children: ReactNode) => (
     <div className="belt" tabIndex={0} role="region" aria-label={label}>{children}</div>
   </div>
 )
-
-const tall = 'height: clamp(340px, 42cqw, 600px); width: auto; display: block'
-// caption: what the piece is. Not shown; kept as the list key and for whoever edits this next.
-const lcrFigures: { src: string; alt: string; caption: string; style: string }[] = [
-  { src: lcrPlaque, alt: 'Life Church Richmond logo: the word life set on a diagonal in magenta, beside the church name', caption: 'Door plaque, A4', style: 'height: clamp(240px, 30cqw, 420px); width: auto; display: block' },
-  { src: lcrWelcome, alt: 'Cream poster reading everyone is welcome in large spaced magenta letters', caption: 'Welcome banner, A2', style: tall },
-  { src: lcrRoller1, alt: 'Tall magenta roller banner with yellow lettering', caption: 'Roller banner 1, 800 × 2000 mm', style: tall },
-  { src: lcrRoller2, alt: 'Tall yellow roller banner with magenta lettering', caption: 'Roller banner 2, 800 × 2000 mm', style: tall },
-  { src: lcrPrayer, alt: 'Cream poster of the Lord’s Prayer in serif type with a large magenta initial', caption: 'Lord’s Prayer banner, A2', style: tall },
-  { src: lcrLogos, alt: 'Logo variations in dark teal, magenta, blue, yellow and cream, on light and dark grounds', caption: 'Logo, all variations', style: tall + '; background: #E6E2D3; padding: 24px' },
-]
 
 // Christian Heritage London print and social pieces, packed into one bento tile (styles.css, "Bento").
 // The poster leads and runs the full height; the rest fill the grid in order and are cropped to fit.
@@ -92,6 +92,24 @@ export const projects: Project[] = [
           {chlArt.map((a) => <div key={a.caption}><img src={a.src} alt={a.alt} loading="lazy" /></div>)}
         </div>
         {phone(chlMobile, 'Christian Heritage London home page at phone width', '#ffffff')}
+      </>
+    )),
+  },
+  {
+    id: 'vpcc', title: 'Victoria Park Community Church', bg: '#FCFCF5', fg: '#0a0a0a',
+    disciplines: 'Visual identity, website and artwork',
+    links: <a target="_blank" rel="noopener" href="https://vpcc.church">vpcc.church</a>,
+    bleed: true,
+    stage: belt('Victoria Park Community Church website, street signs, flyers and posters, scrolls sideways', (
+      <>
+        {laptop(vpccDesktop, 'Victoria Park Community Church home page: cream ground, black and white photos, orange buttons, sections for Sundays, what’s on, about and beliefs', '#FCFCF5')}
+        <ABoard front={vpccWelcome} back={vpccWelcomeCream} label="A-board, turning: WELCOME in heavy cream capitals on orange over a row of chevrons on one side, the same reversed in orange on cream on the other, “We meet here every Sunday, 3–4:30pm”" />
+        <Roller src={vpccJoinUsBanner} alt="Roller banner: JOIN US FOR CHURCH THIS SUNDAY in block letters filled with a photo of a smiling woman, with meeting details below" />
+        <Flyer front={vpccJoinUs} back={vpccWereHere} label="Flyer, turning over. Front: JOIN US FOR CHURCH THIS SUNDAY in rounded block letters filled with a black and white photo of a smiling man. Back: a finger points at the church on a street map, WE’RE HERE, with a QR code and meeting details" />
+        <Flyer lag={2000} front={vpccHcbWhite} back={vpccHcb} label="Flyer, turning over: HOT CROSS BUNS set along a diagonal orange cross on white, and on the back the same in a white cross on orange, with date, time, address and a QR code" />
+        <img className="print flat" src={vpccEsol} alt="Poster: free ESOL classes, learn English through stories old and new, Fridays 11–2pm" loading="lazy" style={st('height: 34em')} />
+        <img className="print flat" src={vpccInvited} alt="Invitation card: “you’re invited” repeated in cream italic rows on orange, one row in black" loading="lazy" style={st('height: 24em')} />
+        <img className="logo-tile" src={vpccLogo} alt="VPCC logo: lowercase vpcc in a solid orange circle" loading="lazy" style={st('aspect-ratio: 1; border-radius: 8px')} />
       </>
     )),
   },
@@ -138,9 +156,15 @@ export const projects: Project[] = [
   {
     id: 'lcr', title: 'Life Church Richmond', bg: '#0B2A2E', fg: '#FFFDF0',
     disciplines: 'Visual identity', links: <span>Logo, banners, signage</span>, bleed: true,
-    stage: belt('Life Church Richmond identity pieces, scrolls sideways', lcrFigures.map((f) => (
-      <img key={f.caption} src={f.src} alt={f.alt} loading="lazy" style={st(f.style)} />
-    ))),
+    stage: belt('Life Church Richmond signage, banners and logo, scrolls sideways', (
+      <>
+        <img className="print flat" src={lcrPlaque} alt="Life Church Richmond door plaque: the word life set on a diagonal in magenta, beside the church name" loading="lazy" style={st('height: 26em')} />
+        <ABoard front={lcrWelcome} back={lcrPrayer} label="A-board, turning: one side a cream poster reading everyone is welcome in large spaced magenta letters, with Sunday times; the other the Lord’s Prayer in serif type with a large magenta initial" />
+        <Roller src={lcrRoller1} alt="Magenta roller banner: everyone is welcome in spaced yellow letters" />
+        <Roller src={lcrRoller2} alt="Yellow roller banner: everyone is welcome in spaced magenta letters" />
+        <img className="print flat" src={lcrLogos} alt="Logo variations in dark teal, magenta, blue, yellow and cream, on light and dark grounds" loading="lazy" style={st('height: 40em; background: #E6E2D3; padding: 2.4em')} />
+      </>
+    )),
   },
   {
     id: 'hbc', title: 'Highbury Baptist Church', bg: '#FFFCED', fg: '#1E1F1B',
