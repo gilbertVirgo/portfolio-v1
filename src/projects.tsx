@@ -89,7 +89,7 @@ export const projects: Project[] = [
         </HeroTile>
         {laptop(chlDesktop, 'Christian Heritage London home page: dark hero reading Explore London’s Stories, then walks, podcast, articles and gift vouchers', '#ffffff')}
         <div className="bento" role="group" aria-label="Christian Heritage London artwork: poster, podcast covers, event banner and walking map">
-          {chlArt.map((a) => <img key={a.caption} src={a.src} alt={a.alt} loading="lazy" />)}
+          {chlArt.map((a) => <div key={a.caption}><img src={a.src} alt={a.alt} loading="lazy" /></div>)}
         </div>
         {phone(chlMobile, 'Christian Heritage London home page at phone width', '#ffffff')}
       </>
