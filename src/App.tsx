@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { ContactForm } from './ContactForm'
-import gil from './assets/gil.jpg'
+import gil from './assets/gil.webp'
 import { MoreWork } from './MoreWork'
 import { ProjectSection } from './ProjectSection'
 import { projects } from './projects'

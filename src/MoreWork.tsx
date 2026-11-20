@@ -1,24 +1,13 @@
 import { useState } from 'react'
 import { noOrphan } from './ProjectSection'
 import { st } from './st'
-import amtDesktop from './assets/amt-desktop.jpg'
-import hcweDesktop from './assets/hcwe-desktop.jpg'
-import hcweLogo from './assets/hcwe-logo.jpg'
-import hcweMobile from './assets/hcwe-mobile.jpg'
-import spucCandidates from './assets/spuc-candidates.jpg'
-import spucHero from './assets/spuc-hero.jpg'
-import spucRegions from './assets/spuc-regions.jpg'
-import vpccDesktop from './assets/vpcc-desktop.jpg'
-import vpccLogo from './assets/vpcc-art-logo.jpg'
-import vpccWelcome from './assets/vpcc-art-welcome.jpg'
-import vpccWelcomeCream from './assets/vpcc-art-welcome-cream.jpg'
-import vpccWereHere from './assets/vpcc-art-were-here.jpg'
-import vpccJoinUs from './assets/vpcc-art-join-us.jpg'
-import vpccJoinUsBanner from './assets/vpcc-art-join-us-banner.jpg'
-import vpccHotCrossBuns from './assets/vpcc-art-hot-cross-buns.jpg'
-import vpccInvited from './assets/vpcc-art-youre-invited.jpg'
-import vpccAllWelcome from './assets/vpcc-art-all-are-welcome.jpg'
-import vpccEsol from './assets/vpcc-art-esol.jpg'
+import amtDesktop from './assets/amt-desktop.webp'
+import hcweDesktop from './assets/hcwe-desktop.webp'
+import hcweLogo from './assets/hcwe-logo.webp'
+import hcweMobile from './assets/hcwe-mobile.webp'
+import spucCandidates from './assets/spuc-candidates.webp'
+import spucHero from './assets/spuc-hero.webp'
+import spucRegions from './assets/spuc-regions.webp'
 
 // Smaller projects, closed by default behind a native <details> toggle. Each shows one piece in a
 // 16:10 frame; a tray of thumbnails under it swaps the others in. `page: true` = a web page capture,
@@ -26,22 +15,6 @@ import vpccEsol from './assets/vpcc-art-esol.jpg'
 // `note` stands in for the link where there is none to give (SPUC: work no longer on their site).
 type Piece = { src: string; alt: string; page?: boolean }
 const more: { title: string; disciplines: string; url?: string; note?: string; bg: string; pieces: Piece[] }[] = [
-  {
-    title: 'Victoria Park Community Church', disciplines: 'Visual identity, website and artwork', url: 'vpcc.church', bg: '#FCFCF5',
-    pieces: [
-      { src: vpccDesktop, page: true, alt: 'Victoria Park Community Church home page: cream ground, black and white photos, orange buttons, sections for Sundays, what’s on, about and beliefs' },
-      { src: vpccLogo, alt: 'VPCC logo: lowercase vpcc in a solid orange circle' },
-      { src: vpccWelcome, alt: 'Poster: WELCOME in heavy cream capitals on orange over a row of chevrons, “We meet here every Sunday, 3–4:30pm”' },
-      { src: vpccWereHere, alt: 'Poster: a finger points at the church on a grey street map, WE’RE HERE in heavy speckled black type with a QR code and meeting details' },
-      { src: vpccJoinUs, alt: 'Poster: JOIN US FOR CHURCH THIS SUNDAY in rounded block letters filled with a black and white photo of a smiling man' },
-      { src: vpccJoinUsBanner, alt: 'Pull-up banner: JOIN US FOR CHURCH THIS SUNDAY in block letters filled with a photo of a smiling woman, with meeting details below' },
-      { src: vpccHotCrossBuns, alt: 'Poster: HOT CROSS BUNS set along a white diagonal cross on orange, with date, time, address and a QR code' },
-      { src: vpccInvited, alt: 'Invitation card: “you’re invited” repeated in cream italic rows on orange, one row in black' },
-      { src: vpccAllWelcome, alt: 'Carol service flyer: ALL ARE WELCOME in decorative capitals on deep red, with a map to the Sports Cage by Victoria Park' },
-      { src: vpccEsol, alt: 'Poster: free ESOL classes, learn English through stories old and new, Fridays 11–2pm' },
-      { src: vpccWelcomeCream, alt: 'Poster: the WELCOME design reversed, orange capitals and chevrons on cream' },
-    ],
-  },
   {
     title: 'SPUC', disciplines: 'Website design and advertising', note: 'Scottish Parliament election, 2026', bg: '#2C2C2C',
     pieces: [

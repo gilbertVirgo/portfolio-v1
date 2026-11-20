@@ -4,10 +4,10 @@ import { useEffect, useRef, type ReactNode } from 'react'
 // a screenshot can't: the landing video, the headline build-in and the button hover, set in HTML with
 // each client site's own fonts and CSS. Decorative: each tile is one labelled image to assistive tech.
 
-const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches
+export const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // Runs `on` while the element is at least half on screen and `off` when it leaves.
-function useInView(ref: { current: Element | null }, on: () => void, off: () => void) {
+export function useInView(ref: { current: Element | null }, on: () => void, off: () => void) {
   useEffect(() => {
     const el = ref.current
     if (!el) return

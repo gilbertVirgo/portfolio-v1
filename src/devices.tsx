@@ -1,5 +1,6 @@
-import type { ReactNode, SyntheticEvent } from 'react'
+import { useRef, type ReactNode, type SyntheticEvent } from 'react'
 import { st } from './st'
+import { still, useInView } from './tiles'
 
 export function Laptop({ children, outline }: { children: ReactNode; outline?: boolean }) {
   const edge = outline ? '; border: 1px solid #5a5a5a' : ''
@@ -28,6 +29,65 @@ export function Capture(p: { src: string; alt: string; ratio: string; bg: string
   return (
     <div className="capture" style={st(`aspect-ratio: ${p.ratio}; overflow: hidden; background: ${p.bg}; border-radius: ${p.radius}`)}>
       <img src={p.src} alt={p.alt} loading="lazy" onLoad={done} onError={done} style={st('width: 100%; display: block')} />
+    </div>
+  )
+}
+
+// Print pieces as the objects they are (styles.css, "Print"). Sized in em off the belt's unit, so they
+// stand as tall as the laptop. The art is described once, on the outer element.
+
+// A pavement A-board: two boards hinged at the top, a poster on each, turning slowly while on screen.
+export function ABoard({ front, back, label }: { front: string; back: string; label: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useInView(ref, () => ref.current?.classList.add('run'), () => ref.current?.classList.remove('run'))
+  const board = (side: string, src: string) => (
+    <div className={`board ${side}`}>
+      <div className="face"><img src={src} alt="" loading="lazy" /><i className="shade" /></div>
+      <div className="rear"><i className="shade" /></div>
+      <i className="edge l" /><i className="edge r" /><i className="edge top" /><i className="leg l" /><i className="leg r" />
+    </div>
+  )
+  return (
+    <div ref={ref} className="print aboard" role="img" aria-label={label}>
+      <i className="ground" />
+      <div className="tilt"><div className="spin">{board('front', front)}{board('back', back)}</div></div>
+    </div>
+  )
+}
+
+// A pull-up roller banner, front on. Rail and base stretch to the art's width. Each time it comes into
+// view the graphic rolls up out of the base (.up); it drops back out of sight when it leaves.
+export function Roller({ src, alt }: { src: string; alt: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useInView(ref, () => ref.current?.classList.add('up'), () => ref.current?.classList.remove('up'))
+  return (
+    <div ref={ref} className="print roller">
+      <i className="ground" />
+      <div className="pull"><div className="roll"><i className="rail" /><div className="graphic"><img src={src} alt={alt} loading="lazy" /></div></div></div>
+      <div className="cassette"><i className="foot l" /><i className="foot r" /></div>
+    </div>
+  )
+}
+
+// A flyer hanging at an angle. It turns over every few seconds while on screen (`lag` delays the first
+// turn, so two flyers side by side take turns); a tap, click or mouse over turns it at once.
+export function Flyer({ front, back, label, lag = 0 }: { front: string; back: string; label: string; lag?: number }) {
+  const ref = useRef<HTMLButtonElement>(null)
+  const timer = useRef(0)
+  const turn = () => ref.current?.classList.toggle('over')
+  const start = (wait: number) => {
+    clearInterval(timer.current) // clears the first-turn timeout too: they share one id pool
+    if (!still()) timer.current = window.setTimeout(() => { turn(); timer.current = window.setInterval(turn, 4000) }, wait)
+  }
+  const now = () => { turn(); start(4000) }
+  useInView(ref, () => start(4000 + lag), () => clearInterval(timer.current))
+  return (
+    <div className="print flyer" role="group" aria-label={label}>
+      <i className="ground" />
+      <button ref={ref} type="button" aria-label="Turn the flyer over" onClick={now} onPointerEnter={(e) => e.pointerType === 'mouse' && now()}>
+        <span className="sheet"><img src={front} alt="" loading="lazy" /></span>
+        <span className="sheet back"><img src={back} alt="" loading="lazy" /></span>
+      </button>
     </div>
   )
 }
