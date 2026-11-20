@@ -90,22 +90,24 @@ a:hover { text-decoration-thickness: 2px; }
    turn passes 45°, 90° and 135° (20.5%, 25%, 29.5% of the cycle for this curve), so it stays in step.
    The back board's shades run half a cycle behind. Nothing here remounts; it pauses off screen
    (.run, set while in view) and stands still for reduced motion. */
-.aboard { --W: 25em; --H: 36.8em; --t: 0.8em; --lean: 13deg; --spin: 14s; --ease: cubic-bezier(0.7, 0, 0.3, 1);
+.aboard { --W: 25em; --H: 36.8em; --t: 0.8em; --lean: 13deg; --spin: 14s;
   position: relative; width: 32em; height: 42em; perspective: 150em; perspective-origin: 50% 30%; }
 .aboard .ground { left: 1em; right: 1em; bottom: 1.4em; height: 5.4em; }
 .aboard .tilt, .aboard .spin { position: absolute; inset: 0; transform-style: preserve-3d; }
 .aboard .tilt { transform: rotateX(-9deg); }
 .aboard .spin { animation: aboard-spin var(--spin) infinite paused; }
 .aboard.run .spin, .aboard.run .shade { animation-play-state: running; }
+/* Curve written out, not var(): Safari ignores var() in a keyframe's timing function and falls back
+   to ease, which puts the turn out of step with the shade. */
 @keyframes aboard-spin {
-  0% { transform: rotateY(0deg); animation-timing-function: var(--ease); }
-  50% { transform: rotateY(-180deg); animation-timing-function: var(--ease); }
+  0% { transform: rotateY(0deg); animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+  50% { transform: rotateY(-180deg); animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
   100% { transform: rotateY(-360deg); }
 }
 .board { position: absolute; top: 3.4em; left: calc(50% - var(--W) / 2); width: var(--W); height: var(--H); transform-origin: 50% 0; transform-style: preserve-3d; }
 .board.front { transform: rotateX(var(--lean)); }
 .board.back { transform: rotateY(180deg) rotateX(var(--lean)); }
-.board .face, .board .rear { position: absolute; left: 0; top: 0; width: var(--W); height: calc(var(--H) - 2.2em); backface-visibility: hidden; border-radius: 0.5em; overflow: hidden; }
+.board .face, .board .rear { position: absolute; left: 0; top: 0; width: var(--W); height: calc(var(--H) - 2.2em); backface-visibility: hidden; border-radius: 0.5em; }
 .board .face { background: #141414; padding: 0.9em; }
 .board .face img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .board .rear { background: #2b2b2b; transform: translateZ(calc(var(--t) * -1)) rotateY(180deg); box-shadow: inset 0 0 0 0.9em #141414; }
@@ -114,9 +116,13 @@ a:hover { text-decoration-thickness: 2px; }
 .board .edge { position: absolute; top: 0; width: var(--t); height: calc(var(--H) - 2.2em); background: #0b0b0b; transform-origin: 0 0; transform: rotateY(90deg); }
 .board .edge.l { left: 0; } .board .edge.r { left: var(--W); }
 .board .edge.top { width: var(--W); height: var(--t); transform: rotateX(-90deg); }
-.board .shade { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; animation: aboard-shade var(--spin) linear infinite paused; }
+/* The shade animates background-color, not opacity: Safari gives an opacity animation its own
+   compositing layer and, inside these 3D boards, draws that layer out of place (a pale wedge across
+   the face). A colour change repaints in place. No overflow: hidden on the faces either, for the same
+   reason: Safari's rounded-corner mask layer misplaces too. */
+.board .shade { position: absolute; inset: 0; border-radius: inherit; background: #0000; pointer-events: none; animation: aboard-shade var(--spin) linear infinite paused; }
 .board.back .face .shade, .board.front .rear .shade { animation-delay: calc(var(--spin) / -2); }
-@keyframes aboard-shade { 0%, 100% { opacity: 0; } 20.5%, 79.5% { opacity: 0.14; } 25%, 75% { opacity: 0.55; } }
+@keyframes aboard-shade { 0%, 100% { background-color: #0000; } 20.5%, 79.5% { background-color: #00000024; } 25%, 75% { background-color: #0000008c; } }
 
 /* Roller banner: front on, still. The graphic is a set height; rail and base stretch to its width.
    Build-in: rail and graphic (.roll) rise out of the base when .up is set (devices.tsx). .pull clips
