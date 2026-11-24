@@ -27,8 +27,12 @@ export function scrollIntent(): () => void {
     let range = 0 // sideways overflow, and so the extra height of the pin
     // Where the page puts the belt: at its start until it sticks, then 1px sideways per 1px down
     const want = () => Math.min(range, Math.max(0, top - pin.getBoundingClientRect().top))
-    const fromPage = () => { belt.scrollLeft = want() }
+    // Safari fires the belt's scroll event for our own write a frame late, after the page has moved on,
+    // so it would read as a swipe and pull the page back. Echoes of the last write are ignored.
+    let written = -1
+    const fromPage = () => { written = want(); belt.scrollLeft = written }
     const fromBelt = () => {
+      if (Math.abs(belt.scrollLeft - written) < 1) return
       const d = belt.scrollLeft - want()
       if (Math.abs(d) < 1) return // our own write, or rounding
       const r = pin.getBoundingClientRect()
